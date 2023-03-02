@@ -1,0 +1,56 @@
+version: '3.9'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./deploy/Dockerfile
+    image: personalsite:${PERSONALSITE_VERSION:-latest}
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PERSONALSITE_HOST: 0.0.0.0
+      PERSONALSITE_DB_HOST: personalsite-db
+      PERSONALSITE_DB_PORT: 5432
+      PERSONALSITE_DB_USER: personalsite
+      PERSONALSITE_DB_PASS: personalsite
+      PERSONALSITE_DB_BASE: personalsite
+
+  db:
+    image: postgres:13.8-bullseye
+    hostname: personalsite-db
+    environment:
+      POSTGRES_PASSWORD: "personalsite"
+      POSTGRES_USER: "personalsite"
+      POSTGRES_DB: "personalsite"
+    volumes:
+      - personalsite-db-data:/var/lib/postgresql/data
+    restart: always
+    healthcheck:
+      test: pg_isready -U personalsite
+      interval: 2s
+      timeout: 3s
+      retries: 40
+
+  migrator:
+    image: personalsite:${PERSONALSITE_VERSION:-latest}
+    restart: "no"
+    environment:
+      PERSONALSITE_DB_HOST: personalsite-db
+      PERSONALSITE_DB_PORT: 5432
+      PERSONALSITE_DB_USER: personalsite
+      PERSONALSITE_DB_PASS: personalsite
+      PERSONALSITE_DB_BASE: personalsite
+    depends_on:
+      db:
+        condition: service_healthy
+
+
+
+volumes:
+  personalsite-db-data:
+    name: personalsite-db-data
