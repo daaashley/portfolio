@@ -42,9 +42,9 @@ class Settings(BaseSettings):
     # Variables for the database
     db_host: str = "localhost"
     db_port: int = 5432
-    db_user: str = "personalsite"
-    db_pass: str = "personalsite"
-    db_base: str = "personalsite"
+    db_user: str = "backend"
+    db_pass: str = "backend"
+    db_base: str = "backend"
     db_echo: bool = False
 
 
@@ -66,7 +66,7 @@ class Settings(BaseSettings):
 
     class Config:
         env_file = ".env"
-        env_prefix = "PERSONALSITE_"
+        env_prefix = "BACKEND_"
         env_file_encoding = "utf-8"
 
 

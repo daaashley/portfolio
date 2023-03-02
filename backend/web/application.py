@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 from fastapi.responses import UJSONResponse
 import logging
-from personalsite.web.api.router import api_router
-from personalsite.settings import settings
-from personalsite.web.lifetime import register_startup_event, register_shutdown_event
+from backend.web.api.router import api_router
+from backend.settings import settings
+from backend.web.lifetime import register_startup_event, register_shutdown_event
 from importlib import metadata
 
 
@@ -16,8 +16,8 @@ def get_app() -> FastAPI:
     :return: application.
     """
     app = FastAPI(
-        title="personalsite",
-        version=metadata.version("personalsite"),
+        title="backend",
+        version=metadata.version("backend"),
         docs_url="/api/docs",
         redoc_url="/api/redoc",
         openapi_url="/api/openapi.json",

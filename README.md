@@ -1,4 +1,4 @@
-# personalsite
+# backend
 
 This project was generated using fastapi_template.
 
@@ -11,7 +11,7 @@ To run the project use this set of commands:
 
 ```bash
 poetry install
-poetry run python -m personalsite
+poetry run python -m app
 ```
 
 This will start the server on the configured host.
@@ -46,8 +46,8 @@ docker-compose -f deploy/docker-compose.yml --project-directory . build
 ## Project structure
 
 ```bash
-$ tree "personalsite"
-personalsite
+$ tree "backend"
+backend
 ├── conftest.py  # Fixtures for all tests.
 ├── db  # module contains db configurations
 │   ├── dao  # Data Access Objects. Contains different classes to interact with database.
@@ -71,18 +71,18 @@ This application can be configured with environment variables.
 You can create `.env` file in the root directory and place all
 environment variables here. 
 
-All environment variabels should start with "PERSONALSITE_" prefix.
+All environment variabels should start with "BACKEND_" prefix.
 
-For example if you see in your "personalsite/settings.py" a variable named like
-`random_parameter`, you should provide the "PERSONALSITE_RANDOM_PARAMETER" 
+For example if you see in your "app/settings.py" a variable named like
+`random_parameter`, you should provide the "BACKEND_RANDOM_PARAMETER" 
 variable to configure the value. This behaviour can be changed by overriding `env_prefix` property
-in `personalsite.settings.Settings.Config`.
+in `backend.settings.Settings.Config`.
 
 An exmaple of .env file:
 ```bash
-PERSONALSITE_RELOAD="True"
-PERSONALSITE_PORT="8000"
-PERSONALSITE_ENVIRONMENT="dev"
+BACKEND_RELOAD="True"
+BACKEND_PORT="8000"
+BACKEND_ENVIRONMENT="dev"
 ```
 
 You can read more about BaseSettings class here: https://pydantic-docs.helpmanual.io/usage/settings/
@@ -139,7 +139,7 @@ For running tests on your local machine.
 
 I prefer doing it with docker:
 ```
-docker run -p "5432:5432" -e "POSTGRES_PASSWORD=personalsite" -e "POSTGRES_USER=personalsite" -e "POSTGRES_DB=personalsite" postgres:13.8-bullseye
+docker run -p "5432:5432" -e "POSTGRES_PASSWORD=backend" -e "POSTGRES_USER=backend" -e "POSTGRES_DB=backend" postgres:13.8-bullseye
 ```
 
 

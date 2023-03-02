@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "personalsite"
+name = "backend"
 version = "0.1.0"
 description = ""
 authors = [
@@ -36,7 +36,7 @@ httpx = "^0.23.3"
 [tool.isort]
 profile = "black"
 multi_line_output = 3
-src_paths = ["personalsite",]
+src_paths = ["backend",]
 
 [tool.mypy]
 strict = true
@@ -58,7 +58,7 @@ filterwarnings = [
     "ignore:.*unclosed.*:ResourceWarning",
 ]
 env = [
-    "PERSONALSITE_DB_BASE=personalsite_test",
+    "BACKEND_DB_BASE=backend_test",
 ]
 
 [build-system]

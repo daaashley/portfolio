@@ -9,8 +9,8 @@ from httpx import AsyncClient
 import uuid
 from unittest.mock import Mock
 
-from personalsite.settings import settings
-from personalsite.web.application import get_app
+from backend.settings import settings
+from backend.web.application import get_app
 
 
 @pytest.fixture(scope="session")

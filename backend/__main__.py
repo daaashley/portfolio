@@ -2,13 +2,13 @@ import uvicorn
 import os
 import shutil
 
-from personalsite.settings import settings
+from backend.settings import settings
 
 
 def main() -> None:
     """Entrypoint of the application."""
     uvicorn.run(
-        "personalsite.web.application:get_app",
+        "backend.web.application:get_app",
         workers=settings.workers_count,
         host=settings.host,
         port=settings.port,

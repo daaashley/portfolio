@@ -2,7 +2,7 @@ from typing import Awaitable, Callable
 import logging
 from fastapi import FastAPI
 
-from personalsite.settings import settings
+from backend.settings import settings
 
 
 def register_startup_event(app: FastAPI) -> Callable[[], Awaitable[None]]:  # pragma: no cover

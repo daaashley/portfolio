@@ -1,5 +1,6 @@
 from fastapi.routing import APIRouter
-from personalsite.web.api import monitoring
+from backend.web.api import monitoring, app
 
 api_router = APIRouter()
 api_router.include_router(monitoring.router)
+api_router.include_router(app.router)
