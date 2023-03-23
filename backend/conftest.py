@@ -10,7 +10,7 @@ import uuid
 from unittest.mock import Mock
 
 from backend.settings import settings
-from backend.web.application import get_app
+from backend.application import get_app
 
 
 @pytest.fixture(scope="session")

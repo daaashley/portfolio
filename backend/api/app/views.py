@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 from fastapi.responses import HTMLResponse
+from backend.db import dal
 
 router = APIRouter()
 
@@ -8,6 +9,7 @@ def health_check() -> dict:
     """
     Test of the project
     """
+    dal.test_db()
     return {'status':'Hello'}
 
 @router.get('/index',response_class=HTMLResponse)

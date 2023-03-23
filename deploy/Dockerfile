@@ -1,6 +1,6 @@
 FROM python:3.9.6-slim-buster
 RUN apt-get update && apt-get install -y \
-  gcc \
+  gcc libpq-dev\
   && rm -rf /var/lib/apt/lists/*
 
 
@@ -24,4 +24,5 @@ RUN apt-get purge -y \
 COPY . /app/src/
 RUN poetry install
 
-CMD ["/usr/local/bin/python", "-m", "backend"]
+#CMD ["/usr/local/bin/python", "-m", "backend"]
+CMD [ "uvicorn", "--host", "0.0.0.0", "--port", "5050", "backend.app:app"]

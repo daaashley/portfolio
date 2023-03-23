@@ -14,40 +14,44 @@ services:
         condition: service_healthy
     environment:
       BACKEND_HOST: 0.0.0.0
-      BACKEND_DB_HOST: backend-db
+      BACKEND_DB_HOST: "db"
       BACKEND_DB_PORT: 5432
-      BACKEND_DB_USER: backend
-      BACKEND_DB_PASS: backend
-      BACKEND_DB_BASE: backend
+      BACKEND_DB_USER: "postgres"
+      BACKEND_DB_PASS: "postgres"
+      BACKEND_DB_BASE: "postgres"
 
   db:
     image: postgres:13.8-bullseye
     hostname: backend-db
     environment:
-      POSTGRES_PASSWORD: "backend"
-      POSTGRES_USER: "backend"
-      POSTGRES_DB: "backend"
-    volumes:
-      - backend-db-data:/var/lib/postgresql/data
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_USER: "postgres"
+      POSTGRES_DB: "postgres"
+      POSTGRES_HOST: 'localhost'
+      POSTGRES_PORT: '5432'
+    ports:
+      - '5432:5432'
+    # volumes:
+    #   - backend-db-data:/var/lib/postgresql/data
     restart: always
     healthcheck:
-      test: pg_isready -U backend
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U postgres -d postgres'"]
       interval: 2s
       timeout: 3s
       retries: 40
 
-  migrator:
-    image: backend:${BACKEND_VERSION:-latest}
-    restart: "no"
-    environment:
-      BACKEND_DB_HOST: backend-db
-      BACKEND_DB_PORT: 5432
-      BACKEND_DB_USER: backend
-      BACKEND_DB_PASS: backend
-      BACKEND_DB_BASE: backend
-    depends_on:
-      db:
-        condition: service_healthy
+  # migrator:
+  #   image: backend:${BACKEND_VERSION:-latest}
+  #   restart: "no"
+  #   environment:
+  #     BACKEND_DB_HOST: localhost
+  #     BACKEND_DB_PORT: 5432
+  #     BACKEND_DB_USER: postgres
+  #     BACKEND_DB_PASS: postgres
+  #     BACKEND_DB_BASE: postgres
+  #   depends_on:
+  #     db:
+  #       condition: service_healthy
 
 
 
