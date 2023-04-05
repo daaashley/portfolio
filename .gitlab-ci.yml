@@ -59,7 +59,7 @@ pytest:
     alias: database
   variables:
     # Postgresql variables
-    POSTGRES_HOST: db
+    POSTGRES_HOST: postgres
     POSTGRES_PASSWORD: postgres
     POSTGRES_USER: postgres
     POSTGRES_DB: postgres
