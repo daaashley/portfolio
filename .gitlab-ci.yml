@@ -66,7 +66,7 @@ pytest:
   script:
   - apt update
   - apt install -y wait-for-it
-  - psql -U "$POSTGRES_USER" -p 5432 -h postgres
+  - psql -U "$POSTGRES_USER" -p 5432 -h postgres -W "$POSTGRES_PASSWORD"
   - wait-for-it -t 180 $BACKEND_DB_HOST:5432
   - pytest -vv --junitxml=report.xml --cov="backend" .
   - coverage xml
