@@ -39,7 +39,7 @@ deploy:
     - tags
   before_script:
     - apt-get update
-    - apt-get -y install libpq-dev python3-dev
+    - apt-get -y install libpq-dev python3-dev curl build-essential procps unzip libffi-dev
     - pip install poetry==1.2.2
     - poetry config virtualenvs.create false
     - poetry install
