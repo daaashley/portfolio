@@ -59,16 +59,22 @@ pytest:
     alias: database
   variables:
     # Postgresql variables
-    BACKEND_DB_HOST: postgres
+    POSTGRES_HOST: localhost
     POSTGRES_PASSWORD: postgres
     POSTGRES_USER: postgres
     POSTGRES_DB: postgres
+    POSTGRES_PORT: '5432'
   script:
-  - apt update
-  - apt install -y wait-for-it
-  - sudo PGPASSWORD="postgres" psql -U "$POSTGRES_USER" -p 5432 -h postgres
-  - wait-for-it -t 180 $BACKEND_DB_HOST:5432
-  - pytest -vv --junitxml=report.xml --cov="backend" .
+  - set -x
+  - apt-get --allow-releaseinfo-change update
+  - apt-get install --no-install-recommends -y build-essential libpq-dev libffi-dev gcc
+  - pip install --upgrade pip
+  - poetry config virtualenvs.in-project true
+  - poetry install
+  # - apt install -y wait-for-it
+  # - psql "postgresql://postgres:postgres@postgres:5432/postgres"
+  #- wait-for-it -t 180 $BACKEND_DB_HOST:5432
+  - poetry run pytest --cov-report term-missing --cov=src backend/tests --junitxml=report.xml
   - coverage xml
   artifacts:
     when: always
