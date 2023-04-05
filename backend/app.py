@@ -1,11 +1,12 @@
-from fastapi import FastAPI
-from fastapi.responses import UJSONResponse
-import logging
-from backend.api.router import api_router
-from backend.settings import settings
-from backend.lifetime import register_startup_event, register_shutdown_event
 from importlib import metadata
 
+import uvicorn
+from fastapi import FastAPI
+from fastapi.responses import UJSONResponse
+
+from backend.api.router import api_router
+from backend.lifetime import register_shutdown_event, register_startup_event
+from backend.settings import settings
 
 app = FastAPI(
     title="backend",
@@ -22,9 +23,6 @@ register_shutdown_event(app)
 
 # Main router for the API.
 app.include_router(router=api_router, prefix="/api")
-
-  
-    
 
 
 if __name__ == "__main__":

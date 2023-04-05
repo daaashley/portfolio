@@ -1,19 +1,22 @@
 from fastapi import APIRouter
 from fastapi.responses import HTMLResponse
+
 from backend.db import dal
 
 router = APIRouter()
 
-@router.get('/test')
+
+@router.get("/test")
 def health_check() -> dict:
     """
     Test of the project
     """
     dal.test_db()
-    return {'status':'Hello'}
+    return {"status": "Hello"}
 
-@router.get('/index',response_class=HTMLResponse)
-def index():
+
+@router.get("/index", response_class=HTMLResponse)
+def index() -> str:
     """
     Index Page
     """

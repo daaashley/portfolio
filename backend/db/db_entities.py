@@ -1,8 +1,7 @@
 import os
 import uuid
-from datetime import datetime
 
-from pony.orm import Database, Optional, PrimaryKey, Required, Set
+from pony.orm import Database, PrimaryKey, Required
 
 db = Database()
 db_uri = os.environ.get(
@@ -17,7 +16,7 @@ class User(db.Entity):
     name = Required(str)
 
 
-print("Binding to DB !!!: ",db_uri )
+print("Binding to DB !!!: ", db_uri)
 db.bind("postgres", db_uri)
 # set_sql_debug(True)
 db.generate_mapping(create_tables=True)

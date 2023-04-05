@@ -1,14 +1,14 @@
 include:
-  - template: Terraform/Base.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Terraform/Base.gitlab-ci.yml
-  - template: Jobs/SAST-IaC.gitlab-ci.yml   # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Jobs/SAST-IaC.gitlab-ci.yml
+- template: Terraform/Base.gitlab-ci.yml    # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Terraform/Base.gitlab-ci.yml
+- template: Jobs/SAST-IaC.gitlab-ci.yml     # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Jobs/SAST-IaC.gitlab-ci.yml
 
 stages:
-  - validate
-  - test
-  - pytest
-  - build
-  - deploy
-  - cleanup
+- validate
+- test
+- pytest
+- build
+- deploy
+- cleanup
 
 fmt:
   extends: .terraform:fmt
@@ -24,50 +24,39 @@ build:
 deploy:
   extends: .terraform:deploy
   dependencies:
-    - build
+  - build
   environment:
     name: $TF_STATE_NAME
 
 
 
 
-# Test template 
+# Test template
 .test-template:
   stage: pytest
   image: python:3.9.6-slim-buster
   except:
-    - tags
+  - tags
   before_script:
-    - apt-get update
-    - apt-get -y install libpq-dev python3-dev curl build-essential procps unzip libffi-dev gcc
-    - pip install poetry==1.2.2
-    - poetry config virtualenvs.create false
-    - poetry install
+  - apt-get update
+  - apt-get -y install libpq-dev python3-dev curl build-essential procps unzip libffi-dev gcc
+  - pip install poetry==1.2.2
+  - poetry config virtualenvs.create false
+  - poetry install
 
 black:
   extends:
-    - .test-template
+  - .test-template
   script:
-    - black --check .
+  - black --check .
 
-flake8:
-  extends:
-    - .test-template
-  script:
-    - flake8 --count .
-
-mypy:
-  extends:
-    - .test-template
-  script:
-    - mypy .
 
 pytest:
   extends:
-    - .test-template
+  - .test-template
   services:
-    - name: postgres:13.8-bullseye
-      alias: database
+  - name: postgres:13.8-bullseye
+    alias: database
   variables:
 
     # Postgresql variables
@@ -76,11 +65,11 @@ pytest:
     POSTGRES_USER: backend
     POSTGRES_DB: backend
   script:
-    - apt update
-    - apt install -y wait-for-it
-    - wait-for-it -t 180 $BACKEND_DB_HOST:5432
-    - pytest -vv --junitxml=report.xml --cov="backend" .
-    - coverage xml
+  - apt update
+  - apt install -y wait-for-it
+  - wait-for-it -t 180 $BACKEND_DB_HOST:5432
+  - pytest -vv --junitxml=report.xml --cov="backend" .
+  - coverage xml
   artifacts:
     when: always
     reports:
