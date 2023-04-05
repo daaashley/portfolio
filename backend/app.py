@@ -18,15 +18,14 @@ def get_app() -> FastAPI:
         openapi_url="/api/openapi.json",
         default_response_class=UJSONResponse,
     )
+    register_startup_event(app)
+    register_shutdown_event(app)
+    # Main router for the API.
+    app.include_router(router=api_router, prefix="/api")
+    return app
 
 
 app = get_app()
-# Adds startup and shutdown events.
-register_startup_event(app)
-register_shutdown_event(app)
-
-# Main router for the API.
-app.include_router(router=api_router, prefix="/api")
 
 
 if __name__ == "__main__":

@@ -6,17 +6,17 @@ from backend.db import dal
 router = APIRouter()
 
 
-@router.get("/test")
-def health_check() -> dict:
+@router.get("/health_check")
+async def health_check() -> dict:
     """
     Test of the project
     """
     dal.test_db()
-    return {"status": "Hello"}
+    return {"status_code": 200}
 
 
 @router.get("/index", response_class=HTMLResponse)
-def index() -> str:
+async def index() -> str:
     """
     Index Page
     """
