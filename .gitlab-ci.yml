@@ -85,5 +85,4 @@ pytest:
   artifacts:
     when: always
     reports:
-      cobertura: coverage.xml
       junit: report.xml
