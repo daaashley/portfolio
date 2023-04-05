@@ -4,7 +4,7 @@ import pytest
 from fastapi import FastAPI
 from httpx import AsyncClient
 
-from backend.application import get_app
+from backend.app import get_app
 
 
 @pytest.fixture(scope="session")
