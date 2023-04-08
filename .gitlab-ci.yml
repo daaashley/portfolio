@@ -25,25 +25,15 @@ Validate Terraform:
   rules:
   - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME =~ /^(main|production)$/ || $CI_COMMIT_BRANCH =~ /^(main|production)$/'
 
-# Build Template
-.build-template:
-  stage: Build and Push
-  image: python:3.9.6-slim-buster
-  before_script:
-  - pip install poetry==1.2.2
-  - poetry config virtualenvs.create false
-  - poetry install
 
 Build and Push:
-  extends:
-  - .build-template
   image: docker:23.0.2
   services:
   - docker:23.0.2-dind
   stage: Build and Push
   script:
-  - apk add python3
-  - pip install awscli
+  - apk add py3-pip
+  - pip3 install awscli
   - docker build --compress -t $ECR_REPO:$CI_COMMIT_SHORT_SHA .
   - $(aws ecr get-login --no-include-email --region us-east-1)
   - docker push $ECR_REPO:$CI_COMMIT_SHORT_SHA
