@@ -35,6 +35,8 @@ Validate Terraform:
   - poetry install
 
 Build and Push:
+  extends:
+  - .build-template
   image: docker:23.0.2
   services:
   - docker:23.0.2-dind
