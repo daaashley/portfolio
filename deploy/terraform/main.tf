@@ -1,21 +1,19 @@
 terraform {
-  required_providers {
-    aws = {
-      version = "~> 2.0"
-      source  = "hashicorp/aws"
-    }
+  backend "s3" {
+    bucket         = "personal-site-tf-bucket-daaashley"
+    key            = "personal-site.tfstate"
+    region         = "us-east-1"
+    encrypt        = true
+    dynamodb_table = "personal-site-api-devops-tf-state-lock"
   }
 }
 
 provider "aws" {
-  region     = var.region
-  access_key = var.access_key
-  secret_key = var.secret_key
-  token      = var.token
+  region  = "us-east-1"
+  version = "~> 4.0"
 }
 
-terraform {
-  backend "http" {
-    address = var.address
-  }
+# Local dynamic variables create from vars
+locals {
+  prefix = "${var.prefix}-${terraform.workspace}"
 }

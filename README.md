@@ -69,12 +69,12 @@ backend
 This application can be configured with environment variables.
 
 You can create `.env` file in the root directory and place all
-environment variables here. 
+environment variables here.
 
 All environment variabels should start with "BACKEND_" prefix.
 
 For example if you see in your "app/settings.py" a variable named like
-`random_parameter`, you should provide the "BACKEND_RANDOM_PARAMETER" 
+`random_parameter`, you should provide the "BACKEND_RANDOM_PARAMETER"
 variable to configure the value. This behaviour can be changed by overriding `env_prefix` property
 in `backend.settings.Settings.Config`.
 
@@ -146,4 +146,23 @@ docker run -p "5432:5432" -e "POSTGRES_PASSWORD=backend" -e "POSTGRES_USER=backe
 2. Run the pytest.
 ```bash
 pytest -vv .
+```
+
+## AWS Vault
+
+Download and setup AWS vault. AWS Vault will need an IAM user with the proper Administrator and MFA roles setup on AWS
+
+## Local Terraform
+
+We pass aws keys from AWS-VAULT into the docker container through docker-compose
+
+To init, fmt, validate, plan, apply terraform run the below in your terraform folder:
+
+```bash
+docker-compose -f docker-compose.yml run --rm terraform init
+docker-compose -f docker-compose.yml run --rm terraform fmt
+docker-compose -f docker-compose.yml run --rm terraform validate
+docker-compose -f docker-compose.yml run --rm terraform plan
+docker-compose -f docker-compose.yml run --rm terraform apply
+docker-compose -f docker-compose.yml run --rm terraform destroy
 ```
