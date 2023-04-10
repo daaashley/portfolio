@@ -29,7 +29,7 @@ Validate Terraform:
 Build and Push:
   image: docker:latest
   services:
-  - docker:latest
+  - docker:dind
   stage: Build and Push
   script:
   - apk add py3-pip
