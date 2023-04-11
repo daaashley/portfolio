@@ -61,3 +61,9 @@ resource "aws_eip" "public_a" {
     tomap({ Name = "${local.prefix}-public-a" })
   )
 }
+
+#####################################################
+# Private Subnets - Inbound/Outbound Internet Access #
+#####################################################
+
+# Excluded here! NAT Gateway costs money! You're kidding me!
