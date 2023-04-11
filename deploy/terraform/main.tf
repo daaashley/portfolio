@@ -23,3 +23,5 @@ locals {
     ManagedBy   = "Terraform"
   }
 }
+
+data "aws_region" "current" {}
