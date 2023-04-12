@@ -1,2 +1,2 @@
-db_username = "personalsite"
-db_password = "changeme"
+db_username = "postgres"
+db_password = "tacotuesday123"

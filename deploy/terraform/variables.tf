@@ -15,12 +15,17 @@ variable "db_username" {
   description = "Username for the RDS Postgres instance"
 }
 
+
 variable "db_password" {
   description = "Password for the RDS Postgres instance"
 }
 
 variable "bastion_key_name" {
   default = "personal-site-api-devops-bastion"
+}
+
+variable "db_host" {
+  description = "AWS RDS database URL"
 }
 
 variable "ecr_image_api" {
