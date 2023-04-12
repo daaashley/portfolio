@@ -4,7 +4,7 @@ services:
   api:
     build:
       context: .
-      dockerfile: ../Dockerfile
+      dockerfile: Dockerfile
     image: backend:${BACKEND_VERSION:-latest}
     restart: always
     env_file:
@@ -13,12 +13,11 @@ services:
       db:
         condition: service_healthy
     environment:
-      BACKEND_HOST: 0.0.0.0
-      BACKEND_DB_HOST: "db"
-      BACKEND_DB_PORT: 5432
-      BACKEND_DB_USER: "postgres"
-      BACKEND_DB_PASS: "postgres"
-      BACKEND_DB_BASE: "postgres"
+      POSTGRES_HOST: "db"
+      POSTGRES_DB: "postgres"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_PORT: "5432"
 
   db:
     image: postgres:13.8-bullseye
@@ -27,7 +26,7 @@ services:
       POSTGRES_PASSWORD: "postgres"
       POSTGRES_USER: "postgres"
       POSTGRES_DB: "postgres"
-      POSTGRES_HOST: 'localhost'
+      POSTGRES_HOST: 'postgres'
       POSTGRES_PORT: '5432'
     ports:
     - '5432:5432'

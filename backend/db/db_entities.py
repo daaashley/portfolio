@@ -6,7 +6,7 @@ from pony.orm import Database, PrimaryKey, Required
 db = Database()
 db_uri = os.environ.get(
     "DATABASE_URL",
-    "postgresql://postgres:postgres@postgres:5432/postgres",
+    "postgresql://postgres:postgres@db:5432/postgres",
 )
 
 

@@ -9,7 +9,7 @@
             {"name": "DB_NAME", "value": "${db_name}"},
             {"name": "DB_USER", "value": "${db_user}"},
             {"name": "DB_PASS", "value": "${db_pass}"},
-            {"name": "ALLOWED_HOSTS", "value": "${allowed_hosts}"},
+            {"name": "ALLOWED_HOSTS", "value": "${allowed_hosts}"}
         ],
         "logConfiguration": {
             "logDriver": "awslogs",
@@ -21,8 +21,8 @@
         },
         "portMappings": [
             {
-                "containerPort": 9000,
-                "hostPort": 9000
+                "containerPort": 8000,
+                "hostPort": 8000
             }
         ],
         "mountPoints": [

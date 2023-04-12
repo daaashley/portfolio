@@ -1,14 +1,16 @@
-resource "aws_subnet" "main" {
-  name              = "${local.prefix}-main"
-  id                = aws_subnet.public_a.id
-  availability_zone = "us-east-1a"
-
+resource "aws_db_subnet_group" "main" {
+  name = "${local.prefix}-main"
+  subnet_ids = [
+    aws_subnet.private_a.id,
+    aws_subnet.private_b.id,
+  ]
 
   tags = merge(
     local.common_tags,
     tomap({ Name = "${local.prefix}-main" })
   )
 }
+
 
 # Security group for inbound access to databse
 resource "aws_security_group" "rds" {
@@ -20,7 +22,14 @@ resource "aws_security_group" "rds" {
     protocol  = "tcp"
     from_port = 5432
     to_port   = 5432
+
+    security_groups = [
+      aws_security_group.bastion.id,
+      aws_security_group.ecs_service.id,
+    ]
   }
+
+
 
   tags = local.common_tags
 }
@@ -31,9 +40,9 @@ resource "aws_db_instance" "main" {
   allocated_storage       = 10
   storage_type            = "gp2"
   engine                  = "postgres"
-  engine_version          = "11.4"
-  instance_class          = "db.t2.micro"
-  db_subnet_group_name    = aws_subnet.main.name
+  engine_version          = "13.8"
+  instance_class          = "db.t3.micro"
+  db_subnet_group_name    = aws_db_subnet_group.main.name
   password                = var.db_password
   username                = var.db_username
   backup_retention_period = 0

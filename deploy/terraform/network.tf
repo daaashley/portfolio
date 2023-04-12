@@ -62,6 +62,17 @@ resource "aws_eip" "public_a" {
   )
 }
 
+resource "aws_nat_gateway" "public_a" {
+  allocation_id = aws_eip.public_a.id
+  subnet_id     = aws_subnet.public_a.id
+
+  tags = merge(
+    local.common_tags,
+    tomap({ Name = "${local.prefix}-public-a" })
+  )
+}
+
+
 #################
 #    Zone B     #
 #################
@@ -82,7 +93,7 @@ resource "aws_route_table" "public_b" {
 
   tags = merge(
     local.common_tags,
-     tomap({ Name = "${local.prefix}-public-b" })
+    tomap({ Name = "${local.prefix}-public-b" })
   )
 }
 
@@ -102,7 +113,7 @@ resource "aws_eip" "public_b" {
 
   tags = merge(
     local.common_tags,
-     tomap({ Name = "${local.prefix}-public-b" })
+    tomap({ Name = "${local.prefix}-public-b" })
   )
 }
 
@@ -112,7 +123,7 @@ resource "aws_nat_gateway" "public_b" {
 
   tags = merge(
     local.common_tags,
-     tomap({ Name = "${local.prefix}-public-b" })
+    tomap({ Name = "${local.prefix}-public-b" })
   )
 }
 
