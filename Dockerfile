@@ -26,4 +26,4 @@ COPY . /app/src/
 RUN poetry install
 
 #CMD ["/usr/local/bin/python", "-m", "backend"]
-CMD [ "uvicorn", "--host", "0.0.0.0", "--port", "5050", "backend.app:app"]
+CMD [ "uvicorn", "--host", "0.0.0.0", "--port", "8000", "backend.app:app"]
