@@ -5,7 +5,7 @@ image:
   - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 
 variables:
-  PYTEST_DB_URL: "A global variable"
+  PYTEST_DB_URL: "postgresql://postgres:postgres@db:5432/postgres"
 
 stages:
 - pytest
