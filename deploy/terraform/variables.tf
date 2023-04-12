@@ -18,3 +18,28 @@ variable "db_username" {
 variable "db_password" {
   description = "Password for the RDS Postgres instance"
 }
+
+variable "bastion_key_name" {
+  default = "personal-site-api-devops-bastion"
+}
+
+variable "ecr_image_api" {
+  description = "ECR image for API"
+  default     = "134895018143.dkr.ecr.us-east-1.amazonaws.com/personal-site"
+}
+
+
+variable "dns_zone_name" {
+  description = "Domain name"
+  default     = "vibeeng.com"
+}
+
+variable "subdomain" {
+  description = "Subdomain per environment"
+  type        = map(string)
+  default = {
+    production = "api"
+    staging    = "api.staging"
+    dev        = "api.dev"
+  }
+}

@@ -1,8 +1,8 @@
-resource "aws_db_subnet_group" "main" {
-  name = "${local.prefix}-main"
-  subnet_ids = [
-    aws_subnet.public_a.id
-  ]
+resource "aws_subnet" "main" {
+  name              = "${local.prefix}-main"
+  id                = aws_subnet.public_a.id
+  availability_zone = "us-east-1a"
+
 
   tags = merge(
     local.common_tags,
@@ -33,7 +33,7 @@ resource "aws_db_instance" "main" {
   engine                  = "postgres"
   engine_version          = "11.4"
   instance_class          = "db.t2.micro"
-  db_subnet_group_name    = aws_db_subnet_group.main.name
+  db_subnet_group_name    = aws_subnet.main.name
   password                = var.db_password
   username                = var.db_username
   backup_retention_period = 0
