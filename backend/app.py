@@ -20,12 +20,19 @@ def get_app() -> FastAPI:
     )
     register_startup_event(app)
     register_shutdown_event(app)
-    # Main router for the API.
+    # Main router for backend API
     app.include_router(router=api_router, prefix="/api")
     return app
 
 
 app = get_app()
+
+# @app.get("/index", tags=["Static"], include_in_schema=False)
+# async def index_route():
+#     return RedirectResponse(url="/index.html")
+
+
+# app.mount("/", StaticFiles(directory="backend/build", html=True), name="build")
 
 
 if __name__ == "__main__":
