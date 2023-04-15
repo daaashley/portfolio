@@ -41,19 +41,23 @@
 FROM python:3.9.6-slim-buster
 LABEL maintainer="David Ashley"
 RUN apt-get update && apt-get install -y \
-  gcc libpq-dev\
+  gcc libpq-dev curl\
   && rm -rf /var/lib/apt/lists/*
-
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+RUN apt-get install -y nodejs
+RUN npm install --global yarn
 
 RUN pip install poetry==1.2.2
 
 # Configuring poetry
 RUN poetry config virtualenvs.create false
 
-# Copying requirements of a project
-COPY pyproject.toml poetry.lock /app/src/
-WORKDIR /app/src
+# Build Client
+#RUN cd client/ && yarn && yarn build && cd ..
 
+# Copying requirements of a project
+COPY pyproject.toml poetry.lock /app/backend/
+WORKDIR /app/backend
 # Installing requirements
 RUN poetry install
 # Removing gcc
@@ -62,8 +66,16 @@ RUN apt-get purge -y \
   && rm -rf /var/lib/apt/lists/*
 
 # Copying actuall application
-COPY . /app/src/
-RUN poetry install
+COPY backend /app/backend/
+WORKDIR /app/client/
+COPY client/yarn.lock client/tsconfig.json client/package.json /app/client/
+RUN yarn
+COPY client /app/client/
+RUN yarn deploy
 
+COPY backend /app/backend
+COPY client/dist /app/backend/dist
+WORKDIR /app/
+RUN ls
 #CMD ["/usr/local/bin/python", "-m", "backend"]
-CMD [ "uvicorn", "--host", "0.0.0.0", "--port", "8000", "backend.app:app"]
+CMD [ "uvicorn", "backend.app:app", "--host", "0.0.0.0", "--port", "8000"  ]

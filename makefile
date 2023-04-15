@@ -10,7 +10,7 @@ PROJECT_NAME = 'personalsite'
 
 
 build-docker:
-	sudo docker-compose -f deploy/docker-compose.yml --project-directory . build
+	sudo docker-compose -f deploy/docker-compose.yml --project-directory . build --no-cache --build-arg CACHEBUST=$(date +%s)
 
 
 run-docker:
@@ -30,9 +30,8 @@ validate-terraform:
 
 
 plan-terraform:
-	sudo docker-compose -f deploy/docker-compose.yml run --rm terraform plan	
+	sudo docker-compose -f deploy/docker-compose.yml run --rm terraform plan
 
 
 apply-terraform:
 	sudo docker-compose -f deploy/docker-compose.yml run --rm terraform apply
-
