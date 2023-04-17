@@ -65,14 +65,13 @@ RUN apt-get purge -y \
   gcc \
   && rm -rf /var/lib/apt/lists/*
 
-# Copying actuall application
+# Copying actual application
 COPY backend /app/backend/
 WORKDIR /app/client/
 COPY client /app/client/
 RUN yarn
 RUN yarn deploy
 
-COPY client/dist /app/backend/dist
 WORKDIR /app/
 RUN ls
 #CMD ["/usr/local/bin/python", "-m", "backend"]
