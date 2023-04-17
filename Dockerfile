@@ -68,12 +68,10 @@ RUN apt-get purge -y \
 # Copying actuall application
 COPY backend /app/backend/
 WORKDIR /app/client/
-COPY client/yarn.lock client/tsconfig.json client/package.json /app/client/
-RUN yarn
 COPY client /app/client/
+RUN yarn
 RUN yarn deploy
 
-COPY backend /app/backend
 COPY client/dist /app/backend/dist
 WORKDIR /app/
 RUN ls
