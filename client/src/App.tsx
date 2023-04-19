@@ -54,14 +54,14 @@ function App() {
             <Typography
               variant="h4"
               component="div"
-              sx={{ color: "#ccd6f6", maxWidth: 600 }}
+              sx={{ color: "#ccd6f6", maxWidth: 700 }}
             >
               Linear Optimization with Gurobi Solver: A production
               schedule case study
             </Typography>
             <div style={{ marginTop: 12, marginBottom: 12 }}>
               <img
-                style={{ height: 300, width: "100%", maxWidth: 600 }}
+                style={{ height: 300, width: "100%", maxWidth: 700 }}
                 src={"code.jpeg"}
               />
             </div>
@@ -117,7 +117,8 @@ function App() {
             display: "flex",
             justifyContent: "center",
             flexDirection: "column",
-            borderLeft: "1px solid white",
+            borderLeft: "1px solid rgba(204,214,246, 0.3)",
+
             paddingLeft: 42,
           }}
         >
