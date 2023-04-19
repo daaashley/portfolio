@@ -1,7 +1,8 @@
 export interface IPost {
     id?: string;
     title: string;
-    date: Date;
+    author: string;
+    date?: Date;
     imageUrl: string;
     body: string;
 }

@@ -743,6 +743,14 @@ python-versions = ">=3.7"
 plugins = ["importlib-metadata"]
 
 [[package]]
+name = "pyhumps"
+version = "3.8.0"
+description = "🐫  Convert strings (and dictionary keys) between snake case, camel case and pascal case in Python. Inspired by Humps for Node"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "pytest"
 version = "7.3.0"
 description = "pytest: simple powerful testing with Python"
@@ -1049,7 +1057,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "56920129273dc53b6105146ef378e0f2f228e69c2a87464ed184c3b0f4cd6060"
+content-hash = "f0a858941c1a50e234af3a49492123c2d48569c1ed8ef9e17a8b671ad0c13c4a"
 
 [metadata.files]
 anyio = []
@@ -1115,6 +1123,7 @@ pydantic = []
 pydocstyle = []
 pyflakes = []
 pygments = []
+pyhumps = []
 pytest = []
 pytest-cov = []
 pytest-env = []

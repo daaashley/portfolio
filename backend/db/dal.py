@@ -8,3 +8,15 @@ def test_db():
     print("Testing DB")
     User(name="David")
     commit()
+
+
+####################
+#      Posts       #
+####################
+
+
+@db_session(immediate=True)
+def get_posts() -> list:
+    return list(
+        select(post for post in Posts).order_by("post.date"),
+    )

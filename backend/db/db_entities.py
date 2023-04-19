@@ -58,4 +58,14 @@ class User(db.postgres.Entity):
     name = Required(str)
 
 
+class Post(db.postgres.Entity):
+    _table_ = "post"
+    id = PrimaryKey(uuid.UUID, default=uuid.uuid4, auto=True)
+    title = Required(str)
+    author = Required(str)
+    date = Required(datetime, default=datetime.utcnow, volatile=True)
+    imageUrl = Required(str)
+    body = Required(str)
+
+
 db.connect()

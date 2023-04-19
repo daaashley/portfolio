@@ -33,7 +33,7 @@ export const Post = ({ isFeed }: PostProps) => {
                     component="div"
                     sx={{ color: "#ccd6f6", maxWidth: 700, fontSize: 18 }}
                 >
-                    {Date(Date.now())}
+                    {Date()}
                 </Typography>
                 <div style={{ marginTop: 12, marginBottom: 12 }}>
                     <img
