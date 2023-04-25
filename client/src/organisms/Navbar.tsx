@@ -1,4 +1,5 @@
 import { AppBar, Button, Toolbar, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 
 
@@ -32,7 +33,7 @@ export const Navbar = () => {
                         </Typography>
                     </div>
                 </Typography>
-                <Button style={{ color: "#64ffda" }}>Latest</Button>
+                <Link to={'/create'}><Button style={{ color: "#64ffda" }}>Latest</Button></Link>
                 <Button style={{ color: "#64ffda" }}>Tutorials</Button>
                 <Button style={{ color: "#64ffda" }}>Posts</Button>
                 <Button style={{ color: "#64ffda" }}>About</Button>

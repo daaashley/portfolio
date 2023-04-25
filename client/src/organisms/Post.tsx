@@ -1,12 +1,14 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { Body } from "../molecules/Body";
 import { Title } from "../atoms/Title";
+import { Link } from "react-router-dom";
 
 type PostProps = {
     isFeed: boolean;
+    post: any;
 };
 
-export const Post = ({ isFeed }: PostProps) => {
+export const Post = ({ isFeed, post }: PostProps) => {
     return (
         <div
             style={{
@@ -41,7 +43,10 @@ export const Post = ({ isFeed }: PostProps) => {
                         src={"code.jpeg"}
                     />
                 </div>
-                <Body isFeed={isFeed} />
+                <Body isFeed={isFeed} body={post.body} id={post.id} />
+                <Link to={`/posts/${post.id}/update`} state={{ post: post }}>
+                    <Button>Edit Post</Button>
+                </Link>
             </Box>
         </div>
     );

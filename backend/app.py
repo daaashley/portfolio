@@ -37,12 +37,13 @@ app.mount("/", StaticFiles(directory="backend/dist", html=True), name="build")
 
 
 if __name__ == "__main__":
+
     uvicorn.run(
         app,
         workers=settings.workers_count,
         host=settings.host,
-        port=settings.port,
-        reload=settings.reload,
+        port=8000,
+        reload=False,
         log_level=settings.log_level.value.lower(),
         factory=True,
     )

@@ -15,7 +15,7 @@ export const Feed = ({ isSinglePost }: FeedProps) => {
         } else {
             const { data, error, errorMessage } = await getPosts()
             if (!error) {
-                setPosts(data)
+                setPosts(data.posts)
             }
         }
     }
@@ -23,7 +23,7 @@ export const Feed = ({ isSinglePost }: FeedProps) => {
     useEffect(() => {
         loadPosts()
     }, [])
-
+    console.log('posts: ', posts)
     return (
         <div
             style={{
@@ -33,8 +33,8 @@ export const Feed = ({ isSinglePost }: FeedProps) => {
                 justifyContent: "center",
             }}
         >{
-                posts.map((index) => {
-                    return <Post isFeed={!isSinglePost} key={`post-${index}`} />
+                posts.map((post, index) => {
+                    return <Post isFeed={!isSinglePost} post={post} key={`post-${index}`} />
                 })}
         </div>
     )

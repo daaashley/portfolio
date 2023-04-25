@@ -8,16 +8,26 @@ import "./index.css";
 import App from './App'
 import './index.css'
 import { PostPage } from './pages/PostPage';
+import { CreatePage } from './pages/CreatePage';
+import { UpdatePage } from './pages/UpdatePage';
 
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/index.html",
     element: <App />,
   },
   {
-    path: `/post/:id`,
+    path: "/posts/:id",
     element: <PostPage />
+  },
+  {
+    path: "/create",
+    element: <CreatePage />
+  },
+  {
+    path: "/posts/:id/update",
+    element: <UpdatePage />
   }
 ]);
 

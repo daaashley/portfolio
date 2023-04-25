@@ -1,4 +1,5 @@
 import { Typography } from "@mui/material"
+import { Link } from "react-router-dom"
 
 
 
@@ -38,24 +39,27 @@ on the page.`
 
 type BodyProps = {
     isFeed: boolean
+    body: string
+    id: string
 }
 
-export const Body = ({ isFeed }: BodyProps) => {
+export const Body = ({ isFeed, body, id }: BodyProps) => {
 
     return (
         <div>
-            <Typography
-                variant="body1"
-                sx={{
-                    maxWidth: 700,
-                    color: "#ccd6f6",
-                    textAlign: "left",
-                    fontSize: 20,
-                }}
-                gutterBottom
-            >
-                {isFeed ? example.substring(0, 500) + "... See more" : example}
-            </Typography>
+            <Link to={`/posts/${id}`}>
+                <Typography
+                    variant="body1"
+                    sx={{
+                        maxWidth: 700,
+                        color: "#ccd6f6",
+                        textAlign: "left",
+                        fontSize: 20,
+                    }}
+                    gutterBottom
+                >
+                    {isFeed ? body.substring(0, 500) + "... See more" : body}
+                </Typography></Link>
         </div>
     )
 }

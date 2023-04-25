@@ -40,6 +40,8 @@
 
 FROM python:3.9.6-slim-buster
 LABEL maintainer="David Ashley"
+
+ENTRYPOINT []
 RUN apt-get update && apt-get install -y \
   gcc libpq-dev curl\
   && rm -rf /var/lib/apt/lists/*
@@ -60,6 +62,8 @@ COPY pyproject.toml poetry.lock /app/backend/
 WORKDIR /app/backend
 # Installing requirements
 RUN poetry install
+# Run Migrations
+CMD ["./entrypoint.sh"]
 # Removing gcc
 RUN apt-get purge -y \
   gcc \
@@ -75,4 +79,4 @@ RUN yarn deploy
 WORKDIR /app/
 RUN ls
 #CMD ["/usr/local/bin/python", "-m", "backend"]
-CMD [ "uvicorn", "backend.app:app", "--host", "0.0.0.0", "--port", "8000"  ]
+CMD [ "uvicorn", "backend.app:app", "--host", "0.0.0.0", "--port", "8000", "--reload"  ]

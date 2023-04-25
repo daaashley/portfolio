@@ -5,8 +5,25 @@ PROJECT_NAME = 'personalsite'
 
 
 
+clean-db:
+	docker stack rm postgres
 
+init-db:
+	@docker pull postgres; \
+	docker swarm init; \
+	docker stack deploy -c db_stack.yaml postgres;
 
+migrate-db:
+	@set -e; \
+	echo $(DATABASE_URL); \
+	DATABASE_URL=$(DATABASE_URL) poetry run yoyo apply -b -vvv; \
+
+# set -e Exit on error
+migration:
+	@set -e; \
+	echo $(DATABASE_URL); \
+	echo $(Migration_Name); \
+	DATABASE_URL=$(DATABASE_URL) poetry run yoyo new --sql -m "$$Migration_Name";
 
 
 build-docker:

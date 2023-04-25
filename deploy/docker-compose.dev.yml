@@ -1,4 +1,4 @@
-version: '3.9'
+version: "3.9"
 
 services:
   api:
@@ -11,3 +11,4 @@ services:
     environment:
       # Enables autoreload.
       BACKEND_RELOAD: "True"
+      DEV_MODE: 1

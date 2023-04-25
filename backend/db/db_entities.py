@@ -63,8 +63,8 @@ class Post(db.postgres.Entity):
     id = PrimaryKey(uuid.UUID, default=uuid.uuid4, auto=True)
     title = Required(str)
     author = Required(str)
-    date = Required(datetime, default=datetime.utcnow, volatile=True)
-    imageUrl = Required(str)
+    date = Required(int, size=64)
+    image_url = Required(str)
     body = Required(str)
 
 
