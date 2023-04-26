@@ -11,28 +11,30 @@ export const Navbar = () => {
             position="static"
         >
             <Toolbar>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                    <div>
-                        <Typography
-                            variant="h6"
-                            component="div"
-                            sx={{ flexGrow: 1, color: "#64ffda" }}
-                        >
-                            viibeeng
-                        </Typography>
-                        <Typography
-                            variant="h6"
-                            component="div"
-                            sx={{
-                                position: "absolute",
-                                color: "#8892b0",
-                                fontSize: 12,
-                            }}
-                        >
-                            by david ashley
-                        </Typography>
-                    </div>
-                </Typography>
+                <Link to={"/index.html"}>
+                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                        <div>
+                            <Typography
+                                variant="h6"
+                                component="div"
+                                sx={{ flexGrow: 1, color: "#64ffda" }}
+                            >
+                                viibeeng
+                            </Typography>
+                            <Typography
+                                variant="h6"
+                                component="div"
+                                sx={{
+                                    position: "absolute",
+                                    color: "#8892b0",
+                                    fontSize: 12,
+                                }}
+                            >
+                                by david ashley
+                            </Typography>
+                        </div>
+                    </Typography>
+                </Link>
                 <Link to={'/create'}><Button style={{ color: "#64ffda" }}>Latest</Button></Link>
                 <Button style={{ color: "#64ffda" }}>Tutorials</Button>
                 <Button style={{ color: "#64ffda" }}>Posts</Button>

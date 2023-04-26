@@ -44,7 +44,7 @@ export const Post = ({ isFeed, post }: PostProps) => {
                         src={"code.jpeg"}
                     />
                 </div>
-                <Link to={`/posts/${post.id}`} state={{ post: post }}>
+                <Link to={`/posts/${post.id}`} state={{ post: post }} style={{ textDecoration: 'none' }}>
                     <Body isFeed={isFeed} body={post.body} id={post.id} />
                 </Link>
                 <Link to={`/posts/${post.id}/update`} state={{ post: post }}>
