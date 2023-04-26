@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react"
 import { Post } from "../organisms/Post"
 import { getPosts } from "../api"
+import { IPost } from "../types"
 
 type FeedProps = {
     isSinglePost: boolean
+    post?: IPost
 }
 
-export const Feed = ({ isSinglePost }: FeedProps) => {
+export const Feed = ({ isSinglePost, post }: FeedProps) => {
     const [posts, setPosts] = useState([])
 
     const loadPosts = async () => {
         if (isSinglePost) {
+            setPosts([post])
             // single post call
         } else {
             const { data, error, errorMessage } = await getPosts()

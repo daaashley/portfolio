@@ -48,3 +48,21 @@ def create_post(post: PostBody) -> dict:
     except Exception as e:
         print(e)
         raise Exception(e)
+
+
+@db_session(immediate=True)
+def update_post(uuid: UUID, post: PostBody) -> dict:
+    post_obj = Post[uuid]
+    post_obj.title = post.title
+    post_obj.author = post.author
+    post_obj.date = post.date
+    post_obj.image_url = post.image_url
+    post_obj.body = post.body
+    commit()
+    return post_obj.to_dict()
+
+
+@db_session(immediate=True)
+def delete_post(uuid: UUID):
+    Post[uuid].delete()
+    return

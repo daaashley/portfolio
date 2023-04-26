@@ -41,8 +41,36 @@ async def get_posts():
     summary="Create Post",
     tags=["Posts"],
 )
-async def create_posts(post: PostBody):
+async def create_post(post: PostBody):
     try:
         return {"posts": [dal.create_post(post)]}
     except:
         raise HTTPException(400, detail="Something went wrong when creating the post.")
+
+
+@router.put(
+    "/posts/{uuid}/update",
+    response_model=PostsResponse,
+    response_model_exclude_unset=True,
+    summary="Update Post",
+    tags=["Posts"],
+)
+async def update_post(uuid: UUID, post: PostBody):
+    try:
+        return {"posts": [dal.update_post(uuid, post)]}
+    except:
+        raise HTTPException(400, detail="Something went wrong when updating the post.")
+
+
+@router.delete(
+    "/posts/{uuid}/delete",
+    response_model_exclude_unset=True,
+    summary="Delete Post",
+    tags=["Posts"],
+)
+async def update_post(uuid: UUID):
+    try:
+        dal.delete_post(uuid)
+        return {"posts": []}
+    except:
+        raise HTTPException(400, detail="Something went wrong when updating the post.")

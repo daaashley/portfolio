@@ -47,19 +47,19 @@ export const Body = ({ isFeed, body, id }: BodyProps) => {
 
     return (
         <div>
-            <Link to={`/posts/${id}`}>
-                <Typography
-                    variant="body1"
-                    sx={{
-                        maxWidth: 700,
-                        color: "#ccd6f6",
-                        textAlign: "left",
-                        fontSize: 20,
-                    }}
-                    gutterBottom
-                >
-                    {isFeed ? body.substring(0, 500) + "... See more" : body}
-                </Typography></Link>
+
+            <Typography
+                variant="body1"
+                sx={{
+                    maxWidth: 700,
+                    color: "#ccd6f6",
+                    textAlign: "left",
+                    fontSize: 20,
+                }}
+                gutterBottom
+            >
+                {isFeed ? body.substring(0, 500) + "... See more" : body}
+            </Typography>
         </div>
     )
 }

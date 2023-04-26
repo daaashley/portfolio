@@ -19,14 +19,13 @@ export const UpdatePage = (props: any) => {
 
     const update = async () => {
         const postBody: Partial<IPost> = {
-            id: id,
             title: title,
             author: author,
             date: date,
             imageUrl: image,
             body: body
         }
-        const { data, error, errorMessage } = await updatePost(postBody)
+        const { data, error, errorMessage } = await updatePost(id, postBody)
         if (error) {
             console.log(errorMessage)
         } else {

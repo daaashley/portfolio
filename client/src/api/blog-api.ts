@@ -20,10 +20,14 @@ export const createPost = async (post: Partial<IPost>, retry: boolean = false) =
     return request("POST", `/api/posts`, body, retry);
 };
 
-export const updatePost = async (post: Partial<IPost>, retry: boolean = false) => {
-    return request("PUT", `/api/posts/${post.id}`, post, retry);
+export const updatePost = async (
+    uuid: string,
+    post: Partial<IPost>,
+    retry: boolean = false
+) => {
+    return request("PUT", `/api/posts/${uuid}/update`, post, retry);
 };
 
 export const deletePost = async (id: string) => {
-    return request("DELETE", `/api/posts/${id}`, {});
+    return request("DELETE", `/api/posts/${id}/delete`, {});
 };

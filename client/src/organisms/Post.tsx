@@ -9,6 +9,7 @@ type PostProps = {
 };
 
 export const Post = ({ isFeed, post }: PostProps) => {
+    const date = new Date(post.date).toString()
     return (
         <div
             style={{
@@ -29,13 +30,13 @@ export const Post = ({ isFeed, post }: PostProps) => {
                     display: "flex",
                 }}
             >
-                <Title />
+                <Title title={post.title} />
                 <Typography
                     variant="h6"
                     component="div"
                     sx={{ color: "#ccd6f6", maxWidth: 700, fontSize: 18 }}
                 >
-                    {Date()}
+                    {date}
                 </Typography>
                 <div style={{ marginTop: 12, marginBottom: 12 }}>
                     <img
@@ -43,7 +44,9 @@ export const Post = ({ isFeed, post }: PostProps) => {
                         src={"code.jpeg"}
                     />
                 </div>
-                <Body isFeed={isFeed} body={post.body} id={post.id} />
+                <Link to={`/posts/${post.id}`} state={{ post: post }}>
+                    <Body isFeed={isFeed} body={post.body} id={post.id} />
+                </Link>
                 <Link to={`/posts/${post.id}/update`} state={{ post: post }}>
                     <Button>Edit Post</Button>
                 </Link>
