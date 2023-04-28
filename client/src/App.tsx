@@ -1,13 +1,14 @@
-import "./App.css";
 import { Feed } from "./templates/Feed";
 import { Sidebar } from "./templates/Sidebar";
 import { Navbar } from "./organisms/Navbar";
+import "./App.css";
 
 function App() {
 
   return (
     <div>
       <div
+
         style={{
           maxWidth: 1200,
           display: "flex",
@@ -17,8 +18,10 @@ function App() {
       >
         <Navbar />
       </div>
-      <div style={{ display: 'flex', flexDirection: 'row', maxWidth: 940, margin: "0 auto", marginTop: 50 }}>
+      <div className={"Container"}>
+
         <Feed isSinglePost={false} />
+
         <Sidebar />
       </div>
     </div>

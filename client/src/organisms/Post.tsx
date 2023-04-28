@@ -2,7 +2,7 @@ import { Box, Button, Typography } from "@mui/material";
 import { Body } from "../molecules/Body";
 import { Title } from "../atoms/Title";
 import { Link } from "react-router-dom";
-
+import "../App.css"
 type PostProps = {
     isFeed: boolean;
     post: any;
@@ -17,9 +17,9 @@ export const Post = ({ isFeed, post }: PostProps) => {
                 display: "flex",
                 justifyContent: "center",
                 flexDirection: "column",
-                paddingRight: 42,
                 marginBottom: 42,
             }}
+            className={"Post"}
         >
             <Box
                 sx={{

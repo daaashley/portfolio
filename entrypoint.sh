@@ -1,7 +1,3 @@
 #!/bin/bash
-set -euo pipefail
 
-if [ -v 1 ]; then
-    echo 'Running migration!!!!!'
-    poetry run yoyo apply -b -vvv
-fi
+uvicorn backend.app:app --host 0.0.0.0 --port 8000 --reload

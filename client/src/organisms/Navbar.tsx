@@ -11,8 +11,9 @@ export const Navbar = () => {
             position="static"
         >
             <Toolbar>
-                <Link to={"/index.html"}>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+
+                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                    <Link to={"/index.html"}>
                         <div>
                             <Typography
                                 variant="h6"
@@ -32,9 +33,9 @@ export const Navbar = () => {
                             >
                                 by david ashley
                             </Typography>
-                        </div>
-                    </Typography>
-                </Link>
+                        </div> </Link>
+                </Typography>
+
                 <Link to={'/create'}><Button style={{ color: "#64ffda" }}>Latest</Button></Link>
                 <Button style={{ color: "#64ffda" }}>Tutorials</Button>
                 <Button style={{ color: "#64ffda" }}>Posts</Button>

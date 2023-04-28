@@ -55,6 +55,7 @@ export const Body = ({ isFeed, body, id }: BodyProps) => {
                     color: "#ccd6f6",
                     textAlign: "left",
                     fontSize: 20,
+                    textDecoration: 'none'
                 }}
                 gutterBottom
             >

@@ -6,6 +6,7 @@ import { Sidebar } from "../templates/Sidebar";
 import { useState } from "react";
 import { createPost } from "../api";
 import { IPost } from "../types";
+import { useNavigate } from "react-router-dom";
 
 
 export const CreatePage = () => {
@@ -16,6 +17,8 @@ export const CreatePage = () => {
     const [body, setBody] = useState('')
 
     const submitPost = async () => {
+        const navigate = useNavigate()
+
         const postBody: Partial<IPost> = {
             title: title,
             author: author,
@@ -27,10 +30,7 @@ export const CreatePage = () => {
         if (error) {
             console.log(errorMessage)
         } else {
-            setTitle('')
-            setAuthor('')
-            setImage('')
-            setBody('')
+            navigate("/index.html")
         }
 
     }

@@ -1,14 +1,8 @@
 import { Typography } from "@mui/material"
 
-
-
-
-
-
 interface TitleProps {
     title: string
 }
-
 
 export const Title = ({ title }: TitleProps) => {
     return (

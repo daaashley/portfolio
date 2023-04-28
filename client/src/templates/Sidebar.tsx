@@ -32,24 +32,7 @@ export const Sidebar = () => {
                 >
                     viibeeng
                 </Typography>
-                <Typography
-                    variant="h6"
-                    sx={{ color: "#ccd6f6" }}
-                >
-                    February 2023
-                </Typography>
-                <Typography
-                    variant="h6"
-                    sx={{ color: "#ccd6f6" }}
-                >
-                    March 2023
-                </Typography>
-                <Typography
-                    variant="h6"
-                    sx={{ color: "#ccd6f6" }}
-                >
-                    April 2023
-                </Typography>
+
             </Box>
         </div>
     )

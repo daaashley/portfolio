@@ -4,12 +4,14 @@ import { Navbar } from "../organisms/Navbar";
 import { useState } from "react";
 import { createPost, deletePost, updatePost } from "../api";
 import { IPost } from "../types";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
 export const UpdatePage = (props: any) => {
+    const navigate = useNavigate()
     const location = useLocation()
     const { post } = location.state
+
     const [id, setId] = useState(post.id)
     const [title, setTitle] = useState(post.title)
     const [author, setAuthor] = useState(post.author)
@@ -29,7 +31,7 @@ export const UpdatePage = (props: any) => {
         if (error) {
             console.log(errorMessage)
         } else {
-            console.log('success')
+            navigate("/index.html")
         }
 
     }
