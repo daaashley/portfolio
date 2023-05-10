@@ -3,6 +3,7 @@ import os
 import uuid
 
 from pony.orm import Database, PrimaryKey, Required
+from yoyo import get_backend, read_migrations
 
 log_format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 logging.basicConfig(format=log_format, level=logging.DEBUG)
@@ -11,6 +12,9 @@ DATABASE_CONNECTION_STRING = os.environ.get(
     "DATABASE_URL",
     "postgresql://postgres:postgres@db:5432/postgres",
 )
+
+backend = get_backend(DATABASE_CONNECTION_STRING)
+migrations = read_migrations("../migrations")
 
 # Database Singleton
 class DatabaseConnection:
@@ -41,11 +45,25 @@ class DatabaseConnection:
         else:
             logging.debug("Already connected to postgres instance.")
 
+    def isConnected(self):
+        return self.connected
+
+    def run_migrations(self):
+        if self.postgres:
+            with backend.lock():
+                # Apply any outstanding migrations
+                backend.apply_migrations(backend.to_apply(migrations))
+
+                # Rollback all migrations
+                # backend.rollback_migrations(backend.to_rollback(migrations))
+
 
 # We create the database instance, then create db schemas for instance,
 # then bind/connect once schemas have been attached
 db = DatabaseConnection.getDatabaseConnection()
 db.create()
+db.run_migrations()
+
 
 ###################
 # Database Schema #
@@ -55,7 +73,8 @@ db.create()
 class User(db.postgres.Entity):
     _table_ = "user"
     id = PrimaryKey(uuid.UUID, default=uuid.uuid4, auto=True)
-    name = Required(str)
+    username = Required(str)
+    hashed_password = Required(str)
 
 
 class Post(db.postgres.Entity):

@@ -1,24 +1,17 @@
 from datetime import datetime, timedelta
+from typing import Annotated
 
-from fastapi import HTTPException
+from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from passlib.context import CryptContext
+from pydantic import BaseModel
 
-SECRET_KEY = "acda13a6c967ff5b83576ca6c23c1dbbf8796a1ad6cbcd9693625a8339d2f8aa"
+from backend.db import dal
+
+SECRET_KEY = "temp"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
-
-
-fake_db = {
-    "david": {
-        "username": "daaashley",
-        "full_name": "David Ashley",
-        "email": "david-ashley@hotmail.com",
-        "hashed_password": "",
-        "disabled": False,
-    },
-}
 
 
 class Token(BaseModel):
@@ -32,13 +25,7 @@ class TokenData(BaseModel):
 
 class User(BaseModel):
     username: str
-    email: str or None = None
-    full_name: str or None = None
     disabled: bool or None = None
-
-
-class UserInDB(User):
-    hashed_password: str
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -50,22 +37,18 @@ def verify_password(plain_password, hashed_password):
 
 
 def get_password_hash(password):
-    return pwd_context.hash(password)
+    pwd = pwd_context.hash(password)
+    print(pwd)
+    return pwd
 
 
-def get_user(db, username: str):
-    if username in db:
-        user_data = db[username]
-        return UserInDB(**user_data)
-
-
-def authenticate_user(db, username: str, password: str):
-    user = get_user(db, username)
+def authenticate_user(username: str, password: str):
+    user = dal.get_user(username)
     if not user:
         return False
-    if not verify_password(password, user.hashed_password):
+    if not verify_password(password, user[0].hashed_password):
         return False
-    return user
+    return user[0]
 
 
 def create_access_token(data: dict, expires_delta: timedelta or None = None):
@@ -80,7 +63,7 @@ def create_access_token(data: dict, expires_delta: timedelta or None = None):
     return encoded_jwt
 
 
-async def get_current_user(token: str = Depends(oauth2_scheme)):
+async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
     credential_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -96,14 +79,16 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
     except JWTError:
         raise credential_exception
 
-    user = get_user(db, username=token_data.username)
+    user = dal.get_user(token_data.username)
     if user is None:
         raise credential_exception
 
     return user
 
 
-async def get_current_active_user(current_user: UserInDB = Depends(get_current_user)):
+async def get_current_active_user(
+    current_user: Annotated[User, Depends(get_current_user)],
+):
     if current_user.disabled:
         raise HTTPException(status_code=400, detail="Inactive user.")
     return current_user

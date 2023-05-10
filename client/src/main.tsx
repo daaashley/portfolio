@@ -10,6 +10,7 @@ import './index.css'
 import { PostPage } from './pages/PostPage';
 import { CreatePage } from './pages/CreatePage';
 import { UpdatePage } from './pages/UpdatePage';
+import { LoginPage } from './pages/LoginPage';
 
 
 const router = createBrowserRouter([
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
   {
     path: "/posts/:id/update",
     element: <UpdatePage />
+  },
+  {
+    path: "/user/login",
+    element: <LoginPage />
   }
 ]);
 

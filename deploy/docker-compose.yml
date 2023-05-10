@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     image: backend:${BACKEND_VERSION:-latest}
-    restart: on-failure
+    restart: always
     env_file:
     - .env
     depends_on:
@@ -39,21 +39,14 @@ services:
       timeout: 3s
       retries: 40
 
-  # migrator:
-  #   image: backend:${BACKEND_VERSION:-latest}
+  # migration:
+  #   image: api:latest
   #   restart: "no"
-  #   environment:
-  #     BACKEND_DB_HOST: localhost
-  #     BACKEND_DB_PORT: 5432
-  #     BACKEND_DB_USER: postgres
-  #     BACKEND_DB_PASS: postgres
-  #     BACKEND_DB_BASE: postgres
+  #   links:
+  #     - db
   #   depends_on:
+  #     api:
+  #       condition: service_healthy
   #     db:
   #       condition: service_healthy
-
-
-
-volumes:
-  backend-db-data:
-    name: backend-db-data
+  #   command: ["poetry", "run", "yoyo", "apply", "-b", "-vvv"]

@@ -57,8 +57,8 @@ RUN poetry config virtualenvs.create false
 #RUN cd client/ && yarn && yarn build && cd ..
 
 # Copying requirements of a project
-COPY pyproject.toml poetry.lock /app/backend/
-WORKDIR /app/backend
+COPY pyproject.toml poetry.lock /app/
+WORKDIR /app/
 # Installing requirements
 RUN poetry install
 # Run Migrations
@@ -75,7 +75,8 @@ COPY client /app/client/
 RUN yarn && yarn deploy
 
 WORKDIR /app/
-COPY entrypoint.sh /app/
+COPY migrations /app/migrations
+COPY yoyo.ini entrypoint.sh /app/
 RUN ls
 #CMD ["/usr/local/bin/python", "-m", "backend"]
 ENTRYPOINT [ "bash", "entrypoint.sh" ]

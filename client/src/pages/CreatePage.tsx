@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 
 export const CreatePage = () => {
+    const navigate = useNavigate()
     const [title, setTitle] = useState('')
     const [author, setAuthor] = useState('')
     const [date, setDate] = useState(Date.now())
@@ -17,7 +18,7 @@ export const CreatePage = () => {
     const [body, setBody] = useState('')
 
     const submitPost = async () => {
-        const navigate = useNavigate()
+
 
         const postBody: Partial<IPost> = {
             title: title,
@@ -87,7 +88,6 @@ export const CreatePage = () => {
                             rows={1}
                             value={date}
                             onChange={(e) => setDate(parseInt(e.target.value))}
-                            defaultValue="unix time stamp"
                         />
                         <TextField
                             value={image}

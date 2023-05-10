@@ -66,3 +66,12 @@ def update_post(uuid: UUID, post: PostBody) -> dict:
 def delete_post(uuid: UUID):
     Post[uuid].delete()
     return
+
+
+@db_session(immediate=True)
+def get_user(username: str):
+    users = list(select(user for user in User if user.username == username))
+    if len(users) > 0:
+        return users
+    else:
+        return None

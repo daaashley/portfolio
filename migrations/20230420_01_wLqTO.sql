@@ -9,3 +9,9 @@ create table if not exists "post" (
   "image_url" TEXT NOT NULL,
   "body" TEXT NOT NULL
 );
+
+create table if not exists "user" (
+  "id" UUID PRIMARY KEY,
+  "username" TEXT UNIQUE NOT NULL,
+  "hashed_password" TEXT NOT NULL
+);

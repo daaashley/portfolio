@@ -37,7 +37,7 @@ export const Navbar = () => {
                 </Typography>
 
                 <Link to={'/create'}><Button style={{ color: "#64ffda" }}>Latest</Button></Link>
-                <Button style={{ color: "#64ffda" }}>Tutorials</Button>
+                <Link to={"/user/login"}> <Button style={{ color: "#64ffda" }}>Tutorials</Button></Link>
                 <Button style={{ color: "#64ffda" }}>Posts</Button>
                 <Button style={{ color: "#64ffda" }}>About</Button>
             </Toolbar>
