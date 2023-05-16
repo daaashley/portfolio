@@ -71,7 +71,7 @@ async def get_current_user(token: str):
     )
     print("running")
     try:
-        print("secret: ", SECRET_KEY)
+        print("secret:", SECRET_KEY)
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         username: str = payload.get("sub")
         print("username: ", username)
