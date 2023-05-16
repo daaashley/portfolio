@@ -1,12 +1,16 @@
+from typing import Annotated
 from uuid import UUID
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
+from fastapi.security import OAuth2PasswordBearer
 
 from backend.db import dal
 from backend.response_models import PostsResponse
 from backend.validator import PostBody
 
 router = APIRouter()
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 
 @router.get(
@@ -41,7 +45,7 @@ async def get_posts():
     summary="Create Post",
     tags=["Posts"],
 )
-async def create_post(post: PostBody):
+async def create_post(post: PostBody, token: Annotated[str, Depends(oauth2_scheme)]):
     try:
         return {"posts": [dal.create_post(post)]}
     except:

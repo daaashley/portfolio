@@ -17,6 +17,8 @@ export const LoginPage = () => {
             window.alert("Error logging in.")
             console.log(errorMessage)
         } else {
+            localStorage.setItem('access_token', data.access_token)
+            localStorage.setItem('token_type', data.token_type)
             navigate("/index.html")
         }
 

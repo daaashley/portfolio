@@ -2,7 +2,9 @@ import { Box, Button, Typography } from "@mui/material";
 import { Body } from "../molecules/Body";
 import { Title } from "../atoms/Title";
 import { Link } from "react-router-dom";
+import { getToken } from "../util"
 import "../App.css"
+
 type PostProps = {
     isFeed: boolean;
     post: any;
@@ -47,9 +49,12 @@ export const Post = ({ isFeed, post }: PostProps) => {
                 <Link to={`/posts/${post.id}`} state={{ post: post }} style={{ textDecoration: 'none' }}>
                     <Body isFeed={isFeed} body={post.body} id={post.id} />
                 </Link>
-                <Link to={`/posts/${post.id}/update`} state={{ post: post }}>
-                    <Button>Edit Post</Button>
-                </Link>
+                {getToken() && (
+                    <Link to={`/posts/${post.id}/update`} state={{ post: post }}>
+                        <Button>Edit Post</Button>
+                    </Link>
+                )}
+
             </Box>
         </div>
     );
