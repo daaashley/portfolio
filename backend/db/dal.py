@@ -3,6 +3,7 @@ from uuid import UUID
 from pony.orm import commit, db_session, select
 
 from backend.db.db_entities import Post, User
+from backend.services.auth import get_password_hash
 from backend.validator import PostBody
 
 
@@ -75,3 +76,10 @@ def get_user(username: str):
         return users
     else:
         return None
+
+
+@db_session(immediate=True)
+def create_user(username: str, password: str):
+    hashed = get_password_hash(password)
+    user_obj = User(username=username, hashed_password=hashed)
+    return user_obj.to_dict(exclude=["hashed_password"])

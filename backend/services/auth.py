@@ -1,7 +1,7 @@
+import os
 from datetime import datetime, timedelta
-from typing import Annotated
 
-from fastapi import Depends, HTTPException
+from fastapi import HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from passlib.context import CryptContext
@@ -9,7 +9,7 @@ from pydantic import BaseModel
 
 from backend.db import dal
 
-SECRET_KEY = "temp"
+SECRET_KEY = os.environ.get("DB_HASH_KEY", "temp")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
@@ -63,15 +63,18 @@ def create_access_token(data: dict, expires_delta: timedelta or None = None):
     return encoded_jwt
 
 
-async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
+async def get_current_user(token: str):
     credential_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
+    print("running")
     try:
+        print("secret: ", SECRET_KEY)
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         username: str = payload.get("sub")
+        print("username: ", username)
         if username is None:
             raise credential_exception
 
@@ -84,11 +87,3 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
         raise credential_exception
 
     return user
-
-
-async def get_current_active_user(
-    current_user: Annotated[User, Depends(get_current_user)],
-):
-    if current_user.disabled:
-        raise HTTPException(status_code=400, detail="Inactive user.")
-    return current_user

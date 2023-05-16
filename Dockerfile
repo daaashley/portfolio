@@ -78,5 +78,5 @@ WORKDIR /app/
 COPY migrations /app/migrations
 COPY yoyo.ini entrypoint.sh /app/
 RUN ls
-#CMD ["/usr/local/bin/python", "-m", "backend"]
+# CMD ["/usr/local/bin/python", "-m", "backend"]
 ENTRYPOINT [ "bash", "entrypoint.sh" ]

@@ -21,3 +21,12 @@ class PostBody(CamelModel):
     date: Any
     image_url: str
     body: str
+
+
+class RegisterForm(CamelModel):
+    username: str
+    password: str
+
+
+class UserResponse(CamelModel):
+    user: Any
