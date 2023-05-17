@@ -7,7 +7,11 @@ image:
 variables:
   PYTEST_DB_URL: "postgresql://postgres:postgres@postgres:5432/postgres"
 
+include:
+- template: Security/Secret-Detection.gitlab-ci.yml
+
 stages:
+- secret_detection
 - pytest
 - black
 - Test and Lint
@@ -17,6 +21,11 @@ stages:
 - Production Plan
 - Production Apply
 - Destroy
+
+secret_detection:
+  stage: secret_detection
+  variables:
+    SECRET_DETECTION_HISTORIC_SCAN: "true"
 
 # Test template
 .test-template:
@@ -58,9 +67,9 @@ pytest:
   - poetry config virtualenvs.in-project true
   - poetry install
   - export DATABASE_URL=$PYTEST_DB_URL
-    # - apt install -y wait-for-it
-    # - psql "postgresql://postgres:postgres@postgres:5432/postgres"
-    #- wait-for-it -t 180 $BACKEND_DB_HOST:5432
+      # - apt install -y wait-for-it
+      # - psql "postgresql://postgres:postgres@postgres:5432/postgres"
+      #- wait-for-it -t 180 $BACKEND_DB_HOST:5432
   - mkdir -p backend/dist
   - touch backend/dist/index.html
   - poetry run pytest --cov-report term-missing --cov=backend --junitxml=report.xml
@@ -162,6 +171,3 @@ Production Destroy:
   rules:
   - if: '$CI_COMMIT_BRANCH == "production"'
     when: manual
-
-include:
-- template: Security/Secret-Detection.gitlab-ci.yml
