@@ -55,7 +55,7 @@ export const Body = ({ isFeed, body, id }: BodyProps) => {
                 variant="body1"
                 sx={{
                     maxWidth: 700,
-                    color: "#ccd6f6",
+                    color: "#8892b0",
                     textAlign: "left",
                     fontSize: 16,
                     textDecoration: 'none'

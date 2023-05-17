@@ -1,6 +1,7 @@
 import { AppBar, Button, Toolbar, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import { getToken } from "../utils"
+import { getToken, clearToken } from "../utils"
+
 
 
 
@@ -40,6 +41,7 @@ export const Navbar = () => {
                 <Link to={"/index.html"}> <Button style={{ color: "#64ffda" }}>Tutorials</Button></Link>
                 <Link to={'/index.html'}> <Button style={{ color: "#64ffda" }}>Posts</Button></Link>
                 <Link to={"/about"}><Button style={{ color: "#64ffda" }}>About</Button></Link>
+                {getToken() && (<Button onClick={() => { clearToken() }} style={{ color: "#64ffda" }}>Logout</Button>)}
             </Toolbar>
         </AppBar>
     );

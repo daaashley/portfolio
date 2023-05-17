@@ -2,6 +2,7 @@ import { Feed } from "./templates/Feed";
 import { Sidebar } from "./templates/Sidebar";
 import { Navbar } from "./organisms/Navbar";
 import "./App.css";
+import { Footer } from "./atoms/Footer";
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
 
         <Sidebar />
       </div>
+      <Footer />
     </div>
   );
 }
