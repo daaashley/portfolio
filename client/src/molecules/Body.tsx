@@ -43,23 +43,25 @@ type BodyProps = {
     id: string
 }
 
-export const Body = ({ isFeed, body, id }: BodyProps) => {
 
+export const Body = ({ isFeed, body, id }: BodyProps) => {
+    const html = isFeed ? body.substring(0, 500) + "... See more" : body
+    const markup = { __html: html }
     return (
         <div>
 
             <Typography
+                dangerouslySetInnerHTML={markup}
                 variant="body1"
                 sx={{
                     maxWidth: 700,
                     color: "#ccd6f6",
                     textAlign: "left",
-                    fontSize: 20,
+                    fontSize: 16,
                     textDecoration: 'none'
                 }}
                 gutterBottom
             >
-                {isFeed ? body.substring(0, 500) + "... See more" : body}
             </Typography>
         </div>
     )

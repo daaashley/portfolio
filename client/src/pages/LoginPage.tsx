@@ -4,6 +4,7 @@ import { Navbar } from "../organisms/Navbar";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../api/user-api";
+import { setToken } from "../utils";
 
 
 export const LoginPage = () => {
@@ -17,8 +18,7 @@ export const LoginPage = () => {
             window.alert("Error logging in.")
             console.log(errorMessage)
         } else {
-            localStorage.setItem('access_token', data.access_token)
-            localStorage.setItem('token_type', data.token_type)
+            setToken(data.access_token, data.token_type)
             navigate("/index.html")
         }
 

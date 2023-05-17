@@ -1,5 +1,6 @@
 import axios from "axios";
 import axiosRetry from "axios-retry";
+import { getToken } from "../utils";
 
 export const defaultHeaders = {
     Accept: "application/json",
@@ -18,7 +19,7 @@ export const request = async (
     url: string,
     data: RequestData | FormData,
     retry: boolean = false,
-    headers: HeadersType = defaultHeaders,
+    headers: HeadersType = { ...defaultHeaders, ...{ Authorization: getToken() } },
     params: URLSearchParams = null
 ) => {
     axiosRetry(

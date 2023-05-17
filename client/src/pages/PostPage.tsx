@@ -2,7 +2,7 @@ import { useLocation } from "react-router-dom";
 import { Navbar } from "../organisms/Navbar";
 import { Feed } from "../templates/Feed";
 import { Sidebar } from "../templates/Sidebar";
-
+import "../App.css";
 
 
 
@@ -24,7 +24,7 @@ export const PostPage = () => {
             >
                 <Navbar />
             </div>
-            <div style={{ display: 'flex', flexDirection: 'row', maxWidth: 940, margin: "0 auto", marginTop: 50 }}>
+            <div className={"Container"}>
                 <Feed isSinglePost={true} post={post} />
                 <Sidebar />
             </div>

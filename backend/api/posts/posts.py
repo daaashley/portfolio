@@ -1,16 +1,14 @@
-from typing import Annotated
+from typing import Annotated, Union
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, HTTPException
-from fastapi.security import OAuth2PasswordBearer
+from fastapi import APIRouter, Depends, Header, HTTPException
 
 from backend.db import dal
 from backend.response_models import PostsResponse
+from backend.services.auth import get_current_user
 from backend.validator import PostBody
 
 router = APIRouter()
-
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 
 @router.get(
@@ -38,14 +36,22 @@ async def get_posts():
     return {"posts": dal.get_posts()}
 
 
+async def verify_token(authorization: Annotated[Union[str, None], Header()] = None):
+    print("hit this part")
+    user = get_current_user(authorization)
+    if user:
+        return
+
+
 @router.post(
     "/posts",
+    dependencies=[Depends(verify_token)],
     response_model=PostsResponse,
     response_model_exclude_unset=True,
     summary="Create Post",
     tags=["Posts"],
 )
-async def create_post(post: PostBody, token: Annotated[str, Depends(oauth2_scheme)]):
+async def create_post(post: PostBody):
     try:
         return {"posts": [dal.create_post(post)]}
     except:

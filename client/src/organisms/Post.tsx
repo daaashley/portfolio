@@ -2,7 +2,7 @@ import { Box, Button, Typography } from "@mui/material";
 import { Body } from "../molecules/Body";
 import { Title } from "../atoms/Title";
 import { Link } from "react-router-dom";
-import { getToken } from "../util"
+import { getToken } from "../utils"
 import "../App.css"
 
 type PostProps = {
@@ -11,7 +11,7 @@ type PostProps = {
 };
 
 export const Post = ({ isFeed, post }: PostProps) => {
-    const date = new Date(post.date).toString()
+    const date = new Date(post.date).toDateString()
     return (
         <div
             style={{
@@ -33,17 +33,28 @@ export const Post = ({ isFeed, post }: PostProps) => {
                 }}
             >
                 <Title title={post.title} />
-                <Typography
-                    variant="h6"
-                    component="div"
-                    sx={{ color: "#ccd6f6", maxWidth: 700, fontSize: 18 }}
-                >
-                    {date}
-                </Typography>
+                <Box sx={{ flexDirection: 'row', display: 'flex' }}>
+                    <Typography
+                        variant="h6"
+                        component="div"
+                        sx={{ color: "#ccd6f6", maxWidth: 700, fontSize: 16, marginRight: 1 }}
+                    >
+                        {post.author}
+                    </Typography>
+                    <Typography variant="h6"
+                        component="div" sx={{ color: "#ccd6f6", maxWidth: 700, fontSize: 16 }}>{"•"}</Typography>
+                    <Typography
+                        variant="h6"
+                        component="div"
+                        sx={{ color: "#ccd6f6", maxWidth: 700, fontSize: 16, marginLeft: 1 }}
+                    >
+                        {date}
+                    </Typography></Box>
+
                 <div style={{ marginTop: 12, marginBottom: 12 }}>
                     <img
                         style={{ height: 300, width: "100%", maxWidth: 700 }}
-                        src={"code.jpeg"}
+                        src={post.imageUrl}
                     />
                 </div>
                 <Link to={`/posts/${post.id}`} state={{ post: post }} style={{ textDecoration: 'none' }}>
@@ -56,6 +67,6 @@ export const Post = ({ isFeed, post }: PostProps) => {
                 )}
 
             </Box>
-        </div>
+        </div >
     );
 };
