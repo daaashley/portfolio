@@ -1,8 +1,8 @@
 image:
   name: hashicorp/terraform:1.4.4
   entrypoint:
-  - '/usr/bin/env'
-  - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+  - "/usr/bin/env"
+  - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 variables:
   PYTEST_DB_URL: "postgresql://postgres:postgres@postgres:5432/postgres"
@@ -37,7 +37,6 @@ black:
   script:
   - black --check .
 
-
 pytest:
   extends:
   - .test-template
@@ -50,7 +49,7 @@ pytest:
     POSTGRES_PASSWORD: postgres
     POSTGRES_USER: postgres
     POSTGRES_DB: postgres
-    POSTGRES_PORT: '5432'
+    POSTGRES_PORT: "5432"
   script:
   - set -x
   - apt-get --allow-releaseinfo-change update
@@ -59,9 +58,9 @@ pytest:
   - poetry config virtualenvs.in-project true
   - poetry install
   - export DATABASE_URL=$PYTEST_DB_URL
-  # - apt install -y wait-for-it
-  # - psql "postgresql://postgres:postgres@postgres:5432/postgres"
-  #- wait-for-it -t 180 $BACKEND_DB_HOST:5432
+    # - apt install -y wait-for-it
+    # - psql "postgresql://postgres:postgres@postgres:5432/postgres"
+    #- wait-for-it -t 180 $BACKEND_DB_HOST:5432
   - mkdir -p backend/dist
   - touch backend/dist/index.html
   - poetry run pytest --cov-report term-missing --cov=backend --junitxml=report.xml
@@ -79,8 +78,7 @@ Validate Terraform:
   - terraform validate
   - terraform fmt -check
   rules:
-  - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME =~ /^(main|production)$/ || $CI_COMMIT_BRANCH =~ /^(main|production)$/'
-
+  - if: "$CI_MERGE_REQUEST_TARGET_BRANCH_NAME =~ /^(main|production)$/ || $CI_COMMIT_BRANCH =~ /^(main|production)$/"
 
 Build and Push:
   image: docker:latest
@@ -96,7 +94,7 @@ Build and Push:
   - docker tag $ECR_REPO:$CI_COMMIT_SHORT_SHA $ECR_REPO:latest
   - docker push $ECR_REPO:latest
   rules:
-  - if: '$CI_COMMIT_BRANCH =~ /^(main|production)$/'
+  - if: "$CI_COMMIT_BRANCH =~ /^(main|production)$/"
 
 Staging Plan:
   stage: Staging Plan
@@ -107,7 +105,7 @@ Staging Plan:
   - terraform workspace select staging || terraform workspace new staging
   - terraform plan
   rules:
-  - if: '$CI_COMMIT_BRANCH =~ /^(main|production)$/'
+  - if: "$CI_COMMIT_BRANCH =~ /^(main|production)$/"
 
 Staging Apply:
   stage: Staging Apply
@@ -119,7 +117,7 @@ Staging Apply:
   - terraform workspace select staging
   - terraform apply -auto-approve
   rules:
-  - if: '$CI_COMMIT_BRANCH =~ /^(main|production)$/'
+  - if: "$CI_COMMIT_BRANCH =~ /^(main|production)$/"
 
 Production Plan:
   stage: Production Plan
@@ -151,7 +149,7 @@ Staging Destroy:
   - terraform workspace select staging
   - terraform destroy -auto-approve
   rules:
-  - if: '$CI_COMMIT_BRANCH =~ /^(main|production)$/'
+  - if: "$CI_COMMIT_BRANCH =~ /^(main|production)$/"
     when: manual
 
 Production Destroy:
@@ -164,3 +162,6 @@ Production Destroy:
   rules:
   - if: '$CI_COMMIT_BRANCH == "production"'
     when: manual
+
+include:
+- template: Security/Secret-Detection.gitlab-ci.yml
