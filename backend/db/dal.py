@@ -10,8 +10,7 @@ from backend.validator import PostBody
 @db_session(immediate=True)
 def test_db():
     print("Testing DB")
-    User(name="David")
-    commit()
+    return
 
 
 ####################
