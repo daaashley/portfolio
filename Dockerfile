@@ -72,9 +72,11 @@ RUN apt-get purge -y \
 COPY backend /app/backend/
 WORKDIR /app/client/
 COPY client /app/client/
-RUN yarn && yarn deploy
+RUN yarn && yarn build
+
 
 WORKDIR /app/
+COPY client/dist /app/backend/dist
 COPY migrations /app/migrations
 COPY yoyo.ini entrypoint.sh /app/
 RUN ls
