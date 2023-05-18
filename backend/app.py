@@ -1,3 +1,5 @@
+import os
+
 import uvicorn
 from fastapi import FastAPI
 from fastapi.responses import UJSONResponse
@@ -34,6 +36,9 @@ async def index_route():
     return RedirectResponse(url="/index.html")
 
 
+print([f.path for f in os.scandir("/app/backend") if f])
+
+print([f.path for f in os.scandir("/app/client") if f])
 app.mount("/", StaticFiles(directory="backend/dist", html=True), name="build")
 
 

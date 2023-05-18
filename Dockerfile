@@ -79,8 +79,11 @@ RUN yarn build
 
 COPY yoyo.ini entrypoint.sh /app/
 COPY migrations /app/migrations
-COPY backend /app/backend/
-RUN ln -s /app/client/dist /app/backend/dist
+COPY backend /app/backend
+COPY /app/client/dist /app/backend/dist
+
+RUN ls /app/client/
+RUN ls /app/backend/
 
 WORKDIR /app/
 # CMD ["/usr/local/bin/python", "-m", "backend"]
