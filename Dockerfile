@@ -71,9 +71,11 @@ RUN apt-get purge -y \
 # Copying actual application
 
 WORKDIR /app/client/
-COPY client /app/client/
-RUN yarn && yarn build
+COPY client/index.html client/package.json client/tsconfig.json client/vite.config.ts client/yarn.lock /app/client/
+RUN yarn
 
+COPY client /app/client/
+RUN yarn build
 
 COPY yoyo.ini entrypoint.sh /app/
 COPY migrations /app/migrations
