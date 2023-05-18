@@ -69,16 +69,17 @@ RUN apt-get purge -y \
   && rm -rf /var/lib/apt/lists/*
 
 # Copying actual application
-COPY backend /app/backend/
+
 WORKDIR /app/client/
 COPY client /app/client/
 RUN yarn && yarn build
 
 
-WORKDIR /app/
-RUN ln -s /app/client/dist /app/backend/dist
-COPY migrations /app/migrations
 COPY yoyo.ini entrypoint.sh /app/
+COPY migrations /app/migrations
+COPY backend /app/backend/
+RUN ln -s /app/client/dist /app/backend/dist
 
+WORKDIR /app/
 # CMD ["/usr/local/bin/python", "-m", "backend"]
 ENTRYPOINT [ "bash", "entrypoint.sh" ]
