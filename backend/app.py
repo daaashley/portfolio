@@ -38,8 +38,9 @@ async def index_route():
 
 print([f.path for f in os.scandir("/app/backend") if f])
 
+print([f.path for f in os.scandir("/app/backend/dist") if f])
 print([f.path for f in os.scandir("/app/client") if f])
-app.mount("/", StaticFiles(directory="backend/dist", html=True), name="build")
+app.mount("/", StaticFiles(directory="backend/dist", html=True), name="dist")
 
 
 if __name__ == "__main__":

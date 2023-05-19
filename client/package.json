@@ -6,7 +6,7 @@
     "scripts": {
         "dev": "vite --host 0.0.0.0",
         "build": "tsc && vite build",
-        "deploy": "tsc && vite build && rm -rf ../backend/dist && mv dist ../backend/dist",
+        "deploy": "tsc && vite build && rm -rf ../backend/dist && mkdir ../backend/dist && mv dist ../backend/dist",
         "preview": "vite preview"
     },
     "dependencies": {

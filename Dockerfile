@@ -38,7 +38,7 @@
 # #CMD ["/usr/local/bin/python", "-m", "backend"]
 # CMD [ "uvicorn", "--host", "0.0.0.0", "--port", "8000", "backend.app:app"]
 
-FROM python:3.9.6-slim-buster
+FROM python:3.9.6-slim-buster as build-stage
 LABEL maintainer="David Ashley"
 
 RUN apt-get update && apt-get install -y \
@@ -71,8 +71,9 @@ RUN apt-get purge -y \
 # Copying actual application
 
 WORKDIR /app/client/
+
 COPY client/index.html client/package.json client/tsconfig.json client/vite.config.ts client/yarn.lock /app/client/
-RUN yarn
+RUN  yarn
 
 COPY client /app/client/
 RUN yarn build
@@ -80,11 +81,8 @@ RUN yarn build
 COPY yoyo.ini entrypoint.sh /app/
 COPY migrations /app/migrations
 COPY backend /app/backend
-COPY /app/client/dist /app/backend/dist
-
-RUN ls /app/client/
-RUN ls /app/backend/
-
+RUN rm -rf /app/backend/dist
+RUN ln -s /app/client/dist /app/backend/
 WORKDIR /app/
 # CMD ["/usr/local/bin/python", "-m", "backend"]
-ENTRYPOINT [ "bash", "entrypoint.sh" ]
+ENTRYPOINT [ "bash", "/app/entrypoint.sh" ]
