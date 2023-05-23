@@ -84,5 +84,5 @@ COPY backend /app/backend
 RUN rm -rf /app/backend/dist
 RUN ln -s /app/client/dist /app/backend/
 WORKDIR /app/
-# CMD ["/usr/local/bin/python", "-m", "backend"]
+
 ENTRYPOINT [ "bash", "/app/entrypoint.sh" ]
