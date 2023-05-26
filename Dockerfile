@@ -72,11 +72,11 @@ RUN apt-get purge -y \
 
 WORKDIR /app/client/
 
-COPY client/index.html client/package.json client/tsconfig.json client/vite.config.ts client/yarn.lock /app/client/
-RUN  yarn
+# COPY client/index.html client/package.json client/tsconfig.json client/vite.config.ts client/yarn.lock /app/client/
+# RUN  yarn
 
 COPY client /app/client/
-RUN yarn build
+RUN yarn && yarn build
 VOLUME ["/app/backend/dist"]
 
 COPY yoyo.ini entrypoint.sh /app/
