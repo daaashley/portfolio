@@ -77,13 +77,18 @@ WORKDIR /app/client/
 
 COPY client /app/client/
 RUN yarn && yarn build
-VOLUME ["/app/backend/dist"]
+RUN ls dist/
 
 COPY yoyo.ini entrypoint.sh /app/
 COPY migrations /app/migrations
 COPY backend /app/backend
-#RUN rm -rf /app/backend/dist
+RUN rm -rf /app/backend/dist
 RUN ln -s /app/client/dist /app/backend/
+
 WORKDIR /app/
+
+RUN ls
+RUN ls /app/backend/
+
 
 ENTRYPOINT [ "bash", "/app/entrypoint.sh" ]

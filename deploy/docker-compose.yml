@@ -6,6 +6,10 @@ services:
       context: .
       dockerfile: Dockerfile
     image: backend:${BACKEND_VERSION:-latest}
+    volumes:
+      # Adds current directory as volume.
+    - ./backend/:/app/backend/
+    - /app/backend/dist
     restart: always
     env_file:
     - .env
@@ -39,6 +43,8 @@ services:
       timeout: 3s
       retries: 40
 
+volumes:
+  backend:
   # migration:
   #   image: api:latest
   #   restart: "no"

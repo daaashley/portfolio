@@ -5,14 +5,8 @@ services:
     ports:
       # Exposes application port.
     - "8000:8000"
-    volumes:
-      # Adds current directory as volume.
-    - ./backend/:/app/backend/
-    - /app/backend/dist # Grabs dist from image and adds it to volume, so we can continue hot reload
+     # Grabs dist from image and adds it to volume, so we can continue hot reload
     environment:
       # Enables autoreload.
       BACKEND_RELOAD: "True"
       DEV_MODE: 1
-
-volumes:
-  backend:
