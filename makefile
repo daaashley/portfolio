@@ -1,5 +1,5 @@
 PROJECT_NAME = 'personalsite'
-
+PROJECT_AUTHOR = 'David Ashley'
 
 
 
