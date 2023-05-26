@@ -77,11 +77,12 @@ RUN  yarn
 
 COPY client /app/client/
 RUN yarn build
+VOLUME ["/app/backend/dist"]
 
 COPY yoyo.ini entrypoint.sh /app/
 COPY migrations /app/migrations
 COPY backend /app/backend
-RUN rm -rf /app/backend/dist
+#RUN rm -rf /app/backend/dist
 RUN ln -s /app/client/dist /app/backend/
 WORKDIR /app/
 
