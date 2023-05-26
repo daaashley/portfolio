@@ -92,10 +92,10 @@ Validate Terraform:
 Build and Push:
   image: docker:latest
   services:
-  - docker:dind
+  - docker:20.10.22-dind
   stage: Build and Push
   script:
-  - apk add py3-pip
+  - apk add py3-pip git
   - pip3 install awscli
   - docker build --compress -t $ECR_REPO:$CI_COMMIT_SHORT_SHA .
   - $(aws ecr get-login --no-include-email --region us-east-1)
