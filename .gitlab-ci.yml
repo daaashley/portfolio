@@ -90,12 +90,12 @@ Validate Terraform:
   - if: "$CI_MERGE_REQUEST_TARGET_BRANCH_NAME =~ /^(main|production)$/ || $CI_COMMIT_BRANCH =~ /^(main|production)$/"
 
 Build and Push:
-  image: docker:latest
+  image: docker:20.10.22
   services:
-  - docker:dind
+  - docker:20.10.22-dind
   stage: Build and Push
   script:
-  - apk add py3-pip
+  - apk add py3-pip git
   - pip3 install awscli
   - docker build --compress -t $ECR_REPO:$CI_COMMIT_SHORT_SHA .
   - $(aws ecr get-login-password --region us-east-1)
