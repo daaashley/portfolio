@@ -120,6 +120,8 @@ Staging Apply:
   stage: Staging Apply
   script:
   - cd deploy/terraform/
+  - echo $ECR_REPO
+  - echo $CI_COMMIT_SHORT_SHA
   - export TF_VAR_ecr_image_api=$ECR_REPO:$CI_COMMIT_SHORT_SHA
   - export DATABASE_URL=$PYTEST_DB_URL
   - terraform init
