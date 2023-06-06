@@ -128,7 +128,7 @@ COPY yoyo.ini entrypoint.sh /app/
 COPY migrations /app/migrations
 COPY backend /app/backend
 RUN ln -s /app/client/dist /app/backend/dist
-RUN ls /app/backend/dist
+RUN ls /app/backend/dist/assets
 
 WORKDIR /app/
 RUN chmod +x /app/entrypoint.sh
