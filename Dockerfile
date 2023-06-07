@@ -107,7 +107,7 @@ RUN  poetry install \
 ###################################### Runtime Image ##########################################
 FROM python-base as fastapi-app
 
-VOLUME /app/backend/dist
+VOLUME /data
 COPY --from=builder-base $poetry_home $poetry_home
 COPY --from=builder-base /usr/lib/x86_64-linux-gnu/ /usr/lib/x86_64-linux-gnu/
 
