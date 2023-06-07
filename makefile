@@ -52,3 +52,6 @@ plan-terraform:
 
 apply-terraform:
 	sudo docker-compose -f deploy/docker-compose.yml run --rm terraform apply
+
+show-terraform:
+	sudo docker-compose -f deploy/terraform/docker-compose.yml run --rm terraform show --json

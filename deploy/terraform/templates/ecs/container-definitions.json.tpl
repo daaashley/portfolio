@@ -3,7 +3,7 @@
         "name": "api",
         "image": "${app_image}",
         "essential": true,
-        "memoryReservation": 256,
+        "memoryReservation": 1024,
         "environment": [
             {"name": "DATABASE_URL", "value": "postgresql://postgres:${db_pass}@${db_host}:5432/postgres"},
             {"name": "DB_HOST", "value": "${db_host}"},
