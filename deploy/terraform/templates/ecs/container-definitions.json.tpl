@@ -25,6 +25,6 @@
                 "containerPort": 8000,
                 "hostPort": 8000
             }
-        ],
+        ]
     }
 ]
