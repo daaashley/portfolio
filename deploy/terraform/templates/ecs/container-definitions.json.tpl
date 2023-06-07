@@ -25,6 +25,13 @@
                 "containerPort": 8000,
                 "hostPort": 8000
             }
+        ],
+        "mountPoints": [
+            {
+                "readOnly": false,
+                "containerPath": "/vol/web",
+                "sourceVolume": "static"
+            }
         ]
     }
 ]
