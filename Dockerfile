@@ -107,6 +107,7 @@ RUN  poetry install \
 ###################################### Runtime Image ##########################################
 FROM python-base as fastapi-app
 
+VOLUME /app/backend/dist
 COPY --from=builder-base $poetry_home $poetry_home
 COPY --from=builder-base /usr/lib/x86_64-linux-gnu/ /usr/lib/x86_64-linux-gnu/
 
@@ -118,8 +119,11 @@ RUN npm install --global yarn
 
 WORKDIR /app/client
 
+COPY client/yarn.lock client/tsconfig.json client/vite.config.ts client/package.json /app/client/
+RUN yarn
+
 COPY client /app/client/
-RUN yarn && yarn build
+RUN yarn build
 
 COPY yoyo.ini entrypoint.sh /app/
 COPY migrations /app/migrations
