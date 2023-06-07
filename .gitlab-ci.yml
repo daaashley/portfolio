@@ -155,7 +155,7 @@ Production Apply:
 Staging Destroy:
   stage: Destroy
   script:
-  - cd deploy/
+  - cd deploy/terraform/
   - terraform init
   - terraform workspace select staging
   - terraform destroy -auto-approve
@@ -166,7 +166,7 @@ Staging Destroy:
 Production Destroy:
   stage: Destroy
   script:
-  - cd deploy/
+  - cd deploy/terraform/
   - terraform init
   - terraform workspace select production
   - terraform destroy -auto-approve
