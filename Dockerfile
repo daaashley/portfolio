@@ -118,11 +118,8 @@ RUN npm install --global yarn
 
 WORKDIR /app/client
 
-COPY client/yarn.lock client/tsconfig.json client/package.json /app/client/
-RUN yarn
-
 COPY client /app/client/
-RUN yarn build
+RUN yarn && yarn build
 
 COPY yoyo.ini entrypoint.sh /app/
 COPY migrations /app/migrations
