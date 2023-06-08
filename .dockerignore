@@ -16,10 +16,6 @@ __pycache__/
 .Python
 develop-eggs/
 downloads/
-dist/
-backend/dist
-client/dist
-node_modules
 eggs/
 .eggs/
 lib/

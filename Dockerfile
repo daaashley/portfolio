@@ -124,6 +124,7 @@ RUN yarn
 
 COPY client /app/client/
 RUN yarn build
+RUN ls /app/client/dist
 
 COPY yoyo.ini entrypoint.sh /app/
 COPY migrations /app/migrations
