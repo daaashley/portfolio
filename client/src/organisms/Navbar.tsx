@@ -38,6 +38,7 @@ export const Navbar = () => {
                 </Typography>
                 {getToken() && (<Link to={'/create'}><Button style={{ color: "#64ffda" }}>New Post</Button></Link>)}
                 <Link to={'/index.html'}><Button style={{ color: "#64ffda" }}>Latest</Button></Link>
+                <Link to={'/compilers'}><Button style={{ color: "#64ffda" }}>Compilers</Button></Link>
                 <Link to={"/index.html"}> <Button style={{ color: "#64ffda" }}>Tutorials</Button></Link>
                 <Link to={'/index.html'}> <Button style={{ color: "#64ffda" }}>Posts</Button></Link>
                 <Link to={"/about"}><Button style={{ color: "#64ffda" }}>About</Button></Link>

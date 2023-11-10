@@ -11,7 +11,7 @@ import { PostPage } from './pages/PostPage';
 import { CreatePage } from './pages/CreatePage';
 import { UpdatePage } from './pages/UpdatePage';
 import { LoginPage } from './pages/LoginPage';
-
+import { Compilers } from './pages/Compilers';
 
 const router = createBrowserRouter([
   {
@@ -21,6 +21,10 @@ const router = createBrowserRouter([
   {
     path: "/posts/:id",
     element: <PostPage />
+  },
+  {
+    path: "/compilers",
+    element: <Compilers />
   },
   {
     path: "/create",
