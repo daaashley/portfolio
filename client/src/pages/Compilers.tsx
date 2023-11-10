@@ -1,6 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { Navbar } from "../organisms/Navbar";
 import "../App.css";
+import { CompilerWindow } from "../organisms/CompilerWindow";
 
 
 
@@ -21,7 +22,7 @@ export const Compilers = () => {
                 <Navbar />
             </div>
             <div className={"Container"}>
-                <h1>Test for Compilers</h1>
+                <CompilerWindow />
             </div>
         </div>
     );
