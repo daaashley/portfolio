@@ -21,7 +21,7 @@ export const Compilers = () => {
             >
                 <Navbar />
             </div>
-            <div className={"Container"}>
+            <div >
                 <CompilerWindow />
             </div>
         </div>

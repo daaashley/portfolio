@@ -2,16 +2,22 @@ import "../App.css";
 import Editor from "@monaco-editor/react";
 import { TerminalWindow } from "../organisms/TerminalWindow"
 import { EditorBar } from "../organisms/EditorBar"
-
+import { TerminalBar } from "../organisms/TerminalBar"
 
 
 
 export const CompilerWindow = () => {
     return (
-        <div style={{ width: "100%", height: "100%" }}>
+        <div style={{ width: "100%", marginTop: '20px' }}>
             <EditorBar />
-            <Editor height={"66vh"} width={"100%"} theme='vs-dark' defaultLanguage="python" />
-            <TerminalWindow />
-        </div>
+            <div >
+                <div style={{ display: 'inline-block', width: '50%' }}>
+                    <Editor height={"101.5vh"} width={"100%"} theme='vs-dark' defaultLanguage="python" />
+                </div>
+                <div style={{ display: 'inline-block', width: '50%' }}>
+                    <TerminalWindow />
+                </div>
+            </div>
+        </div >
     );
 }

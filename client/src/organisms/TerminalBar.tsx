@@ -7,14 +7,12 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 
-export const EditorBar = () => {
+export const TerminalBar = () => {
     return (
         <Box sx={{ flexGrow: 1 }}>
 
-            <Box sx={{ flexGrow: 1, background: 'white', height: '30px' }}>
-                <Box sx={{ flexGrow: 1, background: '#1e1e1e', height: '30px', width: '60px', display: 'flex', justifyContet: 'center', alignItems: 'center' }}>
-                    <Typography style={{ textAlign: 'center', alignSelf: 'center', color: '#cccccc' }}>test.lox</Typography>
-                </Box>
+            <Box sx={{ flexGrow: 1, background: 'white', height: '40px' }}>
+
             </Box>
         </Box>
     );
