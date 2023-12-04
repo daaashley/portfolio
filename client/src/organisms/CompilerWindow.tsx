@@ -12,7 +12,7 @@ export const CompilerWindow = () => {
             <EditorBar />
             <div >
                 <div style={{ display: 'inline-block', width: '50%' }}>
-                    <Editor height={"101.5vh"} width={"100%"} theme='vs-dark' defaultLanguage="python" />
+                    <Editor height={"100vh"} width={"100%"} theme='vs-dark' defaultLanguage="python" />
                 </div>
                 <div style={{ display: 'inline-block', width: '50%' }}>
                     <TerminalWindow />

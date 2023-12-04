@@ -10,7 +10,7 @@ export const TerminalWindow = () => {
             outputColor: '#fcfcfc',
             errorOutputColor: '#ff89bd',
             fontSize: '1.1rem',
-            spacing: '1%',
+            spacing: '0%',
             fontFamily: 'monospace',
             width: '100%',
             height: '100vh'
