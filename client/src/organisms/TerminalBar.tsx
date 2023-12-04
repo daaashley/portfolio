@@ -11,8 +11,8 @@ export const TerminalBar = () => {
     return (
         <Box sx={{ flexGrow: 1 }}>
 
-            <Box sx={{ flexGrow: 1, background: 'white', height: '40px' }}>
-
+            <Box sx={{ flexGrow: 1, background: 'yellow', height: '40px' }}>
+<p>hello</p>
             </Box>
         </Box>
     );
