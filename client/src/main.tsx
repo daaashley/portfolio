@@ -12,6 +12,7 @@ import { CreatePage } from './pages/CreatePage';
 import { UpdatePage } from './pages/UpdatePage';
 import { LoginPage } from './pages/LoginPage';
 import { Compilers } from './pages/Compilers';
+import { EditorStateProvider } from './context/editor-state-context'
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
+    <EditorStateProvider>
     <RouterProvider router={router} />
+    </EditorStateProvider>
   </React.StrictMode>,
 )
