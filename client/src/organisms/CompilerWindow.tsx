@@ -16,13 +16,15 @@ export const CompilerWindow = () => {
         console.log('ref: ',fileCacheRef)
     }
 
-    const setSelectedHelper = (selected: string) => {
+    const setSelectedHelper = (newlySelected: string) => {
         const updateIndex = fileState.findIndex((file)=>{return file.fileName == selectedFile})
+        const cacheIndexForNewFile = fileState.findIndex((file)=>{return file.fileName == newlySelected})
         const tempState = fileState
         tempState[updateIndex] = { fileName: selectedFile, fileContents: fileCacheRef.current }
+        writeTempCache(fileState[cacheIndexForNewFile].fileContents)
         console.log('cache: ',tempState)
         setFileState(tempState)
-        setSelectedFile(selected)
+        setSelectedFile(newlySelected)
     }
 
     return (
