@@ -19,8 +19,8 @@ interface IEditorContext {
 const EditorStateContext = React.createContext<IEditorContext | undefined>(undefined)
 
 const EditorStateProvider = ({ children }: { children: JSX.Element }) => {
-    const [fileState, setFileState] = useState<FileState>([{fileName:'test.lox', fileContents:JLOX_SPEC}, {fileName:'MergeSort.lox', fileContents:'This is a merge sort.'},{fileName:'Inheritance.lox', fileContents:JLOX_INHERITANCE}])
-    const [selectedFile, setSelectedFile] = useState<string>('test.lox')
+    const [fileState, setFileState] = useState<FileState>([{fileName:'spec.lox', fileContents:JLOX_SPEC}, {fileName:'MergeSort.lox', fileContents:'This is a merge sort.'},{fileName:'Inheritance.lox', fileContents:JLOX_INHERITANCE}])
+    const [selectedFile, setSelectedFile] = useState<string>('spec.lox')
 
     const value = {
         setFileState: setFileState,
