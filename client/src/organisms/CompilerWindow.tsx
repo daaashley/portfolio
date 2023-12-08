@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from "react";
 
 
 export const CompilerWindow = () => {
+    const [fileToRun, setFileToRun] = useState(null)
     const { fileState, setFileState, selectedFile, setSelectedFile } = useEditorState()
     const fileCacheRef = useRef(fileState.filter((file) => { return file.fileName == selectedFile })[0]?.fileContents)
     const writeTempCache = (value: string) => {
@@ -36,7 +37,7 @@ export const CompilerWindow = () => {
                     <Editor onChange={writeTempCache} value={fileState.filter((file) => { return file.fileName == selectedFile })[0]?.fileContents} height={"100vh"} width={"100%"} theme='vs-dark' defaultLanguage="python" />
                 </div>
                 <div style={{ display: 'inline-block', width: '50%' }}>
-                    <TerminalBar />
+                    <TerminalBar files={fileState} fileToRun={fileToRun} setFileToRun={setFileToRun} />
                     <TerminalWindow />
                 </div>
             </div>
