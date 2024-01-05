@@ -12,7 +12,7 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { Menu, MenuItem, Tooltip } from '@mui/material';
 
-export const TerminalBar = ({files, fileToRun, setFileToRun}) => {
+export const TerminalBar = ({files, fileToRun, run, setFileToRun}) => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     
     const open = Boolean(anchorEl);
@@ -27,6 +27,7 @@ export const TerminalBar = ({files, fileToRun, setFileToRun}) => {
 
     const handleRun = (fileName:string) => {
         setFileToRun(fileName)
+        run()
         setAnchorEl(null);
     };
     console.log('files: ',files)

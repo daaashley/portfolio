@@ -84,12 +84,13 @@ RUN apt-get update \
   curl \
   # deps for building python deps
   build-essential \
-  # deps for postgresql
+  # deps for postgresql and java for subprocess
   libpq-dev \
   python3-dev \
   procps \
   unzip \
-  libffi-dev
+  libffi-dev \
+  default-jre 
 
 # install poetry - respects $POETRY_VERSION & $POETRY_HOME
 RUN curl -sSLcurl -sSL https://install.python-poetry.org | python3 -
@@ -129,11 +130,12 @@ RUN ls /app/client/dist
 COPY yoyo.ini entrypoint.sh /app/
 COPY migrations /app/migrations
 COPY backend /app/backend
-RUN ln -s /app/client/dist /app/backend/dist
+RUN mv /app/client/dist /app/backend/
 RUN ls /app/backend/dist/
 
 WORKDIR /app/
 RUN chmod +x /app/entrypoint.sh
+EXPOSE 8000
 ENTRYPOINT [ "/app/entrypoint.sh" ]
 
 

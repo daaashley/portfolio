@@ -75,7 +75,7 @@ export const EditorBar = ({ selectedFile, files, setSelectedFile, setFileState }
             </Box>
             <Modal
                         open={open}
-                        handleClose={handleClose}
+                        onClose={handleClose}
                     >
                         <Paper sx={style}>
                             <Typography id="modal-modal-title" variant="h6" component="h2">

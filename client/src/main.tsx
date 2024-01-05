@@ -13,6 +13,8 @@ import { UpdatePage } from './pages/UpdatePage';
 import { LoginPage } from './pages/LoginPage';
 import { Compilers } from './pages/Compilers';
 import { EditorStateProvider } from './context/editor-state-context'
+import { AboutPage } from './pages/AboutPage';
+import { SocketProvider } from './context/compiler-state-context';
 
 const router = createBrowserRouter([
   {
@@ -38,13 +40,19 @@ const router = createBrowserRouter([
   {
     path: "/user/login",
     element: <LoginPage />
+  },
+  {
+    path: "/about",
+    element: <AboutPage />
   }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <EditorStateProvider>
-    <RouterProvider router={router} />
+      <SocketProvider>
+        <RouterProvider router={router} />
+      </SocketProvider>
     </EditorStateProvider>
   </React.StrictMode>,
 )

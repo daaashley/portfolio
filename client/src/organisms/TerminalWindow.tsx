@@ -3,7 +3,9 @@ import ReactTerminal from 'react-terminal-component';
 export const TerminalWindow = () => {
 
     return (
-        <ReactTerminal theme={{
+        <ReactTerminal
+        inputStr={'jlox (1.0.1) >'}
+        theme={{
             background: '#141313',
             promptSymbolColor: '#6effe6',
             commandColor: '#fcfcfc',

@@ -1,4 +1,6 @@
 import uvicorn
+import os
+import subprocess
 from fastapi import FastAPI
 from fastapi.responses import UJSONResponse
 from fastapi.staticfiles import StaticFiles
@@ -7,7 +9,7 @@ from starlette.responses import RedirectResponse
 from backend.api.router import api_router
 from backend.lifetime import register_shutdown_event, register_startup_event
 from backend.settings import settings
-
+from backend.api.router import compiler
 
 def get_app() -> FastAPI:
     app = FastAPI(
@@ -28,10 +30,20 @@ def get_app() -> FastAPI:
 
 app = get_app()
 
+app.mount("/ws", compiler)
 
 @app.get("/", tags=["Static"], include_in_schema=False)
 async def index_route():
+    subprocess.run(["java", "--version"]) 
     return RedirectResponse(url="/index.html")
+
+
+# Client directory debug for Docker
+# for dirpath, dirnames, filenames in os.walk('./backend'):
+#     print(dirpath)
+#     if(dirpath[0:7] != "./client" ):
+#         for f in filenames:
+#             print(os.path.join(dirpath, f))
 
 
 app.mount("/", StaticFiles(directory="backend/dist", html=True), name="dist")

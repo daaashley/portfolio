@@ -1,4 +1,6 @@
 export const JLOX_SPEC = `
+# https://github.com/daaashley/lox-interpreter
+
 #            /$$                    
 #           | $$                    
 #        /$$| $$  /$$$$$$  /$$   /$$
@@ -13,7 +15,8 @@ export const JLOX_SPEC = `
                                   
 ##########################################################
 
-# Lox is a programming language created by Robert Nystrom. 
+# Lox is a dynamically-typed object oriented programming 
+# language with C family syntax created by Robert Nystrom. 
 # It's implementation is provided in his book Crafting 
 # Interpreters. JLOX is the Java runtime implementation of
 # the interpreter. Presented here is a version of JLOX I 

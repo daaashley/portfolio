@@ -30,3 +30,8 @@ class RegisterForm(CamelModel):
 
 class UserResponse(CamelModel):
     user: Any
+
+
+class CompilerRequest(CamelModel):
+    file_contents: str
+    file_name: str

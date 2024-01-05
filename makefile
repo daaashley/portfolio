@@ -31,8 +31,10 @@ build-docker:
 
 
 run-docker:
-	sudo -E docker-compose -f deploy/docker-compose.yml -f deploy/docker-compose.dev.yml --project-directory . up --build
+	sudo docker-compose -f deploy/docker-compose.yml --project-directory . up --build 
 
+run-docker-dev:
+	sudo docker-compose -f deploy/docker-compose.yml -f deploy/docker-compose.dev.yml  --project-directory . up --build 
 
 init-terraform:
 	sudo docker-compose -f deploy/docker-compose.yml run --rm terraform init
