@@ -17,6 +17,8 @@ export const CompilerWindow = () => {
     const fileCacheRef = useRef(fileState.filter((file) => { return file.fileName == selectedFile })[0]?.fileContents)
 
     const writeTempCache = (value: string) => {
+        console.log('ref: ',fileCacheRef)
+        console.log('new value: ',value)
         fileCacheRef.current = value
         console.log('ref: ',fileCacheRef)
     }

@@ -46,6 +46,8 @@ async def index_route():
 #             print(os.path.join(dirpath, f))
 
 
+
+
 app.mount("/", StaticFiles(directory="backend/dist", html=True), name="dist")
 
 
