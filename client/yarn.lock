@@ -1269,6 +1269,11 @@ react-terminal-component@^1.5.0:
     javascript-terminal "^1.0.3"
     prop-types "^15.7.2"
 
+react-terminal-ui@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/react-terminal-ui/-/react-terminal-ui-1.2.0.tgz#83a63a00d3268ada1d859254b8c8287a1a28c15c"
+  integrity sha512-MTPIrWoLGH46zk8yLd8c8YTqgixggvOsfDBmZf/iVJBgJU0RDgOqjlyYFnh6rRsERXh91+aXm6f5zc+eMoUgEA==
+
 react-transition-group@^4.4.5:
   version "4.4.5"
   resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-4.4.5.tgz#e53d4e3f3344da8521489fbef8f2581d42becdd1"

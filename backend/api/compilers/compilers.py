@@ -21,6 +21,8 @@ from backend.queue import message_queue
 START_HASH = "ea2b2676c28c0db26d39331a336c6b92"
 END_HASH = "7f021a1415b86f2d013b2618fb31ae53"
 
+
+
 setup_logging()
 
 # do not re-create the pool with every request, only create it once
@@ -84,7 +86,7 @@ def interpret(
             for f in filenames:
                 print(os.path.join(dirpath, f))
 
-    command = ["java","-cp", "backend/jlox.jar", "lox.Lox", "source", 'print "hello world!";']
+    command = ["java","-cp", "backend/jlox.jar", "lox.Lox", "source", 'print "hello world!"; print "This is another test of hello world! This was written by the lox compiler."; print "This is yet another example of output.";']
     command = [i for i in command if i] 
     print('after command')
     s_log_file = StringIO()

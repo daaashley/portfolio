@@ -10,6 +10,8 @@ import { useSocket } from "../hooks/compiler-socket"
 const START_HASH = "ea2b2676c28c0db26d39331a336c6b92"
 const END_HASH = "7f021a1415b86f2d013b2618fb31ae53"
 
+
+
 export const CompilerWindow = () => {
     const [fileToRun, setFileToRun] = useState('spec.lox')
     const [compilerOutput, setCompilerOutput] = useState('jlox 1.0.1 >')
@@ -44,8 +46,9 @@ export const CompilerWindow = () => {
      
     }
 
-    const onMessage = useCallback((message) => {
-        const data = JSON.parse(message?.data);
+    const onMessage = (message) => {
+        console.log('message!: ',message)
+        const data = message?.data
         // Do something with the data
         if(data == START_HASH){
             setRunning(true)
@@ -53,18 +56,18 @@ export const CompilerWindow = () => {
         if(data == END_HASH){
             setRunning(false)
         }
-        let newOutputStr = compilerOutput + data
+        let newOutputStr = compilerOutput + data + "\n"
         setCompilerOutput(newOutputStr)
         console.log('data: ', data)
-    }, [])
+    }
 
     useEffect(()=>{
         console.log('message')
-        socket.addEventListener("message", onMessage);
-
-        return () => {
-            socket.removeEventListener("message", onMessage);
+        socket.onmessage = function (message) {
+            onMessage(message)
         }
+
+        
     },[socket, onMessage])
 
     
@@ -76,7 +79,7 @@ export const CompilerWindow = () => {
                     <EditorBar selectedFile={selectedFile} setSelectedFile={setSelectedHelper} files={fileState} setFileState={setFileState} />
                     <Editor onChange={writeTempCache} value={fileState.filter((file) => { return file.fileName == selectedFile })[0]?.fileContents} height={"100vh"} width={"100%"} theme='vs-dark' defaultLanguage="python" />
                 </div>
-                <div style={{ display: 'inline-block', width: '50%' }}>
+                <div style={{ display: 'inline-block', width: '50%',top:'85px',position:'absolute' }}>
                     <TerminalBar files={fileState} fileToRun={fileToRun} run={run} setFileToRun={setFileToRun} />
                     <TerminalWindow compilerOutput={compilerOutput} />
                 </div>
