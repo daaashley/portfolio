@@ -7,9 +7,13 @@ import { useEditorState } from "../context/editor-state-context";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useSocket } from "../hooks/compiler-socket"
 
+const START_HASH = "ea2b2676c28c0db26d39331a336c6b92"
+const END_HASH = "7f021a1415b86f2d013b2618fb31ae53"
 
 export const CompilerWindow = () => {
     const [fileToRun, setFileToRun] = useState('spec.lox')
+    const [compilerOutput, setCompilerOutput] = useState('jlox 1.0.1 >')
+    const [running, setRunning] = useState(false)
     const { fileState, setFileState, selectedFile, setSelectedFile } = useEditorState()
 
     const socket = useSocket();
@@ -43,6 +47,14 @@ export const CompilerWindow = () => {
     const onMessage = useCallback((message) => {
         const data = JSON.parse(message?.data);
         // Do something with the data
+        if(data == START_HASH){
+            setRunning(true)
+        }
+        if(data == END_HASH){
+            setRunning(false)
+        }
+        let newOutputStr = compilerOutput + data
+        setCompilerOutput(newOutputStr)
         console.log('data: ', data)
     }, [])
 
@@ -66,7 +78,7 @@ export const CompilerWindow = () => {
                 </div>
                 <div style={{ display: 'inline-block', width: '50%' }}>
                     <TerminalBar files={fileState} fileToRun={fileToRun} run={run} setFileToRun={setFileToRun} />
-                    <TerminalWindow />
+                    <TerminalWindow compilerOutput={compilerOutput} />
                 </div>
             </div>
         </div >

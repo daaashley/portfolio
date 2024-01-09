@@ -1,10 +1,11 @@
-import ReactTerminal from 'react-terminal-component';
+import ReactTerminalStateless from 'react-terminal-component';
 
-export const TerminalWindow = () => {
+export const TerminalWindow = ({compilerOutput}) => {
 
     return (
-        <ReactTerminal
-        inputStr={'jlox (1.0.1) >'}
+        <ReactTerminalStateless
+        //emulatorState={compilerOutput}
+        inputStr={compilerOutput}
         theme={{
             background: '#141313',
             promptSymbolColor: '#6effe6',

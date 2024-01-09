@@ -1,4 +1,5 @@
 import json
+import os
 import multiprocessing as mp
 from io import BytesIO, StringIO
 import asyncio
@@ -16,6 +17,9 @@ from backend.api.compilers.job import Job
 from backend.validator import CompilerRequest
 from backend.log_config import setup_logging
 from backend.queue import message_queue
+
+START_HASH = "ea2b2676c28c0db26d39331a336c6b92"
+END_HASH = "7f021a1415b86f2d013b2618fb31ae53"
 
 setup_logging()
 
@@ -42,6 +46,7 @@ def execute(cmd):
             cmd,
             stdout=PIPE,
             stderr=PIPE,
+            text=True,
             universal_newlines=True,
         )
     except TypeError as e:
@@ -71,8 +76,16 @@ def interpret(
     source:CompilerRequest,
 ):
     print('starting to interpret')
-    command = ["java", "-cp", "../../lox/jlox-1.0.1.jar", "lox.Lox", "source", source["fileContents"]]
-    
+    print(os.getcwd())
+    print(os.path.join(os.path.dirname(__file__), 'jlox.jar'))
+    for dirpath, dirnames, filenames in os.walk('./backend'):
+        print(dirpath)
+        if(dirpath[0:7] != "./client" ):
+            for f in filenames:
+                print(os.path.join(dirpath, f))
+
+    command = ["java","-cp", "backend/jlox.jar", "lox.Lox", "source", 'print "hello world!";']
+    command = [i for i in command if i] 
     print('after command')
     s_log_file = StringIO()
 
@@ -89,7 +102,7 @@ def interpret(
 def long_running_task(q: mp.Queue, source: CompilerRequest) -> str:
     print('starting long running task')
     interpret(q=q,source=source)
-    return "done!"
+    return "done"
 
 @ws.websocket("/compiler")
 async def websocket_endpoint(websocket: WebSocket):
@@ -113,7 +126,7 @@ async def websocket_endpoint(websocket: WebSocket):
                 print(source_data_dict)
                 if source_data_dict['fileName'] and source_data_dict['fileContents']:
                     print('after attr check')
-                    await websocket.send_text("STARTING!")
+                    await websocket.send_text(START_HASH)
                     loop = asyncio.get_event_loop()
                     result = await loop.run_in_executor(pool, long_running_task, q, source_data_dict)
 
@@ -142,16 +155,17 @@ async def websocket_endpoint(websocket: WebSocket):
                         try:
                             await websocket.send_text(queue_result)
                         except (WebSocketDisconnect, Exception):
+                            print('exception 1')
                             # This happens if client has moved on,
                             await websocket.close()
                             # break out of the while loop.
                             return
                     
-                    if result == 0 or result.done():
+                
+                    if result == "done":
+                        print('done 1')
                         try:
-                            await websocket.send_text("Compilation finished.")
-                            await websocket.send_text("Compiler ready.")
-                            await websocket.close()
+                            await websocket.send_text(END_HASH)
 
                         except WebSocketDisconnect:
                             logger.info("WebSocket Disconnected")
@@ -164,6 +178,7 @@ async def websocket_endpoint(websocket: WebSocket):
 
 
     except WebSocketDisconnect:
+        print('this one')
         await websocket.close()  # user has closed or refreshed browser before sending a request, close the connection
         return
 

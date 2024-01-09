@@ -134,6 +134,7 @@ RUN mv /app/client/dist /app/backend/
 RUN ls /app/backend/dist/
 
 WORKDIR /app/
+RUN chmod +x /app/backend/jlox.jar
 RUN chmod +x /app/entrypoint.sh
 EXPOSE 8000
 ENTRYPOINT [ "/app/entrypoint.sh" ]
