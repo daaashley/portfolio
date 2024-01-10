@@ -19,7 +19,7 @@ interface IEditorContext {
 const EditorStateContext = React.createContext<IEditorContext | undefined>(undefined)
 
 const EditorStateProvider = ({ children }: { children: JSX.Element }) => {
-    const [fileState, setFileState] = useState<FileState>([{fileName:'spec.lox', fileContents:JLOX_SPEC}, {fileName:'MergeSort.lox', fileContents:'This is a merge sort.'},{fileName:'Inheritance.lox', fileContents:JLOX_INHERITANCE}])
+    const [fileState, setFileState] = useState<FileState>([{fileName:'spec.lox', fileContents:JLOX_SPEC}, {fileName:'MergeSort.lox', fileContents:'fun fibonacci(n){ if(n < 2) { return 1; } else { return fibonacci(n-2) + fibonacci(n-1); } } print fibonacci(28);'},{fileName:'Inheritance.lox', fileContents:JLOX_INHERITANCE}])
     const [selectedFile, setSelectedFile] = useState<string>('spec.lox')
 
     const value = {

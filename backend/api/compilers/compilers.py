@@ -78,15 +78,9 @@ def interpret(
     source:CompilerRequest,
 ):
     print('starting to interpret')
-    print(os.getcwd())
-    print(os.path.join(os.path.dirname(__file__), 'jlox.jar'))
-    for dirpath, dirnames, filenames in os.walk('./backend'):
-        print(dirpath)
-        if(dirpath[0:7] != "./client" ):
-            for f in filenames:
-                print(os.path.join(dirpath, f))
 
-    command = ["java","-cp", "backend/jlox.jar", "lox.Lox", "source", 'print "hello world!"; print "This is another test of hello world! This was written by the lox compiler."; print "This is yet another example of output.";']
+    command = ["java","-cp", "backend/jlox.jar", "lox.Lox", "source", source["fileContents"]]
+
     command = [i for i in command if i] 
     print('after command')
     s_log_file = StringIO()
