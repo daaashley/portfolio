@@ -14,7 +14,7 @@ const END_HASH = "7f021a1415b86f2d013b2618fb31ae53"
 
 export const CompilerWindow = () => {
     const [fileToRun, setFileToRun] = useState(null)
-    const [compilerOutput, setCompilerOutput] = useState('jlox 1.0.1 >')
+    const [compilerOutput, setCompilerOutput] = useState(null)
     const [running, setRunning] = useState(false)
     const { fileState, setFileState, selectedFile, setSelectedFile } = useEditorState()
 
@@ -55,7 +55,6 @@ export const CompilerWindow = () => {
         }
         else if(data == END_HASH){
             setRunning(false)
-            setCompilerOutput('Completed in ~ms.')
 
         } else {
             setCompilerOutput(data)

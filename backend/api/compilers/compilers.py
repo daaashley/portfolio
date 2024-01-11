@@ -1,12 +1,11 @@
 import json
-import os
+import time
 import multiprocessing as mp
 from io import BytesIO, StringIO
 import asyncio
 from subprocess import PIPE, CalledProcessError, Popen  # nosec B404
 from concurrent.futures import ProcessPoolExecutor
-from time import sleep
-from typing import Any, Dict, List
+
 from queue import Empty
 from loguru import logger
 
@@ -69,7 +68,10 @@ def execute(cmd):
         yield "Compiler Canceled"
     elif return_code:
         raise CalledProcessError(return_code, cmd)
+    return "DONE"
 
+def clock_wrap(source):
+    return 'var start = clock(); ' + source + 'var time = clock() - start; print "Completed in ~" + time + " seconds. ";'
 
 
 # java -cp lox.jar lox.Lox
@@ -79,7 +81,7 @@ def interpret(
 ):
     print('starting to interpret')
 
-    command = ["java","-cp", "backend/jlox.jar", "lox.Lox", "source", source["fileContents"]]
+    command = ["java","-cp", "backend/jlox.jar", "lox.Lox", "source", clock_wrap(source["fileContents"])]
 
     command = [i for i in command if i] 
     print('after command')
@@ -98,7 +100,7 @@ def interpret(
 def long_running_task(q: mp.Queue, source: CompilerRequest) -> str:
     print('starting long running task')
     interpret(q=q,source=source)
-    return "done"
+    return "DONE"
 
 @ws.websocket("/compiler")
 async def websocket_endpoint(websocket: WebSocket):
@@ -124,11 +126,12 @@ async def websocket_endpoint(websocket: WebSocket):
                     print('after attr check')
                     await websocket.send_text(START_HASH)
                     loop = asyncio.get_event_loop()
-                    result = await loop.run_in_executor(pool, long_running_task, q, source_data_dict)
+                    result = loop.run_in_executor(pool, long_running_task, q, source_data_dict)
 
                     #subprocess.run(["java", "-cp", "../../lox/jlox-1.0.1.jar", "lox.Lox"])
+                start_time = time.perf_counter()
                 while True:
-                
+                    
                     # None of the coroutines called in this block (e.g. send_json())
                     # will yield back control. asyncio.sleep() does, and so it will allow
                     # the event loop to switch context and serve multiple requests
@@ -136,6 +139,9 @@ async def websocket_endpoint(websocket: WebSocket):
                     await asyncio.sleep(0)
 
                     try:
+                        if time.perf_counter() - start_time > 30:
+                            await websocket.send_text("Compiler timed out.\nExecution either failed or passed 30 second compile time limit.")
+                            break
                         # see if our long running task has some intermediate result.
                         # Will result None if there isn't any.
                         queue_result = q.get(block=False)
@@ -157,8 +163,8 @@ async def websocket_endpoint(websocket: WebSocket):
                             # break out of the while loop.
                             return
                     
-                
-                    if result == "done":
+                    
+                    if result == "DONE" or result.done():
                         print('done 1')
                         try:
                             await websocket.send_text(END_HASH)

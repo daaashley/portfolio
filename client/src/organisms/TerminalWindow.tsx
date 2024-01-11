@@ -22,13 +22,15 @@ export const TerminalWindow = ({ compilerOutput, running }) => {
   }
 
   useEffect(()=>{
+    if(compilerOutput){
     addOutput(compilerOutput)
+    }
   },[compilerOutput])
 
   
   // Terminal has 100% width by default so it should usually be wrapped in a container div
   return (
-    <Terminal height={'100vh'} name='jlox 1.0.1 ' colorMode={ColorMode.Dark} onInput={terminalInput => console.log(`New terminal input received: '${terminalInput}'`)}>
+    <Terminal height={'100vh'} name='jlox 1.0.1' prompt={'jlox 1.0.1 > '} colorMode={ColorMode.Dark} onInput={terminalInput => console.log(`New terminal input received: '${terminalInput}'`)}>
       {terminalLineData}
     </Terminal>
   )

@@ -3,6 +3,10 @@
   font-size:12px;
 }
 
+.react-terminal-line {
+  font-size: 14px !important;
+}
+
 .bouncing-loader {
   display: inline-flex;
   justify-content: center;

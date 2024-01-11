@@ -110,7 +110,7 @@ FROM python-base as fastapi-app
 
 VOLUME /data
 COPY --from=builder-base $poetry_home $poetry_home
-COPY --from=builder-base /usr/lib/x86_64-linux-gnu/ /usr/lib/x86_64-linux-gnu/
+
 
 
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
