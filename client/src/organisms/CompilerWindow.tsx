@@ -14,7 +14,7 @@ const END_HASH = "7f021a1415b86f2d013b2618fb31ae53"
 
 export const CompilerWindow = () => {
     const [fileToRun, setFileToRun] = useState(null)
-    const [compilerOutput, setCompilerOutput] = useState(null)
+    const [compilerOutput, setCompilerOutput] = useState([])
     const [running, setRunning] = useState(false)
     const { fileState, setFileState, selectedFile, setSelectedFile } = useEditorState()
 
@@ -46,6 +46,20 @@ export const CompilerWindow = () => {
      
     }
 
+    const clear = () => {
+        setCompilerOutput([])
+    }
+
+    const lineFormatted = (compilerOutput) => {
+        let formatted = compilerOutput
+        for(let i = 0; i < compilerOutput.length; i = i + 70) {
+          if(compilerOutput[i]){
+            formatted = [formatted.slice(0, i), '\n', formatted.slice(i)].join('')
+          }
+        }
+        return formatted
+      }
+
     const onMessage = (message) => {
         console.log('message!: ',message)
         const data = message?.data
@@ -57,12 +71,12 @@ export const CompilerWindow = () => {
             setRunning(false)
 
         } else {
-            setCompilerOutput(data)
+
+            setCompilerOutput((prevCompilerOutput)=>[...prevCompilerOutput,<span style={{ fontSize: 14 }}>{data}</span>])
         }
         
         console.log('data: ', data)
     }
-
 
     useEffect(()=>{
         console.log('message')
@@ -83,7 +97,7 @@ export const CompilerWindow = () => {
                     <Editor onChange={writeTempCache} value={fileState.filter((file) => { return file.fileName == selectedFile })[0]?.fileContents} height={"100vh"} width={"100%"} theme='vs-dark' defaultLanguage="python" />
                 </div>
                 <div style={{ display: 'inline-block', width: '50%',top:'85px',position:'absolute' }}>
-                    <TerminalBar files={fileState} run={run} fileToRun={fileToRun} setFileToRun={setFileToRun} />
+                    <TerminalBar files={fileState} run={run} clear={clear} fileToRun={fileToRun} setFileToRun={setFileToRun} />
                     <TerminalWindow compilerOutput={compilerOutput} running={running} />
                 </div>
             </div>

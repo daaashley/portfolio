@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useState} from 'react';
+import { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -27,13 +27,13 @@ const style = {
     boxShadow: 24,
     p: 4,
     zIndex: 100
-  };
+};
 
 export const EditorBar = ({ selectedFile, files, setSelectedFile, setFileState }) => {
     const [open, setOpen] = useState(false)
     const [newFileName, setNewFileName] = useState("untitled.lox")
     const handleClose = () => setOpen(false);
-    
+
     const closeFile = (e: any, file: any) => {
         e.stopPropagation();
         const remainingFiles = files.filter((candidate) => { return candidate.fileName != file.fileName })
@@ -67,26 +67,26 @@ export const EditorBar = ({ selectedFile, files, setSelectedFile, setFileState }
                         )
                     })}
                     <Grid>
-                        <IconButton onClick={(e) => { openModal()}} aria-label="close" style={{ color: '#cccccc', float: 'right', position: 'relative' }} >
+                        <IconButton onClick={(e) => { openModal() }} aria-label="close" style={{ color: '#cccccc', float: 'right', position: 'relative' }} >
                             <AddIcon fontSize="small" />
                         </IconButton></Grid>
-                    
+
                 </Grid>
             </Box>
             <Modal
-                        open={open}
-                        onClose={handleClose}
-                    >
-                        <Paper sx={style}>
-                            <Typography id="modal-modal-title" variant="h6" component="h2">
-                               File Name 
-                            </Typography>
-                            <Grid>
-                            <TextField placeholder='untitled' id="outlined-basic" label="Name" onChange={(e)=>{setNewFileName(e.target.value)} }/>
-                            <Button style={{margin:10}} variant="outlined" onClick={()=>{addFile()}}>Create</Button>
-                            </Grid>
-                        </Paper>
-                    </Modal>
+                open={open}
+                onClose={handleClose}
+            >
+                <Paper sx={style}>
+                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                        File Name
+                    </Typography>
+                    <Grid>
+                        <TextField placeholder='untitled' id="outlined-basic" label="Name" onChange={(e) => { setNewFileName(e.target.value) }} />
+                        <Button style={{ margin: 10 }} variant="outlined" onClick={() => { addFile() }}>Create</Button>
+                    </Grid>
+                </Paper>
+            </Modal>
         </Box>
     );
 }
