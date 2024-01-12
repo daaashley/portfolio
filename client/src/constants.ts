@@ -79,6 +79,17 @@ class David < Boy {
 
 David().speak();`
 
+export const JLOX_FIBONACCI = `
+fun fibonacci(n) { 
+  if(n < 2) { 
+    return 1; 
+  } else { 
+    return fibonacci(n-2) + fibonacci(n-1); 
+  } 
+} 
+
+print fibonacci(28);`
+
 export const JLOX_INHERITANCE = `
 // Tests Single Inheritance and sub/superclass chain.
 

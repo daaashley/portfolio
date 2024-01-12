@@ -1,15 +1,9 @@
 import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import NotInterested from '@mui/icons-material/NotInterested';
 import PlayIcon from '@mui/icons-material/PlayArrow'
 import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
 import { Menu, MenuItem, Tooltip } from '@mui/material';
 
 export const TerminalBar = ({files, run, fileToRun, setFileToRun, clear}) => {
@@ -30,7 +24,6 @@ export const TerminalBar = ({files, run, fileToRun, setFileToRun, clear}) => {
       };    
 
     const handleRun = (fileName:string) => {
-        console.log('setting fileName to run: ', fileName)
         setFileToRun(fileName) 
         run(fileName)
         setAnchorEl(null);

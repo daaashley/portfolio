@@ -4,7 +4,7 @@ import { TerminalWindow } from "../organisms/TerminalWindow"
 import { EditorBar } from "../organisms/EditorBar"
 import { TerminalBar } from "../organisms/TerminalBar"
 import { useEditorState } from "../context/editor-state-context";
-import { useCallback, useEffect, useRef, useState } from "react";
+import {  useEffect, useRef, useState } from "react";
 import { useSocket } from "../hooks/compiler-socket"
 
 const START_HASH = "ea2b2676c28c0db26d39331a336c6b92"
@@ -23,10 +23,7 @@ export const CompilerWindow = () => {
     const fileCacheRef = useRef(fileState.filter((file) => { return file.fileName == selectedFile })[0]?.fileContents)
 
     const writeTempCache = (value: string) => {
-        console.log('ref: ',fileCacheRef)
-        console.log('new value: ',value)
         fileCacheRef.current = value
-        console.log('ref: ',fileCacheRef)
     }
 
     const setSelectedHelper = (newlySelected: string) => {
@@ -41,9 +38,7 @@ export const CompilerWindow = () => {
 
     const run = (fileToRun) => {
         const fileIndex = fileState.findIndex((file)=>{return file.fileName == fileToRun})
-        console.log('file index: ',fileIndex,fileState[fileIndex])
         socket.send(JSON.stringify({fileContents:fileState[fileIndex].fileContents, fileName:fileState[fileIndex].fileName}))
-     
     }
 
     const clear = () => {
@@ -61,9 +56,7 @@ export const CompilerWindow = () => {
       }
 
     const onMessage = (message) => {
-        console.log('message!: ',message)
         const data = message?.data
-        // Do something with the data
         if(data == START_HASH){
             setRunning(true)
         }
@@ -72,14 +65,12 @@ export const CompilerWindow = () => {
 
         } else {
 
-            setCompilerOutput((prevCompilerOutput)=>[...prevCompilerOutput,<span style={{ fontSize: 14 }}>{data}</span>])
+            setCompilerOutput((prevCompilerOutput)=>[...prevCompilerOutput,<span style={{ fontSize: 14 }}>{lineFormatted(data)}</span>])
         }
-        
         console.log('data: ', data)
     }
 
     useEffect(()=>{
-        console.log('message')
         socket.onmessage = function (message) {
             onMessage(message)
         }

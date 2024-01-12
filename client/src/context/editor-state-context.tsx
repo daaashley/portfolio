@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { JLOX_INHERITANCE, JLOX_SPEC } from '../constants'
+import { JLOX_FIBONACCI, JLOX_INHERITANCE, JLOX_SPEC } from '../constants'
 
 interface IFile {
     fileName: string
@@ -19,8 +19,8 @@ interface IEditorContext {
 const EditorStateContext = React.createContext<IEditorContext | undefined>(undefined)
 
 const EditorStateProvider = ({ children }: { children: JSX.Element }) => {
-    const [fileState, setFileState] = useState<FileState>([{fileName:'spec.lox', fileContents:JLOX_SPEC}, {fileName:'MergeSort.lox', fileContents:'fun fibonacci(n){ if(n < 2) { return 1; } else { return fibonacci(n-2) + fibonacci(n-1); } } print fibonacci(28);'},{fileName:'Inheritance.lox', fileContents:JLOX_INHERITANCE}])
-    const [selectedFile, setSelectedFile] = useState<string>('spec.lox')
+    const [fileState, setFileState] = useState<FileState>([{fileName:'Spec.lox', fileContents:JLOX_SPEC}, {fileName:'Fibonacci.lox', fileContents:JLOX_FIBONACCI},{fileName:'Inheritance.lox', fileContents:JLOX_INHERITANCE}])
+    const [selectedFile, setSelectedFile] = useState<string>('Spec.lox')
 
     const value = {
         setFileState: setFileState,
