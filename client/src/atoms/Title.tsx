@@ -9,7 +9,7 @@ export const Title = ({ title }: TitleProps) => {
         <Typography
             variant="h4"
             component="div"
-            sx={{ color: "#ccd6f6", maxWidth: 700 }}
+            sx={{ color: 'rgb(94 234 212)', maxWidth: 700 }}
         >
             {title}
         </Typography>

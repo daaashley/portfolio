@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { Post } from "../organisms/Post"
 import { getPosts } from "../api"
 import { IPost } from "../types"
+import {POSTS} from "../constants"
 import "../App.css"
 type FeedProps = {
     isSinglePost: boolean
@@ -9,8 +10,7 @@ type FeedProps = {
 }
 
 export const Feed = ({ isSinglePost, post }: FeedProps) => {
-    const [posts, setPosts] = useState([])
-
+    const [posts, setPosts] = useState<IPost[]>(POSTS)
     const loadPosts = async () => {
         if (isSinglePost) {
             setPosts([post])
@@ -24,7 +24,7 @@ export const Feed = ({ isSinglePost, post }: FeedProps) => {
     }
 
     useEffect(() => {
-        loadPosts()
+        // loadPosts()
     }, [])
     console.log('posts: ', posts)
     return (

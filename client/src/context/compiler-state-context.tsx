@@ -1,4 +1,4 @@
-import { useEffect, useState, createContext, ReactChild } from "react";
+import { createContext, ReactChild } from "react";
 
 const ws = new WebSocket("ws://localhost:8000/ws/compiler");
 

@@ -20,8 +20,6 @@ from backend.queue import message_queue
 START_HASH = "ea2b2676c28c0db26d39331a336c6b92"
 END_HASH = "7f021a1415b86f2d013b2618fb31ae53"
 
-
-
 setup_logging()
 
 # do not re-create the pool with every request, only create it once
@@ -41,7 +39,6 @@ ws.add_middleware(
 
 
 def execute(cmd):
-    print('starting execute')
     try:
         popen = Popen(  # nosec B602, B607, B603
             cmd,
@@ -79,12 +76,8 @@ def interpret(
     q: mp.Queue,
     source:CompilerRequest,
 ):
-    print('starting to interpret')
-
     command = ["java","-cp", "backend/jlox.jar", "lox.Lox", "source", clock_wrap(source["fileContents"])]
-
     command = [i for i in command if i] 
-    print('after command')
     s_log_file = StringIO()
 
     for std_out_log in execute(command):
@@ -98,40 +91,28 @@ def interpret(
 
 
 def long_running_task(q: mp.Queue, source: CompilerRequest) -> str:
-    print('starting long running task')
     interpret(q=q,source=source)
     return "DONE"
 
 @ws.websocket("/compiler")
 async def websocket_endpoint(websocket: WebSocket):
-    print('accepting')
     await websocket.accept()
-    print('accepted :)')
     q = message_queue.get_queue()
     source_data = ""
     try:
         while True:
-            print('trying to recieve text')
             source_data = await websocket.receive_text()
-            print('recieved text')
-            print('Compiler data: ', source_data)
             if source_data == None or source_data == '' or len(source_data) < 30:
                 print('null or empty string value from ws')
             else:
-                print('Data was not null')
                 source_data_dict = json.loads(source_data)
-                print('After json loads')
-                print(source_data_dict)
                 if source_data_dict['fileName'] and source_data_dict['fileContents']:
-                    print('after attr check')
                     await websocket.send_text(START_HASH)
                     loop = asyncio.get_event_loop()
                     result = loop.run_in_executor(pool, long_running_task, q, source_data_dict)
 
-                    #subprocess.run(["java", "-cp", "../../lox/jlox-1.0.1.jar", "lox.Lox"])
                 start_time = time.perf_counter()
                 while True:
-                    
                     # None of the coroutines called in this block (e.g. send_json())
                     # will yield back control. asyncio.sleep() does, and so it will allow
                     # the event loop to switch context and serve multiple requests
@@ -149,15 +130,12 @@ async def websocket_endpoint(websocket: WebSocket):
                         # if q.get() throws Empty exception, then nothing was
                         # available (yet!).
                         queue_result = None
-                        #print('queue result empty')
                     
                     # If there is an intermediate result, let's send it to the client.
                     if queue_result:
-                        print("q result: ", queue_result)
                         try:
                             await websocket.send_text(queue_result)
                         except (WebSocketDisconnect, Exception):
-                            print('exception 1')
                             # This happens if client has moved on,
                             await websocket.close()
                             # break out of the while loop.
@@ -165,7 +143,6 @@ async def websocket_endpoint(websocket: WebSocket):
                     
                     
                     if result == "DONE" or result.done():
-                        print('done 1')
                         try:
                             await websocket.send_text(END_HASH)
 
@@ -178,9 +155,7 @@ async def websocket_endpoint(websocket: WebSocket):
                             # Make sure we break out of the infinte While loop.
                             break
 
-
     except WebSocketDisconnect:
-        print('this one')
         await websocket.close()  # user has closed or refreshed browser before sending a request, close the connection
         return
 
