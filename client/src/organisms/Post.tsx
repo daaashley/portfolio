@@ -11,7 +11,7 @@ type PostProps = {
 };
 
 export const Post = ({ isFeed, post }: PostProps) => {
-    const date = new Date(post.date).toDateString()
+    const date = new Date(post.date).toLocaleDateString('en-US')
     return (
         <div
             style={{
@@ -37,18 +37,27 @@ export const Post = ({ isFeed, post }: PostProps) => {
                     <Typography
                         variant="h6"
                         component="div"
-                        sx={{ color: "#ccd6f6", maxWidth: 700, fontSize: 16, marginRight: 1 }}
+                        sx={{ color: "#ccd6f6", maxWidth: 700, fontSize: 14, marginRight: 1 }}
                     >
                         {post.author}
                     </Typography>
                     <Typography variant="h6"
-                        component="div" sx={{ color: "#ccd6f6", maxWidth: 700, fontSize: 16 }}>{"•"}</Typography>
+                        component="div" sx={{ color: "#ccd6f6", maxWidth: 700, fontSize: 14 }}>{"•"}</Typography>
+                        <Typography
+                        variant="h6"
+                        component="div"
+                        sx={{ color: "#ccd6f6", maxWidth: 700, fontSize: 14, marginLeft: 1, marginRight:1 }}
+                    >
+                        {post.mins + ' min read'}
+                    </Typography>
+                    <Typography variant="h6"
+                        component="div" sx={{ color: "#ccd6f6", maxWidth: 700, fontSize: 14 }}>{"•"}</Typography>
                     <Typography
                         variant="h6"
                         component="div"
-                        sx={{ color: "#ccd6f6", maxWidth: 700, fontSize: 16, marginLeft: 1 }}
+                        sx={{ color: "#ccd6f6", maxWidth: 700, fontSize: 14, marginLeft: 1 }}
                     >
-                        {date}
+                        {"Published "+date}
                     </Typography></Box>
 
                 <div style={{ marginTop: 12, marginBottom: 12 }}>
@@ -57,9 +66,9 @@ export const Post = ({ isFeed, post }: PostProps) => {
                         src={post.imageUrl}
                     />
                 </div>
-                <Link to={`/posts/${post.id}`} state={{ post: post }} style={{ textDecoration: 'none' }}>
+                {isFeed ? (<Link to={`/posts/${post.id}`} state={{ post: post }} style={{ textDecoration: 'none' }}>
                     <Body isFeed={isFeed} body={post.body} id={post.id} />
-                </Link>
+                </Link>):(<Body isFeed={isFeed} body={post.body} id={post.id} />)}
                 {getToken() && (
                     <Link to={`/posts/${post.id}/update`} state={{ post: post }}>
                         <Button>Edit Post</Button>

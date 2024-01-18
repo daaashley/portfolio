@@ -88,11 +88,11 @@ export const CompilerWindow = () => {
     return (
         <div style={{ width: "100%", marginTop: '20px' }}>
             <div >
-                <div style={{ display: 'inline-block', width: '50%' }}>
+                <div className="editorContainer" style={{ display: 'inline-block', width: '50%' }}>
                     <EditorBar selectedFile={selectedFile} setSelectedFile={setSelectedHelper} files={fileState} setFileState={setFileState} />
-                    <Editor onChange={(value)=>{writeTempCache(value,selectedFile)}} value={fileState.filter((file) => { return file.fileName == selectedFile })[0]?.fileContents} height={"100vh"} width={"100%"} theme='vs-dark' defaultLanguage="c" />
+                    <Editor  onChange={(value)=>{writeTempCache(value,selectedFile)}} value={fileState.filter((file) => { return file.fileName == selectedFile })[0]?.fileContents} className="editorSection" height={"1000px"} width={"100%"} theme='vs-dark' defaultLanguage="c" />
                 </div>
-                <div style={{ display: 'inline-block', width: '50%',top:'85px',position:'absolute' }}>
+                <div className="terminalContainer" style={{ display: 'inline-block', width: '50%',top:'85px',position:'absolute',height:'1000px' }}>
                     <TerminalBar files={fileState} run={run} clear={clear} fileToRun={fileToRun} setFileToRun={setFileToRun} />
                     <TerminalWindow compilerOutput={compilerOutput} running={running} />
                 </div>

@@ -34,6 +34,8 @@ export const Feed = ({ isSinglePost, post }: FeedProps) => {
                 flexDirection: "column",
                 maxWidth: 700,
                 justifyContent: "center",
+                paddingLeft:6,
+                paddingRight:4
             }}
             className={"Feed"}
         >{

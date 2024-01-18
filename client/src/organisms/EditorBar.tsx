@@ -20,8 +20,9 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 400,
-    border: '2px solid #000',
+    border: '2px solid black',
     boxShadow: 24,
+    background:'#031627',
     p: 4,
     zIndex: 100
 };
@@ -47,13 +48,13 @@ export const EditorBar = ({ selectedFile, files, setSelectedFile, setFileState }
         setSelectedFile(newFileName)
     }
     return (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1, }}>
 
             <Box overflow={'auto'} whiteSpace={'nowrap'} sx={{ flexGrow: 1, background: '#1e1e1e', height: '30px' }}>
                 <Grid container  >
                     {files.map((file) => {
                         return (
-                            <Grid>
+                            <Grid style={{zIndex:100}}>
                                 <a href="#" style={{ textDecoration: 'none' }} onClick={(e) => { console.log('outer'); e.stopPropagation(); setSelectedFile(file.fileName) }}> <Box sx={file.fileName == selectedFile ? { flexGrow: 1, background: '#4f4f4f', border: '0.5px solid #3c3c3c', height: '30px', width: '120px', display: 'flex', justifyContet: 'center', } : { flexGrow: 1, background: '#1e1e1e', border: '0.5px solid #3c3c3c', height: '30px', width: '120px', display: 'flex', justifyContet: 'center', }}>
                                     <Tooltip title={file.fileName}><Typography align={'center'} style={{ flex: 1, textAlign: 'center', alignSelf: 'center', color: '#cccccc' }}>{file.fileName.length > 10 ? file.fileName.substring(0, 9) + '...' : file.fileName}</Typography></Tooltip>
                                     <IconButton onClick={(e) => { closeFile(e, file) }} aria-label="close" style={{ color: '#cccccc' }} >
@@ -75,12 +76,12 @@ export const EditorBar = ({ selectedFile, files, setSelectedFile, setFileState }
                 onClose={handleClose}
             >
                 <Paper sx={style}>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                    <Typography color='rgb(94 234 212)' id="modal-modal-title" variant="h5" component="h2">
                         File Name
                     </Typography>
                     <Grid>
-                        <TextField placeholder='untitled' id="outlined-basic" label="Name" onChange={(e) => { setNewFileName(e.target.value) }} />
-                        <Button style={{ margin: 10 }} variant="outlined" onClick={() => { addFile() }}>Create</Button>
+                        <TextField sx={{color:'white'}} placeholder='untitled' id="filled-basic" variant='filled' onChange={(e) => { setNewFileName(e.target.value) }} focused/>
+                        <Button style={{ margin: 10,background:'rgb(94 234 212)' }} variant="contained" onClick={() => { addFile() }}>Create</Button>
                     </Grid>
                 </Paper>
             </Modal>

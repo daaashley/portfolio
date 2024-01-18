@@ -1,10 +1,22 @@
 :root {
   background-color: #011627;
   font-size:12px;
+  --pointerX: 50vw;
+	--pointerY: 50vh;
 }
 
 body {
   font-family: "Roboto", sans-serif;
+  
+}
+
+body:before {
+	content: '';
+	position: fixed;
+	width: 100%;
+	height: 100%;
+  pointer-events: none;
+	background: radial-gradient(circle 50vmax at var(--pointerX) var(--pointerY), rgba(3,64,114,0.2) 25%, rgba(1,22,39,0.5) 80%, rgba(1,22,39,0.95) 100%);
 }
 
 pre {
@@ -23,6 +35,33 @@ pre {
   display: block;
   word-wrap: break-word;
   user-select: text !important;
+}
+
+
+
+#filled-basic {
+  color:white;
+}
+
+  @media screen and (max-width: 800px) {
+    .editorContainer {
+      display: block !important;
+      width:100% !important;
+      
+    }
+    .editorSection {
+      height: 500px !important;
+    }
+    .terminalContainer {
+      display: block !important;
+      width:100% !important;
+      position: absolute !important;
+      top:585px !important;
+    }
+  }
+
+.react-terminal-wrapper {
+  max-height: 1000px;
 }
 
 .react-terminal-line {

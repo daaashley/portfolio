@@ -46,8 +46,8 @@ type BodyProps = {
 
 export const Body = ({ isFeed, body, id }: BodyProps) => {
     const html = isFeed ? body.substring(0, 500) + "... See more" : body
-    const markup = { __html: html }
     const bodyArray = body.split('<br/><br/>')
+    const postArray = isFeed ? [bodyArray[0], bodyArray[1], bodyArray[2], bodyArray[3]+ "<a>...read more</a>"] : bodyArray
     return (
         <div>
 
@@ -63,7 +63,7 @@ export const Body = ({ isFeed, body, id }: BodyProps) => {
                 }}
                 gutterBottom
             >{
-                bodyArray.map((element) => {
+                postArray.map((element) => {
                     if(element == '<br/><br/>'){
                         return <></>
                     } else if(element.includes('<snippet>')){
@@ -75,12 +75,24 @@ export const Body = ({ isFeed, body, id }: BodyProps) => {
                         let src = element.substring(6,element.length - 7)
                         console.log('src: ',src)
                         return <img style={{width:'100%'}} src={src}/>
+                    }else if (element.includes('<h3>')){
+                        let src = element.substring(6,element.length - 7)
+                        console.log('src: ',src)
+                        return <p style={{fontSize:'20px', color:'#ccd6f6'}}>{element.substring(5,element.length -6)}</p>
 
-                    } else if (element.includes('<a>')){
-                        let start = element.indexOf('<a')
+                    } else if (element.includes('<i')){
+                        let start = element.indexOf('<i')
+                        let endOfSrc = element.indexOf('>')
                         let end = element.indexOf('</')
-                        return <p>{element.substring(0,start)}<a style={{color:"rgb(94 234 212)",fontStyle:'italic'}}>{element.substring(start+3,end)}</a>{element.substring(end+4 ,element.length)}</p>
-                } else {
+                        return <p>{element.substring(0,start)}<a href={element.substring(start + 3,endOfSrc)} style={{color:"rgb(94 234 212)",fontStyle:'italic',textDecoration:'none'}}>{element.substring(endOfSrc+1,end)}</a>{element.substring(end+4 ,element.length)}</p>
+                    } else if (element.includes('<a')){
+                        let start = element.indexOf('<a')
+                        let endOfSrc = element.indexOf('>')
+                        let end = element.indexOf('</')
+                        return <p>{element.substring(0,start)}<a href={element.substring(start + 3,endOfSrc)} style={{color:"rgb(94 234 212)"}}>{element.substring(endOfSrc+1,end)}</a>{element.substring(end+4 ,element.length)}</p>
+                 
+                    } else {
+
                         return <p>{element}</p>
                     }
                 })

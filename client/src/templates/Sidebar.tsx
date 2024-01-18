@@ -1,4 +1,6 @@
 import { Box, Typography } from "@mui/material"
+import { POSTS } from "../constants"
+import { Link } from "react-router-dom"
 
 
 
@@ -32,7 +34,15 @@ export const Sidebar = () => {
                 >
                     viibeeng
                 </Typography>
-
+                {POSTS.map((post)=>{
+                    return (<Link to={"/posts/" + post.id} state={{ post: post }} ><Typography
+                    variant="h6"
+                    component="div"
+                    sx={{ color: 'rgb(94 234 212)' }}
+                >
+                    {post.title}
+                </Typography></Link>)
+                })}
             </Box>
         </div>
     )

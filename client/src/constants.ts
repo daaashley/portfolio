@@ -109,34 +109,39 @@ class David < Boy {
 
 David().speak();`
 
-export const POSTS = [{ id:'1',author:'David',title: 'Building The Lox Interpreter', date: 1705205782000, 
-imageUrl: 'https://lukemerrick.com/posts/static/julox/crafting_interpreters_mountain_edited.png', 
+export const POSTS = [{ id:'1',author:'David Ashley',title: 'Building The Lox Interpreter', date: 1705205782000, 
+imageUrl: '/code.png',  
+mins:20,
 body: `
+<h3>Beginnings</h3>
+<br/><br/>
 So you wake up one day and decide you want to build an interpreter?
 <br/><br/>
- In an attempt to dive deeper into the fundamentals of computing and computer languages, I was fortunate to stumble across Robert Nystrom’s <a>Crafting Interpreters</a>. Prior to this book, I purchased Terrence Parr’s Language Implementation Patterns, a resource aimed at providing broader strokes around design patterns generally in the language world. I began working through the text and was able to establish the bare bones of a working recursive descent parser. After further progress, I found the book to be a little grandiose in scope and I abandoned the effort altogether. 
+ In an attempt to dive deeper into the fundamentals of computing and computer languages, I was fortunate to stumble across Robert Nystrom’s <i https://craftinginterpreters.com/>Crafting Interpreters</i>. Prior to this book, I purchased Terrence Parr’s Language Implementation Patterns, a resource aimed at providing broader strokes around design patterns generally in the language world. I began working through the text and was able to establish the bare bones of a working recursive descent parser. After further progress, I found the book to be a little grandiose in scope and I abandoned the effort altogether. 
  <br/><br/>
 Upon opening Crafting Interpreters some time later, my spark to write a language reignited as the book seemed to lay out a palpable route toward writing a grammar that rose to the bar of being Turing-complete, and presumably quite a bit higher. The text set forth a guide in building a toy language called Lox, detailing the specific grammar and conventions we would be compiling from source. 
 <br/><br/>
-Lox is a dynamically-typed object oriented programming language with roots in C. Basically, it looks a lot like JavaScript but is classically object oriented—it does not use <a>prototypal inheritance</a>. An example of the syntax below:
+Lox is a dynamically-typed object oriented programming language with roots in C. Basically, it looks a lot like JavaScript but is classically object oriented—it does not use <a https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain>prototypal inheritance</a>. An example of the syntax below:
 <br/><br/>
 <snippet>2ef5e243d7952a47740916f66e9018a2</snippet>
 <br/><br/>
 Lox is complete with logical expressions, operators, data types, classes, objects, attributes, properties, block scoping, inheritance, and many of the other standard features one would expect in a general-purpose computing language. 
 <br/><br/>
+<h3>Parsing</h3>
+<br/><br/>
 After laying out the language spec, the book starts by building the lexer. This is the part of the program that decomposes source code word by word into an array of ordered tokens that are assigned a token value 
 <br/><br/>
 <snippet>43909f211f3484c5cc8021421e7600c3</snippet>
 <br/><br/>
-so that the next steps of our interpreter will be able to identify and recognize a standard set of source code inputs, that it can then organize, translate, and interpret. Once the source code is tokenized, we can pass our tokens into the parser. The parser takes our tokens and parses them into an intermediate representation, in this case, an abstract syntax tree (AST). The job of the parser is to arrange the input tokens into a data structure that maintains an order of execution that is meaningful and related to the manner in which they were written, like in the tree below
+so that the next steps of our interpreter will be able to identify and recognize a standard set of source code inputs, that it can then organize, translate, and interpret. Once the source code is tokenized, we can pass our tokens into the parser. The parser takes our tokens and parses them into an intermediate representation, in this case, an <a https://en.wikipedia.org/wiki/Abstract_syntax_tree>abstract syntax tree (AST)</a>. The job of the parser is to arrange the input tokens into a data structure that maintains an order of execution that is meaningful and related to the manner in which they were written, like in the tree below
 <br/><br/>
 <img>https://ruslanspivak.com/lsbasi-part7/lsbasi_part7_ast_01.png</img>
 <br/><br/>
 We can represent 2 * 7 + 3 in the following tree as an ‘expression’. In the above AST, the rules of an binary expression dictate that we can have two ‘terms’, left-hand side (LHS) and a right-hand side(RHS) and an mathematical ‘operator’ performing some arithmetic between the two resolved terms. The ‘terms’ are composed of ‘factors’ that are purely arithmetic, not involving other expression that you will have to resolve further. As you add more syntax to your language, this can all get very complicated, especially if you plan on building a compiler/interpreter that needs to recursively descend the tree according to your languages rules. At this point, we take a step back and visit computer science theory to aid in the building of our program. 
 <br/><br/>
-The book introduces <a>Backus-Naur form</a>, a notation invented by computer scientists used to describe the syntax of programming and formal languages. We can’t just write a set of switch statements to handle every conceivable combination of valid grammar that a programmer might type in as source code for the language we end up defining. There are an infinite number of valid strings that could be passed through our grammar rules, so we use Backus-Naur notation to cleanly represent our grammar and all strings it will allow. An example from a portion of the Backus-Naur form of the Lox grammar can be seen below.
+The book introduces <a https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form>Backus-Naur form</a>, a notation invented by computer scientists used to describe the syntax of programming and formal languages. We can’t just write a set of switch statements to handle every conceivable combination of valid grammar that a programmer might type in as source code for the language we end up defining. There are an infinite number of valid strings that could be passed through our grammar rules, so we use Backus-Naur notation to cleanly represent our grammar and all strings it will allow. An example from a portion of the Backus-Naur form of the Lox grammar can be seen below.
 <br/><br/>
-<img>./factor.png</img>
+<img>/factor.png</img>
 <br/><br/>
 In our grammar, the above rules (comparison, term, factor, etc.) are known as productions. A production can be a terminal value, or a non-terminal value. A terminal value is a value which stops the recursive descent, it is the last stop in the branch of the tree. A string literal, number, or true\false value in the primary production, for example, would all be terminal values. These are tokens that can be decomposed no further and are returned up the recursion tree as the terminal value. A non-terminal value could be a factor, unary, or a function call. These are productions that are composed of other productions, that we can recursively parse further. 
 <br/><br/>
@@ -146,7 +151,7 @@ A factor, for example, will contain either a division or multiplication operator
 <br/><br/>
 The LHS is expr which we recursively parse further starting with a check of the unary() production. We call previous() to get the most recently parsed token to get the operator string, and the right variable is the result of the unary() call for the RHS.
 <br/><br/>
-<img>./unary.png</img>
+<img>/unary.png</img>
 <br/><br/> 
 We observe that the factor production above (unary (( “/” | “*”) unary )*;) mirrors the factor() parser function perfectly. In fact, every function we end up writing in the Lox program mirrors its Backus-Naur equivalent identically in this way. Don’t believe it? Take the unary parsing method for example
 <br/><br/>
@@ -156,6 +161,8 @@ First we match for a BANG* or MINUS- operator, consume that operator through a c
 <br/><br/>
 Yes, this can take a minute to wrap your head around, but after writing a few of these top-down parsing functions that mirror the grammar, the nascent pattern appears and its like “oh yeah this is definitely how I would do this”. This is known as a top-down parser. There exist bottom-up parsers as well, but we won’t get into that here. There are even parser generator programs that spit out fully functioning parsers for you based on a grammar language you supply. This is how universal this pattern is—it will work for most languages.
 <br/><br/>
+<h3>Variable Resolution</h3>
+<br/><br/>
 If we take a look at Lox.java which contains our main method and starting point for the interpreter, we can see the run function.
 <br/><br/>
 <snippet>ba4c9189939f3d682da477df2230b756</snippet>
@@ -164,9 +171,11 @@ We see first the lexer scans in tokens as the Scanner. Once tokenized, the parse
 <br/><br/>
 <snippet>d4dfa9e1793658747651cc1a39fbf0d4</snippet>
 <br/><br/>
-In our resolver class, we establish a Stack of <String, Boolean> Maps in order to keep track of our execution scopes. If we enter a function declaration in our program during resolution, a map is pushed onto the stack with a string identifying the lexeme it refers to, and a Boolean set to false, so that we know we are not done resolving all possible variables for the current scope. Once the parameters and body of the function have resolved all variables and context, the mapped Boolean is set to true, and the resolver continues through the rest of the statements. Resolver.java and the various resolution types can be explored further if you would like more detail on the inner workings of variable namespacing and resolution.
+In our resolver class, we establish a Stack of String:Boolean Maps in order to keep track of our execution scopes. If we enter a function declaration in our program during resolution, a map is pushed onto the stack with a string identifying the lexeme it refers to, and a Boolean set to false, so that we know we are not done resolving all possible variables for the current scope. Once the parameters and body of the function have resolved all variables and context, the mapped Boolean is set to true, and the resolver continues through the rest of the statements. <a https://github.com/daaashley/lox-interpreter/blob/main/src/main/java/lox/Resolver.java>Resolver.java</a> and the various resolution types can be explored further if you would like more detail on the inner workings of variable namespacing and resolution.
 <br/><br/>
 Now that our scopes have been established and passed to the interpreter, we call interpreter.interpret(statements) to actually execute the expressions and statements that we have created in our parser and added environment context to in our resolver. 
+<br/><br/>
+<h3>Architecture</h3>
 <br/><br/>
 Before we move forward, we should probably take a look at the architecture of our program, so that the interpreter and how it works makes a little bit more sense. The book has you implement the visitor design pattern. The visitor pattern is employed here to reduce the amount of code we write and to simplify the shared interface of our token types across all classes in the interpreter. We achieve this by using an abstract class to define all Expression and Statement token types, with one universal interface.  
 <br/><br/>
@@ -180,7 +189,7 @@ In the resolver, we handle a variable assignment like ‘var isFinished = false;
 <br/><br/>
 <snippet>202de23c62896e665539f07a29cef7f4</snippet>
 <br/><br/>
-Resolve in this case calls our abstract classes accept method on our expression that we need to resolve further. Doesn’t this look familiar? That’s right, this is similar to our recursive descent pattern in our parser, only instead of decomposing grammar down the tree, we are decomposing syntax for the purpose of variable resolution. The accept method calls the correctly overridden method, based on our Expr type and the ‘this’ which refers to the current class that the method is being overridden in. At this point I feel I might be losing most of you as I fail to explain this in a better way. I would go take a look at Resolver.java and Interpreter.java and how each make use of our abstract class methods in Expr.java and Stmt.java.
+Resolve in this case calls our abstract classes accept method on our expression that we need to resolve further. Doesn’t this look familiar? That’s right, this is similar to our recursive descent pattern in our parser, only instead of decomposing grammar down the tree, we are decomposing syntax for the purpose of variable resolution. The accept method calls the correctly overridden method, based on our Expr type and the ‘this’ which refers to the current class that the method is being overridden in. At this point I feel I might be losing most of you as I fail to explain this in a better way. I would go take a look at Resolver.java and <a https://github.com/daaashley/lox-interpreter/blob/main/src/main/java/lox/Interpreter.java>Interpreter.java</a> and how each make use of our abstract class methods in Expr.java and Stmt.java.
 <br/><br/>
  Anyways, if our expr.value we passed to resolve which gets its accept method called ends up being a unary expression, for example, then it will call the Resolver.java unary overridden method which looks like this:
  <br/><br/>
@@ -194,6 +203,8 @@ visitAssignExpr() -> resolve(expr.value) -> expr.value.accept(Resolver) -> visit
 <br/><br/>
 The accept method does the heavy lifting of making sure we are executing the correct overridden method based on our token type and the ‘this’ that is overriding the method.
 <br/><br/>
+<h3>Interpreter</h3>
+<br/><br/>
 Now that we’ve gotten that out of the way, we can look at our actual Interpreter.java to see the execution steps. To parallel the visitAssignExpr above from Resolver.java, we can look at visitAssignExpr as implemented in Interpreter.java.
 <br/><br/>
 <snippet>23f0332e4b92c0d81605ae3803a7a253</snippet>
@@ -206,7 +217,9 @@ Our accept method again is in play here, as it delegates execution to whatever m
 <br/><br/>
 <snippet>419c1b129594b0101123cc4c358de564</snippet>
 <br/><br/>
-After evaluating both LHS and RHS, we match the PLUS operator, and the addition itself is performed and returned. That is it. We have just executed an instruction in our interpreter. Of course, this execution is being done in Java running on the JVM—we are taking a lot for granted here. Namely the JVM is doing garbage collection, compiling itself to bytecode, and then to machine code. But nonetheless we have successfully lexed, parsed, resolved, interpreted, and executed our Lox source code. The result of this addition will be returned back to our visitAssignExpr method at which point it gets stored in our current execution environment, and will sit waiting to be used by other parts of our program when this variable is referenced in the future. 
+After evaluating both LHS and RHS, we match the PLUS operator, and the addition itself is performed and returned. That is it. We have just executed an instruction in our interpreter. Of course, this execution is being done in Java running on the Java Virtual Machine (JVM)—we are taking a lot for granted here. The JVM is compiling our Java code to bytecode which in turn is translated to machine code. It also takes care of garbage collection.  Nonetheless we have successfully lexed, parsed, resolved, interpreted, and executed our Lox source code. The result of this addition will be returned back to our visitAssignExpr method at which point it gets stored in our current execution environment, and will sit waiting to be used by other parts of our program when this variable is referenced in the future. 
 <br/><br/>
-If you’ve made it this far you probably already knew enough about this to make it sensible, or I have just confused you more. Regardless, I applaud you for struggling through my explanation of a topic I only understand very roughly myself. I have omitted many details and encourage you to take a look at the full repository.I also recommend you play around on the Compilers page on my site to see Lox in action where you can compile Lox source code with the actual interpreter I built. 
+If you’ve made it this far you probably already knew enough about this to make it sensible, or I have just confused you. Regardless, I applaud you for struggling through my explanation of a topic I only understand roughly. I have omitted many details and encourage you to take a look at the <a https://github.com/daaashley/lox-interpreter/tree/main>full repository</a>.
+<br/><br/>
+Feel free to visit the <a /compilers>Compilers</a> page to play around with the JLOX interpreter itself. I would hate to have gone through the effort of making this and have no one use it!
 `}]
