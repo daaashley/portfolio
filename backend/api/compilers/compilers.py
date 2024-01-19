@@ -37,7 +37,6 @@ ws.add_middleware(
 )
 
 
-
 def execute(cmd):
     try:
         popen = Popen(  # nosec B602, B607, B603
@@ -50,7 +49,7 @@ def execute(cmd):
     except TypeError as e:
         yield f"Could not excecute script, command line error: {e.args}\n{traceback.format_exc()}"
         return
-    
+
     Job().start(popen.pid)
     for stdout_line in iter(popen.stdout.readline, ""):
         yield stdout_line
@@ -67,17 +66,29 @@ def execute(cmd):
         raise CalledProcessError(return_code, cmd)
     return "DONE"
 
+
 def clock_wrap(source):
-    return 'var start = clock(); ' + source + 'var time = clock() - start; print "Completed in ~" + time + " seconds. ";'
+    return (
+        "var start = clock(); "
+        + source
+        + 'var time = clock() - start; print "Completed in ~" + time + " seconds. ";'
+    )
 
 
 # java -cp lox.jar lox.Lox
 def interpret(
     q: mp.Queue,
-    source:CompilerRequest,
+    source: CompilerRequest,
 ):
-    command = ["java","-cp", "backend/jlox.jar", "lox.Lox", "source", clock_wrap(source["fileContents"])]
-    command = [i for i in command if i] 
+    command = [
+        "java",
+        "-cp",
+        "backend/jlox.jar",
+        "lox.Lox",
+        "source",
+        clock_wrap(source["fileContents"]),
+    ]
+    command = [i for i in command if i]
     s_log_file = StringIO()
 
     for std_out_log in execute(command):
@@ -88,11 +99,10 @@ def interpret(
     s_log_file.close()
 
 
-
-
 def long_running_task(q: mp.Queue, source: CompilerRequest) -> str:
-    interpret(q=q,source=source)
+    interpret(q=q, source=source)
     return "DONE"
+
 
 @ws.websocket("/compiler")
 async def websocket_endpoint(websocket: WebSocket):
@@ -102,14 +112,16 @@ async def websocket_endpoint(websocket: WebSocket):
     try:
         while True:
             source_data = await websocket.receive_text()
-            if source_data == None or source_data == '' or len(source_data) < 30:
-                print('null or empty string value from ws')
+            if source_data == None or source_data == "" or len(source_data) < 30:
+                print("null or empty string value from ws")
             else:
                 source_data_dict = json.loads(source_data)
-                if source_data_dict['fileName'] and source_data_dict['fileContents']:
+                if source_data_dict["fileName"] and source_data_dict["fileContents"]:
                     await websocket.send_text(START_HASH)
                     loop = asyncio.get_event_loop()
-                    result = loop.run_in_executor(pool, long_running_task, q, source_data_dict)
+                    result = loop.run_in_executor(
+                        pool, long_running_task, q, source_data_dict
+                    )
 
                 start_time = time.perf_counter()
                 while True:
@@ -121,7 +133,9 @@ async def websocket_endpoint(websocket: WebSocket):
 
                     try:
                         if time.perf_counter() - start_time > 30:
-                            await websocket.send_text("Compiler timed out.\nExecution either failed or passed 30 second compile time limit.")
+                            await websocket.send_text(
+                                "Compiler timed out.\nExecution either failed or passed 30 second compile time limit."
+                            )
                             break
                         # see if our long running task has some intermediate result.
                         # Will result None if there isn't any.
@@ -130,7 +144,7 @@ async def websocket_endpoint(websocket: WebSocket):
                         # if q.get() throws Empty exception, then nothing was
                         # available (yet!).
                         queue_result = None
-                    
+
                     # If there is an intermediate result, let's send it to the client.
                     if queue_result:
                         try:
@@ -140,8 +154,7 @@ async def websocket_endpoint(websocket: WebSocket):
                             await websocket.close()
                             # break out of the while loop.
                             return
-                    
-                    
+
                     if result == "DONE" or result.done():
                         try:
                             await websocket.send_text(END_HASH)
@@ -158,6 +171,3 @@ async def websocket_endpoint(websocket: WebSocket):
     except WebSocketDisconnect:
         await websocket.close()  # user has closed or refreshed browser before sending a request, close the connection
         return
-
-        
-

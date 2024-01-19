@@ -11,6 +11,7 @@ from backend.lifetime import register_shutdown_event, register_startup_event
 from backend.settings import settings
 from backend.api.router import compiler
 
+
 def get_app() -> FastAPI:
     app = FastAPI(
         title="backend",
@@ -32,9 +33,10 @@ app = get_app()
 
 app.mount("/ws", compiler)
 
+
 @app.get("/", tags=["Static"], include_in_schema=False)
 async def index_route():
-    subprocess.run(["java", "--version"]) 
+    subprocess.run(["java", "--version"])
     return RedirectResponse(url="/index.html")
 
 
@@ -44,8 +46,6 @@ async def index_route():
 #     if(dirpath[0:7] != "./client" ):
 #         for f in filenames:
 #             print(os.path.join(dirpath, f))
-
-
 
 
 app.mount("/", StaticFiles(directory="backend/dist", html=True), name="dist")
