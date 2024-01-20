@@ -38,6 +38,24 @@ pre {
 }
 
 
+.test-slide {
+  position: absolute;
+    
+    width: 200px;
+  animation-name: testSlide;
+  animation: testSlide infinite alternate ease 3s;
+}
+
+@keyframes testSlide {
+  from {
+    opacity:0;
+  }
+  to {
+    opacity:1;
+  }
+}
+
+
 
 #filled-basic {
   color:white;

@@ -93,7 +93,7 @@ export const CompilerWindow = () => {
                     <Editor  onChange={(value)=>{writeTempCache(value,selectedFile)}} value={fileState.filter((file) => { return file.fileName == selectedFile })[0]?.fileContents} className="editorSection" height={"1000px"} width={"100%"} theme='vs-dark' defaultLanguage="c" />
                 </div>
                 <div className="terminalContainer" style={{ display: 'inline-block', width: '50%',top:'85px',position:'absolute',height:'1000px' }}>
-                    <TerminalBar files={fileState} run={run} clear={clear} fileToRun={fileToRun} setFileToRun={setFileToRun} />
+                    <TerminalBar files={fileState} run={run} clear={clear} setFileToRun={setFileToRun} />
                     <TerminalWindow compilerOutput={compilerOutput} running={running} />
                 </div>
             </div>

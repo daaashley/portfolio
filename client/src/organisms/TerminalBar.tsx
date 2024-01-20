@@ -4,10 +4,10 @@ import IconButton from '@mui/material/IconButton';
 import NotInterested from '@mui/icons-material/NotInterested';
 import PlayIcon from '@mui/icons-material/PlayArrow'
 import Grid from '@mui/material/Grid';
-import { Menu, MenuItem, Tooltip } from '@mui/material';
+import { FormControl, InputLabel, Menu, MenuItem, NativeSelect, Select, Tooltip } from '@mui/material';
 
-export const TerminalBar = ({files, run, fileToRun, setFileToRun, clear}) => {
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+export const TerminalBar = ({files, run, setFileToRun, clear}) => {
+    const [anchorEl, setAnchorEl] = React.useState(null);
     
     const open = Boolean(anchorEl);
 
@@ -33,10 +33,23 @@ export const TerminalBar = ({files, run, fileToRun, setFileToRun, clear}) => {
 
             <Box overflow={'auto'} whiteSpace={'nowrap'} sx={{ flexGrow: 1, background: '#1e1e1e', height: '30px' }}>
                 <Grid container  >
-                    <select name="pets" id="pet-select" style={{ height: 30, width: 180, background: '#1e1e1e', color: '#cccccc' }}>
-                        <option value="">jlox 1.0.1</option>
-                        <option value="dog">clox 1.0.1 coming soon...</option>
-                    </select>
+                <FormControl sx={{width:200, background:'#4f4f4f'}}>
+                <NativeSelect
+                style={{color:'white'}}
+    defaultValue={30}
+    inputProps={{
+      name: 'age',
+      id: 'uncontrolled-native',
+    }}
+  >
+    <option style={{color:'white'}} value={10}> jlox 1.0.1</option>
+    <option disabled value={20}> clox 1.0.1</option>
+  </NativeSelect>
+</FormControl>
+                    {/* <select  style={{ height: 30, width: 'auto', background: '#1e1e1e', color: '#cccccc' }}>
+                        <option value="jlox-1.0.1">jlox 1.0.1</option>
+                        <option value="clox-1.0.1">clox 1.0.1 coming soon...</option>
+                    </select> */}
                         <div>
                         <Tooltip title={"Run"} arrow>
                         <IconButton onClick={handleClick} aria-label="delete" size="small" style={{ color: 'rgb(100, 255, 218)' }} >

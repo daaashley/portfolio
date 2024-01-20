@@ -64,6 +64,7 @@ export const Sidebar = () => {
                 commits.length > 0 && [commits[0]].map((commit)=>{
                     return (<Typography
                         variant="h6"
+                        className={'test-slide'}
                         component="div"
                         sx={{ color: "#ccd6f6", }}
                     >
