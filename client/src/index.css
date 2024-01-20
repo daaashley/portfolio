@@ -40,18 +40,23 @@ pre {
 
 .test-slide {
   position: absolute;
-    
-    width: 200px;
+  width: 200px;
   animation-name: testSlide;
-  animation: testSlide infinite alternate ease 3s;
+  animation: testSlide infinite alternate ease 10s;
 }
 
 @keyframes testSlide {
-  from {
-    opacity:0;
+  0% {
+    opacity: 0;
   }
-  to {
-    opacity:1;
+  25% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
 

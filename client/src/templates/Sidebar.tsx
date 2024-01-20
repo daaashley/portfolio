@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 
 export const Sidebar = () => {
     const [commits, setCommits] = useState([]);
+    const [selectedCommit, setSelectedCommit] = useState(0)
 
   useEffect(() => {
     fetch("https://api.github.com/repos/daaashley/lox-interpreter/commits")
@@ -17,7 +18,20 @@ export const Sidebar = () => {
       .then((data) => {
         setCommits(data);
       });
+      
+    
   }, []);
+
+  useEffect(()=>{
+    if(commits.length > 0){
+    const animated = document.getElementsByClassName("test-slide")[0];
+      if(animated){
+        animated.addEventListener("animationiteration", () => {
+            setSelectedCommit((prev)=> prev + 1)
+          });
+      }
+    }
+  },[commits])
 
     return (
         <div
@@ -60,17 +74,14 @@ export const Sidebar = () => {
                 >
                     Recent Commits
                 </Typography>
-                {
-                commits.length > 0 && [commits[0]].map((commit)=>{
-                    return (<Typography
+                <Typography
                         variant="h6"
-                        className={'test-slide'}
+                        className='test-slide'
                         component="div"
                         sx={{ color: "#ccd6f6", }}
                     >
-                    {<a target="_blank" style={{textDecoration:'none'}} href={commit.html_url}><Typography sx={{color: 'rgb(94 234 212)'}} variant="h6">"{commit.commit.message}"</Typography></a>}{" in repo lox-interpreter on " + new Date(commit.commit.author.date)}                    
-                    </Typography>) 
-                })}
+                    {<a target="_blank" style={{textDecoration:'none'}} href={commits.length > 0 ? commits[selectedCommit]?.html_url:''}><Typography sx={{color: 'rgb(94 234 212)'}} variant="h6">"{commits.length > 0 ? commits[selectedCommit]?.commit.message : ''}"</Typography></a>}{" in repo lox-interpreter on " + new Date(commits.length > 0 ? commits[selectedCommit].commit?.author.date:null)}                    
+                    </Typography>
             </Box>
         </div>
     )
