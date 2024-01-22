@@ -1,6 +1,10 @@
 import { createContext, ReactChild } from "react";
 
-const ws = new WebSocket("ws://localhost:8000/ws/compiler");
+const isDev = process.env.NODE_ENV === "development" 
+
+const ws = new WebSocket( isDev ? "ws://localhost:8000/ws/compiler" : "ws://api.staging.vibeeng.com/ws/compiler");
+
+console.log('Using isDev: ',isDev)
 
 ws.onopen = () => ws.send("Connected to server.")
 
