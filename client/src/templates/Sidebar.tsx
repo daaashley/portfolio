@@ -72,7 +72,7 @@ export const Sidebar = () => {
                     component="div"
                     sx={{ color: "#ccd6f6", marginTop:5,marginBottom:1 }}
                 >
-                    Recent Commits
+                    recent commits
                 </Typography>
                 <Typography
                         variant="h6"

@@ -30,7 +30,7 @@ export const AboutPage = () => {
                         <Typography style={{color:'#8892b0',}} variant="h6">{`Frontend, Backend, DevOps, \n Compilers, Machine Learning`} </Typography>
                     </Grid>
                     <Grid item md={12}>
-                        <Typography style={{ textAlign: 'left',padding:15,marginBottom:30}} variant="h6">{"In 2013, I took the AP Computer Science class in Java offered at my highschool. A decade later I am still learning and growing in my career as an engineer. Through undergraduate study, internships, freelance jobs, full time engineering work, and more half-baked projects than completed ones, I have approached software engineering as a meaningful pursuit; a craft I aim to hone toward an imperfect end. I have a depth and breadth of experience that spans many industries and problem domains. From mobile games that run on millions of phones to niche linear optimization applications to writing a "}<a href="/compilers" style={{color:'rgb(94 234 212)'}}>programming language</a>{", the only thing my varied development paths share is that they were motivated by curiosity; the general desire to do and understand that which I never have."}
+                        <Typography style={{ textAlign: 'left',padding:15,marginBottom:30}} variant="h6">{"In 2013, I took AP Computer Science in Java at my highschool. A decade later I am still learning and growing in my career as an engineer. Through undergraduate study, internships, freelance jobs, full time engineering work, and more half-baked projects than completed ones, I have approached software engineering as a craft I aim to hone toward an imperfect end. I have a depth and breadth of experience that spans many industries and problem domains. From mobile games that run on millions of phones to niche linear optimization applications to writing a "}<a href="/compilers" style={{color:'rgb(94 234 212)'}}>programming language</a>{", the only thing my varied paths share is that they were motivated by curiosity; the general desire to do and understand that which I never have."}
                             </Typography>
                     </Grid>
                     <Grid item  sm={3} xs={12}>
@@ -73,7 +73,10 @@ export const AboutPage = () => {
                     <Card style={{background:'#182a46',color:'#cdd8f7',padding:25}}>
                         <Typography variant="body1">• Built games and features for the online gambling and social platform</Typography>
                         <Typography variant="body1">• Engineered mobile games and features for iOS and Android devices</Typography>
-                        <Typography variant="body1">• Developed and optimized performance of games in React Native, GraphQL, Unity, and C#</Typography>
+                        <Typography variant="body1">• Wrote backend microservices and API's using Scala</Typography>
+
+                       <Typography variant="body1">• Developed and optimized performance of games in React Native, GraphQL, Unity, and C#</Typography>
+
                         <Grid container style={{paddingTop:5}} spacing={0}>
                             <Grid item md={2} sm={4} xs={6}><Typography style={{margin:5,textAlign: 'center',color:'rgb(94, 234, 212)'}}>React Native</Typography></Grid>
                             <Grid item md={2} sm={4} xs={6}><Typography style={{margin:5,textAlign: 'center',color:'rgb(94, 234, 212)'}}>React</Typography></Grid>
