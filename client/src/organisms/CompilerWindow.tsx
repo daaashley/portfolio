@@ -74,7 +74,7 @@ export const CompilerWindow = () => {
         else if(data == END_HASH){
             setRunning(false)
         } else {
-            setCompilerOutput((prevCompilerOutput)=>[...prevCompilerOutput,<span style={{ fontSize: 14 }}>{lineFormatted(data)}</span>])
+            setCompilerOutput((prevCompilerOutput)=>[...prevCompilerOutput,<span className="terminal-type" style={{ fontSize: 14, display:'block' }}>{lineFormatted(data)}</span>])
         }
         console.log('data: ', data)
     }

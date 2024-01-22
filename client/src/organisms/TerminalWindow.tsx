@@ -1,6 +1,7 @@
 import Terminal, { ColorMode, } from 'react-terminal-ui';
 import LoadingDots from '../atoms/LoadingDots';
 import { useEffect } from 'react';
+import { Paper, Typography } from '@mui/material';
 
 
 
@@ -8,7 +9,7 @@ export const TerminalWindow = ({ compilerOutput, running }) => {
 
   useEffect(()=>{
     if(running){
-      const element = document.getElementsByClassName('cursor')[1]
+      const element = document.getElementsByClassName('terminal-cursor')[0]
     
     const html = `<style id="bouncer-style">
     @keyframes bouncing-loader {
@@ -49,12 +50,22 @@ export const TerminalWindow = ({ compilerOutput, running }) => {
   },[running])
 
   return (
-    <>
+    // <div tabIndex={-1}>
     
     
-    <Terminal height={'100vh'} name='jlox 1.0.1' prompt={'jlox 1.0.1 > '} colorMode={ColorMode.Dark} onInput={terminalInput => console.log(`New terminal input received: '${terminalInput}'`)}>
-      {compilerOutput}
-    </Terminal></>
+    // <Terminal height={'100vh'} name='jlox 1.0.1' prompt={'jlox 1.0.1 > '} colorMode={ColorMode.Dark} onInput={terminalInput => console.log(`New terminal input received: '${terminalInput}'`)}>
+    //   {compilerOutput}
+    // </Terminal></div>
+    <Paper style={{height:1000,background:'#252a33'}}>
+      <Typography className='terminal-type' style={{fontSize:16,color:'#a2a2a2',textAlign:'center'}}>jlox 1.0.1</Typography>
+      <div style={{padding:50,marginTop:10,color:'white',overflowY:'auto',height:800}}>
+        {compilerOutput.map((output)=>{
+          return output
+        })}
+      <Typography className='terminal-type' style={{fontSize:14,color:'#eeeeee',}}>{'jlox 1.0.1 > '}<div className={'terminal-cursor'}><i></i></div></Typography>
+
+      </div>
+    </Paper>
   )
 }
 

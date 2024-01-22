@@ -37,6 +37,34 @@ pre {
   user-select: text !important;
 }
 
+.terminal-type {
+  font-family:'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', Courier, monospace !important;
+}
+
+.terminal-cursor {
+  display: inline-block;
+  
+}
+
+.terminal-cursor i {
+  display: block;
+  position: relative;
+	width: 8px !important;
+	height: 18px !important;
+	background-color: gray;
+	top:3.5px;
+	animation-name: blink;
+	animation-duration: 1600ms;
+	animation-iteration-count: infinite;
+	opacity: 1;
+}
+
+
+@keyframes blink {
+	from { opacity: 1; }
+	to { opacity: 0; }
+}
+
 
 .test-slide {
   position: absolute;
