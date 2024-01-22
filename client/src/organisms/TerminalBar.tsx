@@ -42,8 +42,8 @@ export const TerminalBar = ({files, run, setFileToRun, clear}) => {
       id: 'uncontrolled-native',
     }}
   >
-    <option style={{color:'white'}} value={10}> jlox 1.0.1</option>
-    <option disabled value={20}> clox 1.0.1</option>
+    <option key={'jlox1'} style={{color:'white'}} value={10}> jlox 1.0.1</option>
+    <option key={'clox1'} disabled value={20}> clox 1.0.1</option>
   </NativeSelect>
 </FormControl>
                     {/* <select  style={{ height: 30, width: 'auto', background: '#1e1e1e', color: '#cccccc' }}>
@@ -71,7 +71,7 @@ export const TerminalBar = ({files, run, setFileToRun, clear}) => {
                             }}
                         >
                             {files.map((file)=>{
-                                return (<MenuItem onClick={()=>{handleRun(file.fileName)}}>{file.fileName}</MenuItem>)
+                                return (<MenuItem key={`${file.fileName}item`} onClick={()=>{handleRun(file.fileName)}}>{file.fileName}</MenuItem>)
                                 
                             })}
                             
