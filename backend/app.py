@@ -36,7 +36,7 @@ app.mount("/ws", compiler)
 app.mount("/", StaticFiles(directory="backend/dist", html=True), name="dist")
 
 
-@app.get("/*", tags=["Static"], include_in_schema=False)
+@app.get("*", tags=["Static"], include_in_schema=False)
 async def index_route():
     return RedirectResponse(url="/index.html")
 
