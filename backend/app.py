@@ -36,19 +36,8 @@ app.mount("/ws", compiler)
 app.mount("/", StaticFiles(directory="backend/dist", html=True), name="dist")
 
 
-@app.get("/compilers", tags=["Static"], include_in_schema=False)
-async def compilers_route():
-    return RedirectResponse(url="/index.html")
-
-
-@app.get("/about", tags=["Static"], include_in_schema=False)
-async def compilers_route():
-    return RedirectResponse(url="/index.html")
-
-
-@app.get("/", tags=["Static"], include_in_schema=False)
+@app.get("/*", tags=["Static"], include_in_schema=False)
 async def index_route():
-    subprocess.run(["java", "--version"])
     return RedirectResponse(url="/index.html")
 
 
