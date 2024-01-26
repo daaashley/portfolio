@@ -24,6 +24,9 @@ def get_app() -> FastAPI:
     register_startup_event(app)
     register_shutdown_event(app)
 
+    app.mount("/", StaticFiles(directory="backend/dist", html=True), name="dist")
+
+
     # Main router for backend API
     app.include_router(router=api_router, prefix="/api")
     return app
@@ -48,7 +51,6 @@ async def index_route():
 #             print(os.path.join(dirpath, f))
 
 
-app.mount("/", StaticFiles(directory="backend/dist", html=True), name="dist")
 
 
 if __name__ == "__main__":
