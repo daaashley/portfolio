@@ -24,7 +24,6 @@ def get_app() -> FastAPI:
     register_startup_event(app)
     register_shutdown_event(app)
 
-    
     # Main router for backend API
     app.include_router(router=api_router, prefix="/api")
     return app
@@ -41,9 +40,11 @@ app.mount("/", StaticFiles(directory="backend/dist", html=True), name="dist")
 async def compilers_route():
     return RedirectResponse(url="/index.html")
 
+
 @app.get("/about", tags=["Static"], include_in_schema=False)
 async def compilers_route():
     return RedirectResponse(url="/index.html")
+
 
 @app.get("/", tags=["Static"], include_in_schema=False)
 async def index_route():
