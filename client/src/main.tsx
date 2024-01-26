@@ -56,10 +56,11 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       <SocketProvider>
       <BrowserRouter basename="/">
       <Routes>
-        <Route path="/index.html" element={<App />} />
+        
         <Route path="/posts/:id" element={<PostPage />} /> 
         <Route path="/compilers" element={<Compilers />} /> 
         <Route path="/about" element={<AboutPage />} /> 
+        <Route path="/*" element={<App />} />
       </Routes>
     </BrowserRouter>
       </SocketProvider>
