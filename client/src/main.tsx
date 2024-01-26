@@ -1,8 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import {
+  BrowserRouter,
   createBrowserRouter,
+  Route,
   RouterProvider,
+  Routes,
 } from "react-router-dom";
 import "./index.css";
 import App from './App'
@@ -51,7 +54,15 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <EditorStateProvider>
       <SocketProvider>
-        <RouterProvider router={router} />
+      <BrowserRouter basename="/">
+      <Routes>
+        
+        <Route path="/posts/:id" element={<PostPage />} /> 
+        <Route path="/compilers" element={<Compilers />} /> 
+        <Route path="/about" element={<AboutPage />} /> 
+        <Route path="/*" element={<App />} />
+      </Routes>
+    </BrowserRouter>
       </SocketProvider>
     </EditorStateProvider>
   </React.StrictMode>,
