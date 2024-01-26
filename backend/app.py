@@ -26,7 +26,6 @@ def get_app() -> FastAPI:
 
     app.mount("/", StaticFiles(directory="backend/dist", html=True), name="dist")
 
-
     # Main router for backend API
     app.include_router(router=api_router, prefix="/api")
     return app
@@ -49,8 +48,6 @@ async def index_route():
 #     if(dirpath[0:7] != "./client" ):
 #         for f in filenames:
 #             print(os.path.join(dirpath, f))
-
-
 
 
 if __name__ == "__main__":
