@@ -72,6 +72,7 @@ pytest:
       #- wait-for-it -t 180 $BACKEND_DB_HOST:5432
   - mkdir -p backend/templates
   - mkdir -p backend/static
+  - mkdir -p backend/static/assets
   - touch backend/static/assets/index.js
   - touch backend/templates/index.html
   - poetry run pytest --cov-report term-missing --cov=backend --junitxml=report.xml
