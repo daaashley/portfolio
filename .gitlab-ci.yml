@@ -70,8 +70,10 @@ pytest:
       # - apt install -y wait-for-it
       # - psql "postgresql://postgres:postgres@postgres:5432/postgres"
       #- wait-for-it -t 180 $BACKEND_DB_HOST:5432
-  - mkdir -p backend/dist
-  - touch backend/dist/index.html
+  - mkdir -p backend/templates
+  - mkdir -p backend/static
+  - touch backend/static/assets/index.js
+  - touch backend/templates/index.html
   - poetry run pytest --cov-report term-missing --cov=backend --junitxml=report.xml
   - coverage xml
   artifacts:
