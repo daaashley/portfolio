@@ -132,7 +132,6 @@ COPY migrations /app/migrations
 COPY backend /app/backend
 RUN mv /app/client/dist/index.html /app/backend/templates/
 RUN mv /app/client/dist/* /app/backend/static/
-RUN ls /app/backend/dist/
 
 WORKDIR /app/
 RUN chmod +x /app/backend/jlox.jar
