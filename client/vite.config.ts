@@ -5,6 +5,7 @@ const development = process.env.NODE_ENV === "development";
 console.log("development?: ", development);
 // https://vitejs.dev/config/
 export default defineConfig({
+    base:'/static',
     plugins: [react()],
     server: {
         proxy: {

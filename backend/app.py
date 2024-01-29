@@ -3,10 +3,9 @@ import os
 from pathlib import Path
 import subprocess
 from fastapi import FastAPI, Request
-from fastapi.responses import UJSONResponse, HTMLResponse
+from fastapi.responses import UJSONResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from starlette.responses import RedirectResponse
 
 from backend.api.router import api_router
 from backend.lifetime import register_shutdown_event, register_startup_event
@@ -33,18 +32,15 @@ def get_app() -> FastAPI:
 
 app = get_app()
 
-BASE_PATH = Path(__file__).resolve().parent
+app.mount("/ws", compiler)
 
-TEMPLATES = Jinja2Templates(directory="backend/dist")
-@app.get("/{full_path:path}",  include_in_schema=False)
-async def index_route(request:Request, full_path:str):
-    print("full_path: "+full_path)
-    app_path = str(BASE_PATH / "dist" / "index.html")
-    print(app_path)
-    return TEMPLATES.TemplateResponse(app_path, {"request": request})
-    
+app.mount("/static", StaticFiles(directory="backend/static"), name="static")
 
-app.mount("/", StaticFiles(directory="backend/dist"), name="dist")
+templates = Jinja2Templates(directory="templates")
+
+@app.route("/{full_path:path}")
+async def serve_spa(request: Request):
+    return FileResponse("backend/templates/index.html")
 
 
 
@@ -52,15 +48,19 @@ app.mount("/", StaticFiles(directory="backend/dist"), name="dist")
 
 
 
-#app.mount("/ws", compiler)
 
 
 
 
 
 
-# Client directory debug for Docker
-# for dirpath, dirnames, filenames in os.walk('./backend'):
+
+
+
+
+
+#Client directory debug for Docker
+# for dirpath, dirnames, filenames in os.walk('.'):
 #     print(dirpath)
 #     if(dirpath[0:7] != "./client" ):
 #         for f in filenames:

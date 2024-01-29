@@ -130,7 +130,8 @@ RUN ls /app/client/dist
 COPY yoyo.ini entrypoint.sh /app/
 COPY migrations /app/migrations
 COPY backend /app/backend
-RUN mv /app/client/dist /app/backend/
+RUN mv /app/client/dist/index.html /app/backend/templates/
+RUN mv /app/client/dist/* /app/backend/static/
 RUN ls /app/backend/dist/
 
 WORKDIR /app/

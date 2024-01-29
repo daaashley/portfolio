@@ -110,7 +110,7 @@ class David < Boy {
 David().speak();`
 
 export const POSTS = [{ id:'1',author:'David Ashley',title: 'Building The Lox Interpreter', date: 1705205782000, 
-imageUrl: '/code.png',  
+imageUrl: '/static/code.png',  
 mins:20,
 body: `
 <h3>Beginnings</h3>
@@ -141,7 +141,7 @@ We can represent 2 * 7 + 3 in the following tree as an ‘expression’. In the 
 <br/><br/>
 The book introduces <a https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form>Backus-Naur form</a>, a notation invented by computer scientists used to describe the syntax of programming and formal languages. We can’t just write a set of switch statements to handle every conceivable combination of valid grammar that a programmer might type in as source code for the language we end up defining. There are an infinite number of valid strings that could be passed through our grammar rules, so we use Backus-Naur notation to cleanly represent our grammar and all strings it will allow. An example from a portion of the Backus-Naur form of the Lox grammar can be seen below.
 <br/><br/>
-<img>/factor.png</img>
+<img>/static/factor.png</img>
 <br/><br/>
 In our grammar, the above rules (comparison, term, factor, etc.) are known as productions. A production can be a terminal value, or a non-terminal value. A terminal value is a value which stops the recursive descent, it is the last stop in the branch of the tree. A string literal, number, or true\false value in the primary production, for example, would all be terminal values. These are tokens that can be decomposed no further and are returned up the recursion tree as the terminal value. A non-terminal value could be a factor, unary, or a function call. These are productions that are composed of other productions, that we can recursively parse further. 
 <br/><br/>
@@ -151,7 +151,7 @@ A factor, for example, will contain either a division or multiplication operator
 <br/><br/>
 The LHS is expr which we recursively parse further starting with a check of the unary() production. We call previous() to get the most recently parsed token to get the operator string, and the right variable is the result of the unary() call for the RHS.
 <br/><br/>
-<img>/unary.png</img>
+<img>/static/unary.png</img>
 <br/><br/> 
 We observe that the factor production above (unary (( “/” | “*”) unary )*;) mirrors the factor() parser function perfectly. In fact, every function we end up writing in the Lox program mirrors its Backus-Naur equivalent identically in this way. Don’t believe it? Take the unary parsing method for example
 <br/><br/>
