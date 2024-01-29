@@ -8,7 +8,7 @@ services:
     volumes:
       # Adds current directory as volume.
     - ./backend/:/app/backend/
-    - /app/backend/build # Grabs dist from image and adds it to volume, so we can continue hot reload
+    - /app/backend/dist # Grabs dist from image and adds it to volume, so we can continue hot reload
     environment:
       # Enables autoreload.
       DOCKER_BUILDKIT: 1

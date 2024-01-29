@@ -1,9 +1,11 @@
 import uvicorn
 import os
+from pathlib import Path
 import subprocess
-from fastapi import FastAPI
-from fastapi.responses import UJSONResponse
+from fastapi import FastAPI, Request
+from fastapi.responses import UJSONResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 from starlette.responses import RedirectResponse
 
 from backend.api.router import api_router
@@ -31,14 +33,30 @@ def get_app() -> FastAPI:
 
 app = get_app()
 
-app.mount("/ws", compiler)
+BASE_PATH = Path(__file__).resolve().parent
 
-app.mount("/", StaticFiles(directory="backend/dist", html=True), name="dist")
+TEMPLATES = Jinja2Templates(directory="backend/dist")
+@app.get("/{full_path:path}",  include_in_schema=False)
+async def index_route(request:Request, full_path:str):
+    print("full_path: "+full_path)
+    app_path = str(BASE_PATH / "dist" / "index.html")
+    print(app_path)
+    return TEMPLATES.TemplateResponse(app_path, {"request": request})
+    
+
+app.mount("/", StaticFiles(directory="backend/dist"), name="dist")
 
 
-@app.get("*", tags=["Static"], include_in_schema=False)
-async def index_route():
-    return RedirectResponse(url="/index.html")
+
+
+
+
+
+#app.mount("/ws", compiler)
+
+
+
+
 
 
 # Client directory debug for Docker
