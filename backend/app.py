@@ -38,28 +38,13 @@ app.mount("/static", StaticFiles(directory="backend/static"), name="static")
 
 templates = Jinja2Templates(directory="templates")
 
+
 @app.route("/{full_path:path}")
 async def serve_spa(request: Request):
     return FileResponse("backend/templates/index.html")
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#Client directory debug for Docker
+# Client directory debug for Docker
 # for dirpath, dirnames, filenames in os.walk('.'):
 #     print(dirpath)
 #     if(dirpath[0:7] != "./client" ):
