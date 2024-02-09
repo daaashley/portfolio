@@ -2,7 +2,7 @@ import { createContext, ReactChild } from "react";
 
 const isDev = process.env.NODE_ENV === "development" 
 
-const ws = new WebSocket( isDev ? "ws://localhost:8000/ws/compiler" : "wss://api.staging.vibeeng.com/ws/compiler");
+const ws = new WebSocket( isDev ? "ws://localhost:8000/ws/compiler" : "wss://www.vibeeng.com/ws/compiler");
 
 console.log('Using isDev: ',isDev)
 

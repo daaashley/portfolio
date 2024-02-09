@@ -12,7 +12,7 @@ export default defineConfig({
             "/api": {
                 target: development
                     ? "http://localhost:8000"
-                    : "https://api.staging.vibeeng.com",
+                    : "https://www.vibeeng.com",
                 changeOrigin: true,
                 secure: false,
             },
