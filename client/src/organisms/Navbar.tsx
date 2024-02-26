@@ -21,7 +21,7 @@ export const Navbar = () => {
                                 component="div"
                                 sx={{ flexGrow: 1, color: "#64ffda" }}
                             >
-                                viibeeng
+                                vibeeng
                             </Typography>
                             <Typography
                                 variant="h6"
