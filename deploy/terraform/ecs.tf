@@ -41,10 +41,10 @@ data "template_file" "api_container_definitions" {
 
   vars = {
     app_image        = var.ecr_image_api
-    db_host          = aws_db_instance.main.address
-    db_name          = aws_db_instance.main.name
-    db_user          = aws_db_instance.main.username
-    db_pass          = aws_db_instance.main.password
+    # db_host          = aws_db_instance.main.address
+    # db_name          = aws_db_instance.main.name
+    # db_user          = aws_db_instance.main.username
+    # db_pass          = aws_db_instance.main.password
     log_group_name   = aws_cloudwatch_log_group.ecs_task_logs.name
     log_group_region = data.aws_region.current.name
     allowed_hosts    = aws_route53_record.app.fqdn
